@@ -50,4 +50,16 @@ export class Elctks {
    * *:當選，“ “:未當選，!:婦女保障 -:因婦女保障被排擠未當選
    */
   electedMark: ElectedMarkEnum | undefined = undefined;
+  constructor(data: any) {
+    this.provinceCity = data[0];
+    this.countyCity = data[1];
+    this.electoralDistrict = data[2];
+    this.townshipDistrict = data[3];
+    this.village = data[4];
+    this.pollingStation = data[5];
+    this.candidateNumber = data[6];
+    this.voteCount = data[7];
+    this.votePercentage = data[8];
+    this.electedMark = data[9];
+  }
 }

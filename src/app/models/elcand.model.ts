@@ -64,4 +64,23 @@ export class Elcand {
    * Y:副總統，” “:其它候選人
    */
   deputy: DeputyEnum | undefined = undefined;
+
+  constructor(data: any) {
+    this.provinceCity = data[0];
+    this.countyCity = data[1];
+    this.electoralDistrict = data[2];
+    this.townshipDistrict = data[3];
+    this.village = data[4];
+    this.numberSequence = data[5];
+    this.name = data[6];
+    this.politicalPartyCode = data[7];
+    this.gender = data[8];
+    this.dateOfBirth = data[9];
+    this.age = data[10];
+    this.placeOfBirth = data[11];
+    this.education = data[12];
+    this.incumbent = data[13];
+    this.electedMark = data[14];
+    this.deputy = data[15];
+  }
 }

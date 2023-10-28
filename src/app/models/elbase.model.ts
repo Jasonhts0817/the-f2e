@@ -16,4 +16,12 @@ export class Elbase {
   village: string | undefined = undefined;
   /** 名稱 */
   name: string | undefined = undefined;
+  constructor(data: any) {
+    this.provinceCity = data[0];
+    this.countyCity = data[1];
+    this.electoralDistrict = data[2];
+    this.townshipDistrict = data[3];
+    this.village = data[4];
+    this.name = data[5];
+  }
 }

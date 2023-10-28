@@ -64,4 +64,26 @@ export class Elprof {
   voterTurnout: number | undefined = undefined;
   /** 當選人數對候選人數 */
   electedToCandidateRatio: number | undefined = undefined;
+  constructor(data: any) {
+    this.provinceCity = data[0];
+    this.countyCity = data[1];
+    this.electoralDistrict = data[2];
+    this.townshipDistrict = data[3];
+    this.village = data[4];
+    this.pollingStation = data[5];
+    this.validVotes = data[6];
+    this.invalidVotes = data[7];
+    this.totalVotes = data[8];
+    this.electorate = data[9];
+    this.population = data[10];
+    this.totalCandidates = data[11];
+    this.totalElected = data[12];
+    this.maleCandidates = data[13];
+    this.femaleCandidates = data[14];
+    this.maleElected = data[15];
+    this.femaleElected = data[16];
+    this.electorateToPopulationRatio = data[17];
+    this.voterTurnout = data[18];
+    this.electedToCandidateRatio = data[19];
+  }
 }
