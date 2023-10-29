@@ -7,49 +7,49 @@ export class Elctks {
    *
    * 全國層級時，該省市別為00
    */
-  provinceCity: string | undefined = undefined;
+  provinceCity: string;
   /**
    * 縣市別
    *
    * 縣市以上層級彙總時，該縣市別為000
    */
-  countyCity: string | undefined = undefined;
+  countyCity: string;
   /**
    * 選區別
    *
    * 選區以上層級彙總時，該選區為00
    */
-  electoralDistrict: string | undefined = undefined;
+  electoralDistrict: string;
   /**
    * 鄉鎮市區
    *
    * 鄉鎮市區以上層級彙總時，該鄉鎮市區別為000
    */
-  townshipDistrict: string | undefined = undefined;
+  townshipDistrict: string;
   /**
    * 村里別
    *
    * 村里以上層級彙總時，該村里別為0000
    */
-  village: string | undefined = undefined;
+  village: string;
   /**
    * 投開票所
    *
    * 投開票所以上層級彙總時，該投開票所別為0
    */
-  pollingStation: number | undefined = undefined;
+  pollingStation: number;
   /** 候選人號次 */
-  candidateNumber: number | undefined = undefined;
+  candidateNumber: number;
   /** 得票數 */
-  voteCount: number | undefined = undefined;
+  voteCount: number;
   /** 得票率 */
-  votePercentage: number | undefined = undefined;
+  votePercentage: number;
   /**
    * 當選註記
    *
    * *:當選，“ “:未當選，!:婦女保障 -:因婦女保障被排擠未當選
    */
-  electedMark: ElectedMarkEnum | undefined = undefined;
+  electedMark: ElectedMarkEnum;
   constructor(data: any) {
     this.provinceCity = data[0];
     this.countyCity = data[1];

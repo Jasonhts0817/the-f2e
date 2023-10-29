@@ -5,17 +5,21 @@ export class Elbase {
    *
    * 全國層級時，該省市別為00
    */
-  provinceCity: string | undefined = undefined;
+  provinceCity: string;
   /** 縣市別 */
-  countyCity: string | undefined = undefined;
-  /** 選區別 */
-  electoralDistrict: string | undefined = undefined;
+  countyCity: string;
+  /**
+   * 選區別
+   *
+   * 使用範圍：立委、議員、里長、民代
+   **/
+  electoralDistrict: string;
   /** 鄉鎮市區 */
-  townshipDistrict: string | undefined = undefined;
+  townshipDistrict: string;
   /** 村里別 */
-  village: string | undefined = undefined;
+  village: string;
   /** 名稱 */
-  name: string | undefined = undefined;
+  name: string;
   constructor(data: any) {
     this.provinceCity = data[0];
     this.countyCity = data[1];

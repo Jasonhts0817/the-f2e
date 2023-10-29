@@ -8,62 +8,62 @@ export class Elcand {
    *
    * 全國層級時，該省市別為00
    */
-  provinceCity: string | undefined = undefined;
+  provinceCity: string;
   /** 縣市別 */
-  countyCity: string | undefined = undefined;
+  countyCity: string;
   /** 選區別 */
-  electoralDistrict: string | undefined = undefined;
+  electoralDistrict: string;
   /** 鄉鎮市區 */
-  townshipDistrict: string | undefined = undefined;
+  townshipDistrict: string;
   /** 村里別 */
-  village: string | undefined = undefined;
+  village: string;
   /** 號次 */
-  numberSequence: number | undefined = undefined;
+  numberSequence: number;
   /** 名字 */
-  name: string | undefined = undefined;
+  name: string;
   /** 政黨代號 */
-  politicalPartyCode: string | undefined = undefined;
+  politicalPartyCode: string;
   /** 性別 1:男，2:女 */
-  gender: GenderEnum | undefined = undefined;
+  gender: GenderEnum;
   /**
    * 出生日期
    * 民國年月日，部分選舉資料僅有出生年
    */
-  dateOfBirth: number | undefined = undefined;
+  dateOfBirth: number;
   /**
    * 年齡
    *
    * (部分選舉未必有資料,可能0或99)
    */
-  age: number | undefined = undefined;
+  age?: number;
   /**
    * 出生地
    *
    * (補選未必有資料)
    */
-  placeOfBirth: string | undefined = undefined;
+  placeOfBirth?: string;
   /**
    * 學歷
    *
    * (補選未必有資料)
    */
-  education: string | undefined = undefined;
+  education?: string;
   /**
    * 現任
    *
    * Y:現任，N:非現任
    */
-  incumbent: 'Y' | 'N' | undefined = undefined;
+  incumbent: 'Y' | 'N';
   /**
    * 當選註記
    *
    * *:當選，“ “:未當選，!:婦女保障 -:因婦女保障被排擠未當選
    */
-  electedMark: ElectedMarkEnum | undefined = undefined;
+  electedMark: ElectedMarkEnum;
   /** 副手
    * Y:副總統，” “:其它候選人
    */
-  deputy: DeputyEnum | undefined = undefined;
+  deputy: DeputyEnum;
 
   constructor(data: any) {
     this.provinceCity = data[0];
