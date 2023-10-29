@@ -1,5 +1,5 @@
 import { DeputyEnum } from '../enums/deputy.enum';
-import { ElectedMarkEnum } from '../enums/electedMark.enum';
+import { ElectedMarkEnum } from '../enums/elected-mark.enum';
 import { GenderEnum } from '../enums/gender.enum';
 
 /** 候選人得票 */

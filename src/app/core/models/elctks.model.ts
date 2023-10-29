@@ -1,4 +1,4 @@
-import { ElectedMarkEnum } from '../enums/electedMark.enum';
+import { ElectedMarkEnum } from '../enums/elected-mark.enum';
 
 /** 候選人得票檔 */
 export class Elctks {
