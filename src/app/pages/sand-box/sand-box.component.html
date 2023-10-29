@@ -1,0 +1,123 @@
+<nav class="px-5">
+  <ul class="flex">
+    <li
+      class="py-3 px-5 cursor-pointer"
+      [class.bg-gray-200]="currentVoteYear === VoteYearEnum._1996"
+      (click)="getVoteYearData(VoteYearEnum._1996)"
+    >
+      {{ VoteYearEnum._1996 }}
+    </li>
+    <li
+      class="py-3 px-5 cursor-pointer"
+      [class.bg-gray-200]="currentVoteYear === VoteYearEnum._2000"
+      (click)="getVoteYearData(VoteYearEnum._2000)"
+    >
+      {{ VoteYearEnum._2000 }}
+    </li>
+    <li
+      class="py-3 px-5 cursor-pointer"
+      [class.bg-gray-200]="currentVoteYear === VoteYearEnum._2004"
+      (click)="getVoteYearData(VoteYearEnum._2004)"
+    >
+      {{ VoteYearEnum._2004 }}
+    </li>
+    <li
+      class="py-3 px-5 cursor-pointer"
+      [class.bg-gray-200]="currentVoteYear === VoteYearEnum._2008"
+      (click)="getVoteYearData(VoteYearEnum._2008)"
+    >
+      {{ VoteYearEnum._2008 }}
+    </li>
+    <li
+      class="py-3 px-5 cursor-pointer"
+      [class.bg-gray-200]="currentVoteYear === VoteYearEnum._2012"
+      (click)="getVoteYearData(VoteYearEnum._2012)"
+    >
+      {{ VoteYearEnum._2012 }}
+    </li>
+    <li
+      class="py-3 px-5 cursor-pointer"
+      [class.bg-gray-200]="currentVoteYear === VoteYearEnum._2016"
+      (click)="getVoteYearData(VoteYearEnum._2016)"
+    >
+      {{ VoteYearEnum._2016 }}
+    </li>
+    <li
+      class="py-3 px-5 cursor-pointer"
+      [class.bg-gray-200]="currentVoteYear === VoteYearEnum._2020"
+      (click)="getVoteYearData(VoteYearEnum._2020)"
+    >
+      {{ VoteYearEnum._2020 }}
+    </li>
+  </ul>
+</nav>
+<div class="container px-5">
+  <section class="my-8">
+    <h2>候選人基本資料</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>號次</th>
+          <th>名字</th>
+          <th>政黨</th>
+          <th>性別</th>
+          <th>學歷</th>
+          <th>當選註記</th>
+          <th>副手</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let elcand of elcands">
+          <td>{{ elcand.numberSequence }}</td>
+          <td>{{ elcand.name }}</td>
+          <td>{{ elcand.politicalPartyCode | displayName: elpatysObj }}</td>
+          <td>{{ elcand.gender | displayName: genderObject }}</td>
+          <td>{{ elcand.education }}</td>
+          <td>{{ elcand.electedMark }}</td>
+          <td>{{ elcand.deputy }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+  <div [formGroup]="regionFilterFormGroup" class="flex gap-3">
+    <label>
+      縣市
+      <select formControlName="provinceAnyCountyCity">
+        <option
+          *ngFor="let elbase of provinceAndCountryCityOptions"
+          [ngValue]="elbase"
+        >
+          {{ elbase.name }}
+        </option>
+      </select>
+    </label>
+    <label>
+      鄉鎮市區
+      <select formControlName="townshipDistrict">
+        <option
+          *ngFor="let elbase of townshipDistrictOptions"
+          [ngValue]="elbase"
+        >
+          {{ elbase.name }}
+        </option>
+      </select>
+    </label>
+    <label>
+      村里別
+      <select formControlName="village">
+        <option
+          *ngFor="let elbase of villageOptions"
+          [ngValue]="elbase.village"
+        >
+          {{ elbase.name }}
+        </option>
+      </select>
+    </label>
+  </div>
+  <section>
+    <h2>選舉概況檔</h2>
+  </section>
+  <section>
+    <h2>候選人得票檔</h2>
+  </section>
+</div>
