@@ -4,7 +4,7 @@ import * as csv from 'csv-parser';
 
 const DATA_DIR_PATH = path.join(`${__dirname}/..`, 'data');
 const DATA_FILE_EXT = '.csv';
-const API_DIR_PATH = path.join(`${__dirname}/..`, 'src/assets/api');
+const API_DIR_PATH = path.join(`${__dirname}/..`, 'src/api');
 
 function getDataFilePath(folderPath: string): string[] {
   let filePathList: string[] = [];
