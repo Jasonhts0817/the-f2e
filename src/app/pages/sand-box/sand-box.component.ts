@@ -10,13 +10,23 @@ import { Elcand } from 'src/app/core/models/elcand.model';
 import { Elpaty } from 'src/app/core/models/elpaty.model';
 import { Elprof } from 'src/app/core/models/elprof.model';
 import { Elctks } from 'src/app/core/models/elctks.model';
-import { forkJoin, from, mergeMap } from 'rxjs';
+import { forkJoin } from 'rxjs';
 import { DisplayNamePipe } from 'src/app/core/pipes/display-name.pipe';
+import { BarChartComponent } from 'src/app/shared/charts/bar-chart/bar-chart.component';
+import { LineChartComponent } from 'src/app/shared/charts/line-chart/line-chart.component';
+import { PieChartComponent } from 'src/app/shared/charts/pie-chart/pie-chart.component';
 
 @Component({
   selector: 'app-sand-box',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, DisplayNamePipe],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    DisplayNamePipe,
+    BarChartComponent,
+    LineChartComponent,
+    PieChartComponent,
+  ],
   templateUrl: './sand-box.component.html',
   styleUrls: ['./sand-box.component.scss'],
 })
