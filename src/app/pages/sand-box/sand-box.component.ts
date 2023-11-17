@@ -15,6 +15,7 @@ import { DisplayNamePipe } from 'src/app/core/pipes/display-name.pipe';
 import { BarChartComponent } from 'src/app/shared/charts/bar-chart/bar-chart.component';
 import { LineChartComponent } from 'src/app/shared/charts/line-chart/line-chart.component';
 import { PieChartComponent } from 'src/app/shared/charts/pie-chart/pie-chart.component';
+import { MapChartComponent } from 'src/app/shared/charts/map-chart/map-chart.component';
 
 @Component({
   selector: 'app-sand-box',
@@ -26,6 +27,7 @@ import { PieChartComponent } from 'src/app/shared/charts/pie-chart/pie-chart.com
     BarChartComponent,
     LineChartComponent,
     PieChartComponent,
+    MapChartComponent,
   ],
   templateUrl: './sand-box.component.html',
   styleUrls: ['./sand-box.component.scss'],

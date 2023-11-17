@@ -8,6 +8,7 @@ import { Elbase } from '../models/elbase.model';
 import { Elcand } from '../models/elcand.model';
 import { Elpaty } from '../models/elpaty.model';
 import { environment } from 'src/environments/environment';
+import { TaiwanMap } from '../models/map.model';
 
 @Injectable({
   providedIn: 'root',
@@ -44,5 +45,19 @@ export class ApiService {
     return this.http
       .get<Elctks[]>(`${environment.apiUrl}/api/president/${year}/elctks.json`)
       .pipe(map((datas) => datas.map((data) => new Elctks(data))));
+  }
+
+  getCountryJson() {
+    return this.http
+      .get<TaiwanMap>(`${environment.apiUrl}/api/map/counties.json`)
+      .pipe(map((data) => new TaiwanMap(data)));
+  }
+
+  getTownJson(townNo: string) {
+    return this.http
+      .get<TaiwanMap>(
+        `${environment.apiUrl}/api/map/towns/towns-${townNo}.json`,
+      )
+      .pipe(map((data) => new TaiwanMap(data)));
   }
 }
