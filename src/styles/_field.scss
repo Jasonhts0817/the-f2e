@@ -1,5 +1,5 @@
 @layer base {
   .drop-down-backdrop {
-    @apply bg-none w-screen h-screen;
+    @apply bg-none w-screen h-screen z-0;
   }
 }

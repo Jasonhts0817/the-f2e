@@ -3,9 +3,9 @@ import {
   AfterContentInit,
   Component,
   ContentChildren,
+  ElementRef,
+  HostListener,
   QueryList,
-  TemplateRef,
-  ViewChild,
   forwardRef,
 } from '@angular/core';
 import { DropDownOptionComponent } from './drop-down-option.component';
@@ -16,29 +16,29 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
   selector: 'app-drop-down',
   standalone: true,
   imports: [CommonModule, OverlayModule],
+  styles: [':host{ display: inline-block}'],
   template: `
     <button
       (click)="_isOpen = !_isOpen"
       type="button"
       cdkOverlayOrigin
       #trigger="cdkOverlayOrigin"
-      class="inline-flex justify-between items-center w-fill"
+      class="inline-flex w-full items-center justify-between whitespace-nowrap"
     >
       <span class="max-w-full text-ellipsis">{{
-        value ? value : '請選擇'
+        label ? label : '請選擇'
       }}</span>
       <img class="p-2" src="assets/icons/expand_more.svg" alt="展開" />
     </button>
     <ng-template
       cdkConnectedOverlay
-      cdkConnectedOverlayHasBackdrop
-      (backdropClick)="close()"
-      cdkConnectedOverlayBackdropClass="drop-down-backdrop"
+      [cdkConnectedOverlayOffsetY]="15"
+      [cdkConnectedOverlayOffsetX]="-16"
       [cdkConnectedOverlayOrigin]="trigger"
       [cdkConnectedOverlayOpen]="_isOpen"
     >
       <div
-        class="bg-white py-2 rounded-lg border-inline min-w-[280px] border-[1px]"
+        class="min-w-[185px] rounded-lg border-[1px] border-line bg-white py-2"
       >
         <ng-content></ng-content>
       </div>
@@ -63,7 +63,14 @@ export class DropDownComponent
   onTouched = (value: any) => {};
   disabled: boolean = false;
 
-  constructor() {}
+  public get label(): string {
+    return (
+      this.options.find((option) => option.value === this.value)?.ref
+        .nativeElement.textContent ?? ''
+    );
+  }
+
+  constructor(private ref: ElementRef<HTMLElement>) {}
 
   ngAfterContentInit(): void {
     this.options.map((option) =>
@@ -93,5 +100,11 @@ export class DropDownComponent
 
   setDisabledState(isDisabled: boolean): void {
     this.disabled = isDisabled;
+  }
+  @HostListener('document:click', ['$event'])
+  click(event: Event) {
+    if (!this.ref.nativeElement.contains(event.target as Node)) {
+      this.close();
+    }
   }
 }

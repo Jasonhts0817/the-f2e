@@ -1,5 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  Output,
+} from '@angular/core';
 
 @Component({
   selector: 'app-drop-down-option',
@@ -7,7 +13,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   imports: [CommonModule],
   template: `
     <div
-      class="py-2 px-4 cursor-pointer hover:bg-gray-100"
+      class="cursor-pointer px-4 py-2 hover:bg-gray-100"
       (click)="clickOption()"
     >
       <ng-content></ng-content>
@@ -17,6 +23,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 export class DropDownOptionComponent {
   @Input() value: any;
   @Output() selectValue = new EventEmitter<any>();
+  constructor(public ref: ElementRef<HTMLElement>) {}
   clickOption() {
     this.selectValue.emit(this.value);
   }

@@ -20,7 +20,7 @@ module.exports = {
         "font-secondary": "#64748B",
         bg: "#E9ECEF",
         hover: "#F8F9FA",
-        inline: "#DEE2E6",
+        line: "#DEE2E6",
         "role-1": "#8082FF",
         "role-2": "#F4A76F",
         "role-3": "#57D2A9",
