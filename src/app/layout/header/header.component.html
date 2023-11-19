@@ -1,1 +1,28 @@
-<p>header works!</p>
+<header class="px-4 py-2 md:py-3 md:px-6">
+  <div class="flex gap-1 md:gap-2">
+    <img
+      class="w-[37px] md:w-[53px]"
+      src="assets/logo.png"
+      alt="台灣歷年總統"
+    />
+    <img
+      class="max-w-[177px] h-[28px] md:max-w-[251px] md:h-[41px] object-contain"
+      src="assets/logo-text.png"
+      alt="台灣歷年總統"
+    />
+  </div>
+  <div>
+    <label for="year">選擇年份</label>
+
+    <app-drop-down>
+      <app-drop-down-option value="1996">1996</app-drop-down-option>
+      <app-drop-down-option value="2000">2000</app-drop-down-option>
+      <app-drop-down-option value="2004">2004</app-drop-down-option>
+      <app-drop-down-option value="2008">2008</app-drop-down-option>
+      <app-drop-down-option value="2012">2012</app-drop-down-option>
+      <app-drop-down-option value="2016">2016</app-drop-down-option>
+      <app-drop-down-option value="2020">2020</app-drop-down-option>
+    </app-drop-down>
+  </div>
+  <div></div>
+</header>
