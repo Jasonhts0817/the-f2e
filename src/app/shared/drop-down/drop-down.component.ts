@@ -1,11 +1,14 @@
 import { CommonModule } from '@angular/common';
 import {
+  AfterContentChecked,
   AfterContentInit,
   Component,
   ContentChildren,
   ElementRef,
   HostListener,
+  OnChanges,
   QueryList,
+  SimpleChanges,
   forwardRef,
 } from '@angular/core';
 import { DropDownOptionComponent } from './drop-down-option.component';
@@ -38,7 +41,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
       [cdkConnectedOverlayOpen]="_isOpen"
     >
       <div
-        class="min-w-[185px] rounded-lg border-[1px] border-line bg-white py-2"
+        class="max-h-[350px] min-w-[185px] overflow-y-auto rounded-lg border-[1px] border-line bg-white py-2"
       >
         <ng-content></ng-content>
       </div>
@@ -53,7 +56,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
   ],
 })
 export class DropDownComponent
-  implements AfterContentInit, ControlValueAccessor
+  implements ControlValueAccessor, AfterContentChecked
 {
   @ContentChildren(DropDownOptionComponent)
   options!: QueryList<DropDownOptionComponent>;
@@ -65,21 +68,15 @@ export class DropDownComponent
 
   public get label(): string {
     return (
-      this.options.find((option) => option.value === this.value)?.ref
-        .nativeElement.textContent ?? ''
+      this.options.find(
+        (option) => JSON.stringify(option.value) === JSON.stringify(this.value),
+      )?.ref.nativeElement.textContent ?? ''
     );
   }
 
   constructor(private ref: ElementRef<HTMLElement>) {}
-
-  ngAfterContentInit(): void {
-    this.options.map((option) =>
-      option.selectValue.subscribe((value) => {
-        this.onChange(value);
-        this.writeValue(value);
-        this.close();
-      }),
-    );
+  ngAfterContentChecked(): void {
+    this.registerOptionEmit();
   }
 
   close() {
@@ -96,6 +93,20 @@ export class DropDownComponent
 
   registerOnTouched(fn: (value: any) => void): void {
     this.onTouched = fn;
+  }
+
+  registerOptionEmit() {
+    this.options.forEach(async (option) => {
+      if (option.isSubscribe) {
+        return;
+      }
+      option.selectValue.subscribe((value) => {
+        this.onChange(value);
+        this.writeValue(value);
+        this.close();
+      });
+      option.isSubscribe = await true;
+    });
   }
 
   setDisabledState(isDisabled: boolean): void {

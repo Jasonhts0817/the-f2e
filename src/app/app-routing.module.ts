@@ -18,7 +18,7 @@ const routes: Routes = [
     component: LayoutComponent,
     children: [
       {
-        path: 'vote-map/:year',
+        path: 'vote-map',
         loadComponent: () =>
           import('./pages/vote-map/vote-map.component').then(
             (mod) => mod.VoteMapComponent,

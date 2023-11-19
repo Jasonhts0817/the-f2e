@@ -1,40 +1,45 @@
-<header class="flex justify-between px-4 py-2 md:px-6 md:py-3">
-  <div class="flex gap-1 md:gap-2">
+<header class="flex justify-between gap-6 px-4 py-[9px] sm:px-6 sm:py-3">
+  <div class="flex gap-1 sm:gap-2">
     <img
-      class="w-[37px] md:w-[53px]"
+      class="w-[37px] object-contain sm:w-[53px]"
       src="assets/logo.png"
       alt="台灣歷年總統"
     />
     <img
-      class="h-[28px] max-w-[177px] object-contain md:h-[41px] md:max-w-[251px]"
+      class="h-[28px] max-w-[177px] object-contain sm:h-[41px] sm:max-w-[251px]"
       src="assets/logo-text.png"
       alt="台灣歷年總統"
     />
   </div>
-  <div class="flex gap-2">
-    <div class="hidden items-center pr-4 md:flex">
-      <label class="pr-3">選擇年份</label>
-      <ng-container *ngTemplateOutlet="year"></ng-container>
+  <div
+    *ngIf="voteMapService.searchForm"
+    class="flex justify-center gap-2 xl:grow"
+    [formGroup]="voteMapService.searchForm"
+  >
+    <div class="flex items-center">
+      <label class="hidden pr-3 xl:inline-block">選擇年份</label>
+      <app-drop-down
+        class="w-[118px] rounded-full bg-bg px-3 py-1 text-body-2 sm:px-4 sm:py-[9px] sm:text-h6"
+        formControlName="year"
+      >
+        <app-drop-down-option value="1996">1996</app-drop-down-option>
+        <app-drop-down-option value="2000">2000</app-drop-down-option>
+        <app-drop-down-option value="2004">2004</app-drop-down-option>
+        <app-drop-down-option value="2008">2008</app-drop-down-option>
+        <app-drop-down-option value="2012">2012</app-drop-down-option>
+        <app-drop-down-option value="2016">2016</app-drop-down-option>
+        <app-drop-down-option value="2020">2020</app-drop-down-option>
+      </app-drop-down>
     </div>
 
-    <div class="flex items-center rounded-full bg-bg py-[9px]">
-      <img class="pl-3" src="assets/icons/search.svg" alt="搜尋" />
-      <app-drop-down
-        class="w-full max-w-[194px] border-r-[1px] border-line px-3"
-      >
-        <app-drop-down-option value="all">全部</app-drop-down-option>
-      </app-drop-down>
-      <app-drop-down
-        class="w-full max-w-[194px] border-r-[1px] border-line px-3"
-      >
-        <app-drop-down-option value="all">全部</app-drop-down-option>
-      </app-drop-down>
-      <app-drop-down class="w-full max-w-[194px] px-3">
-        <app-drop-down-option value="all">全部</app-drop-down-option>
-      </app-drop-down>
+    <div
+      *ngIf="voteMapService.searchForm"
+      class="hidden max-w-[610px] grow items-center pl-4 xl:flex"
+    >
+      <ng-container *ngTemplateOutlet="area"></ng-container>
     </div>
   </div>
-  <div class="flex items-center gap-4">
+  <div class="hidden items-center gap-4 xl:flex">
     <span>分享</span>
     <a class="cursor-pointer"
       ><img src="assets/icons/facebook.svg" alt="facebook"
@@ -47,15 +52,59 @@
     /></a>
   </div>
 </header>
+<div
+  *ngIf="voteMapService.searchForm"
+  class="sticky inline-block px-4 py-[9px] xl:hidden"
+>
+  <ng-container *ngTemplateOutlet="area"></ng-container>
+</div>
 
-<ng-template #year>
-  <app-drop-down class="w-[118px] rounded-full bg-bg px-4 py-[9px]">
-    <app-drop-down-option value="1996">1996</app-drop-down-option>
-    <app-drop-down-option value="2000">2000</app-drop-down-option>
-    <app-drop-down-option value="2004">2004</app-drop-down-option>
-    <app-drop-down-option value="2008">2008</app-drop-down-option>
-    <app-drop-down-option value="2012">2012</app-drop-down-option>
-    <app-drop-down-option value="2016">2016</app-drop-down-option>
-    <app-drop-down-option value="2020">2020</app-drop-down-option>
-  </app-drop-down>
+<ng-template #area let-form="form">
+  <div
+    *ngIf="voteMapService.searchForm"
+    class="flex grow items-center rounded-full bg-bg px-3 py-1 sm:py-[9px] xl:px-0"
+    [formGroup]="voteMapService.searchForm"
+  >
+    <img
+      class="hidden pl-3 xl:inline-block"
+      src="assets/icons/search.svg"
+      alt="搜尋"
+    />
+
+    <app-drop-down
+      class="grow border-r-[1px] border-line text-body-2 sm:px-3 sm:text-h6"
+      formControlName="provinceAnyCountyCity"
+    >
+      <app-drop-down-option value="">全部</app-drop-down-option>
+      <app-drop-down-option
+        *ngFor="
+          let elbase of voteMapService.provinceAndCountryCityOptions | async
+        "
+        [value]="elbase"
+        >{{ elbase.name }}</app-drop-down-option
+      >
+    </app-drop-down>
+    <app-drop-down
+      class="grow border-r-[1px] border-line text-body-2 sm:px-3 sm:text-h6"
+      formControlName="townshipDistrict"
+    >
+      <app-drop-down-option value="">全部</app-drop-down-option>
+      <app-drop-down-option
+        *ngFor="let elbase of voteMapService.townshipDistrictOptions | async"
+        [value]="elbase"
+        >{{ elbase.name }}</app-drop-down-option
+      >
+    </app-drop-down>
+    <app-drop-down
+      class="grow text-body-2 sm:px-3 sm:text-h6"
+      formControlName="village"
+    >
+      <app-drop-down-option value="">全部</app-drop-down-option>
+      <app-drop-down-option
+        *ngFor="let elbase of voteMapService.villageOptions | async"
+        [value]="elbase"
+        >{{ elbase.name }}</app-drop-down-option
+      >
+    </app-drop-down>
+  </div>
 </ng-template>

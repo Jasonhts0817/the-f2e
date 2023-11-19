@@ -23,8 +23,10 @@ import {
 export class DropDownOptionComponent {
   @Input() value: any;
   @Output() selectValue = new EventEmitter<any>();
+  isSubscribe = false;
   constructor(public ref: ElementRef<HTMLElement>) {}
   clickOption() {
+    console.log('this.value', this.value);
     this.selectValue.emit(this.value);
   }
 }

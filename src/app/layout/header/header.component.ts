@@ -1,12 +1,22 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DropDownComponent } from 'src/app/shared/drop-down/drop-down.component';
 import { DropDownOptionComponent } from 'src/app/shared/drop-down/drop-down-option.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { VoteMapService } from 'src/app/pages/vote-map/vote-map.service';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [DropDownComponent, DropDownOptionComponent],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    DropDownComponent,
+    DropDownOptionComponent,
+  ],
   templateUrl: './header.component.html',
 })
-export class HeaderComponent {}
+export class HeaderComponent implements OnInit {
+  constructor(public voteMapService: VoteMapService) {}
+  ngOnInit(): void {}
+}
