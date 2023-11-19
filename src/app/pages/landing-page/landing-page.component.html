@@ -1,1 +1,96 @@
-<p>landing-page works!</p>
+<section>
+  <div class="m-auto max-w-[930px] px-4">
+    <div class="flex flex-col items-center pt-24">
+      <img class="w-[137px]" src="assets/logo.png" alt="台灣歷年總統" />
+      <img
+        class="max-w-[284px] h-[46px] md:max-w-[525px] md:h-[85px] object-contain pt-2"
+        src="assets/logo-text.png"
+        alt="台灣歷年總統"
+      />
+    </div>
+    <div>
+      <div class="text-primary text-h4-xs md:text-h4 py-6 text-center">
+        選擇查詢年份
+      </div>
+      <ul
+        class="grid grid-cols-[repeat(2,163px)] md:grid-cols-[repeat(3,173px)] xl:grid-cols-[repeat(5,173px)] justify-center gap-4"
+      >
+        <li>
+          <a
+            class="inline-block p-3 w-full rounded-full bg-bg text-center"
+            routerLink="/vote-map/1996"
+            >1996</a
+          >
+        </li>
+        <li>
+          <a
+            class="inline-block p-3 w-full rounded-full bg-bg text-center"
+            routerLink="/vote-map/2000"
+            >2000</a
+          >
+        </li>
+        <li>
+          <a
+            class="inline-block p-3 w-full rounded-full bg-bg text-center"
+            routerLink="/vote-map/2004"
+            >2004</a
+          >
+        </li>
+        <li>
+          <a
+            class="inline-block p-3 w-full rounded-full bg-bg text-center"
+            routerLink="/vote-map/2008"
+            >2008</a
+          >
+        </li>
+        <li>
+          <a
+            class="inline-block p-3 w-full rounded-full bg-bg text-center"
+            routerLink="/vote-map/2012"
+            >2012</a
+          >
+        </li>
+        <li>
+          <a
+            class="inline-block p-3 w-full rounded-full bg-bg text-center"
+            routerLink="/vote-map/2016"
+            >2016</a
+          >
+        </li>
+        <li>
+          <a
+            class="inline-block p-3 w-full rounded-full bg-bg text-center"
+            routerLink="/vote-map/2020"
+            >2020</a
+          >
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="absolute bottom-0 w-full flex justify-between">
+    <img
+      class="max-w-[280px] hidden w-1/4 md:w-1/6 md:block"
+      src="assets/images/candidate-1.png"
+    />
+    <img
+      class="max-w-[280px] hidden w-1/4 md:w-1/6 md:block"
+      src="assets/images/candidate-2.png"
+    />
+    <img
+      class="max-w-[280px] w-1/4 md:w-1/6"
+      src="assets/images/candidate-3.png"
+    />
+    <img
+      class="max-w-[280px] w-1/4 md:w-1/6"
+      src="assets/images/candidate-4.png"
+    />
+    <img
+      class="max-w-[280px] w-1/4 md:w-1/6"
+      src="assets/images/candidate-5.png"
+    />
+    <img
+      class="max-w-[280px] w-1/4 md:w-1/6"
+      src="assets/images/candidate-6.png"
+    />
+  </div>
+</section>
