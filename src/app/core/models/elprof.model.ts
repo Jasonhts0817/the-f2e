@@ -1,5 +1,9 @@
+import { VoteYearEnum } from '../enums/vote-year.enum';
+
 /** 選舉概況 */
 export class Elprof {
+  id?: number;
+  year: VoteYearEnum;
   /**
    * 省市別
    *
@@ -64,7 +68,8 @@ export class Elprof {
   voterTurnout: number;
   /** 當選人數對候選人數 */
   electedToCandidateRatio: number;
-  constructor(data: any) {
+  constructor(data: any, year: VoteYearEnum) {
+    this.year = year;
     this.provinceCity = data[0];
     this.countyCity = data[1];
     this.electoralDistrict = data[2];

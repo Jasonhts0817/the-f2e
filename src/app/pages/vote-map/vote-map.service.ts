@@ -13,6 +13,7 @@ import {
   RegionFilterVM,
   VoteInfoVM,
 } from './vote-map.view-model';
+import { DbService } from 'src/app/core/service/db.service';
 
 @Injectable({
   providedIn: 'root',
@@ -40,7 +41,7 @@ export class VoteMapService {
   townshipDistrictOptions = new BehaviorSubject<Elbase[]>([]);
   villageOptions = new BehaviorSubject<Elbase[]>([]);
   constructor(
-    private apiService: ApiService,
+    private db: DbService,
     private fb: FormBuilder,
   ) {
     this.initFrom();
@@ -108,26 +109,15 @@ export class VoteMapService {
   }
 
   /** 取得投票年度資料 */
-  getVoteYearData(voteYear: VoteYearEnum) {
-    this.currentVoteYear = voteYear;
-    return new Promise((resolve) => {
-      forkJoin([
-        this.apiService.getElbase(voteYear),
-        this.apiService.getElpaty(voteYear),
-        this.apiService.getElcand(voteYear),
-        this.apiService.getElprof(voteYear),
-        this.apiService.getElctks(voteYear),
-      ]).subscribe(([elbase, elpatys, elcands, elprofs, elctks]) => {
-        this.elbases = elbase;
-        this._getProvinceAndCountryCityOptions();
-        this.elpatysObj = this._parseElpatyObj(elpatys);
-        this.elcands = elcands;
-        this.elprofs = elprofs;
-        this.elctks = elctks;
-
-        resolve(true);
-      });
-    });
+  async getVoteYearData(year: VoteYearEnum) {
+    this.currentVoteYear = year;
+    this.elbases = await this.db.elbase.where({ year }).toArray();
+    this._getProvinceAndCountryCityOptions();
+    const elpatys = await this.db.elpaty.where({ year }).toArray();
+    this.elpatysObj = this._parseElpatyObj(elpatys);
+    this.elcands = await this.db.elcand.where({ year }).toArray();
+    this.elprofs = await this.db.elprof.where({ year }).toArray();
+    this.elctks = await this.db.elctks.where({ year }).toArray();
   }
 
   /** 取得前三名候選人資訊 */

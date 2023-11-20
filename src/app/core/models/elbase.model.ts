@@ -1,5 +1,9 @@
+import { VoteYearEnum } from '../enums/vote-year.enum';
+
 /** 行政區基本資料 */
 export class Elbase {
+  id?: number;
+  year: VoteYearEnum;
   /**
    * 省市別
    *
@@ -20,7 +24,8 @@ export class Elbase {
   village: string;
   /** 名稱 */
   name: string;
-  constructor(data: any) {
+  constructor(data: any, year: VoteYearEnum) {
+    this.year = year;
     this.provinceCity = data[0];
     this.countyCity = data[1];
     this.electoralDistrict = data[2];

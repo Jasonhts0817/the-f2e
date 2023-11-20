@@ -1,7 +1,10 @@
 import { ElectedMarkEnum } from '../enums/elected-mark.enum';
+import { VoteYearEnum } from '../enums/vote-year.enum';
 
 /** 候選人得票檔 */
 export class Elctks {
+  id?: number;
+  year: VoteYearEnum;
   /**
    * 省市別
    *
@@ -50,7 +53,8 @@ export class Elctks {
    * *:當選，“ “:未當選，!:婦女保障 -:因婦女保障被排擠未當選
    */
   electedMark: ElectedMarkEnum;
-  constructor(data: any) {
+  constructor(data: any, year: VoteYearEnum) {
+    this.year = year;
     this.provinceCity = data[0];
     this.countyCity = data[1];
     this.electoralDistrict = data[2];

@@ -20,31 +20,31 @@ export class ApiService {
   getElbase(year: VoteYearEnum) {
     return this.http
       .get<Elbase[]>(`${environment.apiUrl}/api/president/${year}/elbase.json`)
-      .pipe(map((datas) => datas.map((data) => new Elbase(data))));
+      .pipe(map((datas) => datas.map((data) => new Elbase(data, year))));
   }
   /** 取得候選人資料 */
   getElcand(year: VoteYearEnum) {
     return this.http
       .get<Elcand[]>(`${environment.apiUrl}/api/president/${year}/elcand.json`)
-      .pipe(map((datas) => datas.map((data) => new Elcand(data))));
+      .pipe(map((datas) => datas.map((data) => new Elcand(data, year))));
   }
   /** 取得政黨基本資料 */
   getElpaty(year: VoteYearEnum) {
     return this.http
       .get<Elpaty[]>(`${environment.apiUrl}/api/president/${year}/elpaty.json`)
-      .pipe(map((datas) => datas.map((data) => new Elpaty(data))));
+      .pipe(map((datas) => datas.map((data) => new Elpaty(data, year))));
   }
   /** 取得選舉概況 */
   getElprof(year: VoteYearEnum) {
     return this.http
       .get<Elprof[]>(`${environment.apiUrl}/api/president/${year}/elprof.json`)
-      .pipe(map((datas) => datas.map((data) => new Elprof(data))));
+      .pipe(map((datas) => datas.map((data) => new Elprof(data, year))));
   }
   /** 取得候選人得票檔 */
   getElctks(year: VoteYearEnum) {
     return this.http
       .get<Elctks[]>(`${environment.apiUrl}/api/president/${year}/elctks.json`)
-      .pipe(map((datas) => datas.map((data) => new Elctks(data))));
+      .pipe(map((datas) => datas.map((data) => new Elctks(data, year))));
   }
 
   /** 取得縣市地圖 */

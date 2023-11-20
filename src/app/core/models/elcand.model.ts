@@ -1,9 +1,12 @@
 import { DeputyEnum } from '../enums/deputy.enum';
 import { ElectedMarkEnum } from '../enums/elected-mark.enum';
 import { GenderEnum } from '../enums/gender.enum';
+import { VoteYearEnum } from '../enums/vote-year.enum';
 
 /** 候選人資料 */
 export class Elcand {
+  id?: number;
+  year: VoteYearEnum;
   /** 省市別
    *
    * 全國層級時，該省市別為00
@@ -65,7 +68,8 @@ export class Elcand {
    */
   deputy: DeputyEnum;
 
-  constructor(data: any) {
+  constructor(data: any, year: VoteYearEnum) {
+    this.year = year;
     this.provinceCity = data[0];
     this.countyCity = data[1];
     this.electoralDistrict = data[2];
