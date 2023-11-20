@@ -40,7 +40,6 @@ function convertCSVtoJson(dataFilePath: string) {
       const { base, name } = path.parse(dataFilePath);
       const subPath = dataFilePath.replace(DATA_DIR_PATH, '').replace(base, '');
       const apiFilePath = `${API_DIR_PATH}${subPath}`;
-      console.log(apiFilePath);
       fs.mkdirSync(apiFilePath, { recursive: true });
       fs.writeFileSync(`${apiFilePath}${name}.json`, jsonString);
     });

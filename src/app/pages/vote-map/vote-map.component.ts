@@ -26,9 +26,9 @@ export class VoteMapComponent implements OnInit {
       this.route.snapshot.queryParams;
     const req = {
       year: year ?? VoteYearEnum._1996,
-      provinceAnyCountyCity: provinceAnyCountyCity ?? 'all',
-      townshipDistrict: townshipDistrict ?? 'all',
-      village: village ?? 'all',
+      provinceAnyCountyCity: provinceAnyCountyCity,
+      townshipDistrict: townshipDistrict,
+      village: village,
     };
     this.voteMapService.searchForm?.patchValue(req);
   }

@@ -75,7 +75,6 @@
       class="grow border-r-[1px] border-line text-body-2 sm:px-3 sm:text-h6"
       formControlName="provinceAnyCountyCity"
     >
-      <app-drop-down-option value="">全部</app-drop-down-option>
       <app-drop-down-option
         *ngFor="
           let elbase of voteMapService.provinceAndCountryCityOptions | async
@@ -88,7 +87,6 @@
       class="grow border-r-[1px] border-line text-body-2 sm:px-3 sm:text-h6"
       formControlName="townshipDistrict"
     >
-      <app-drop-down-option value="">全部</app-drop-down-option>
       <app-drop-down-option
         *ngFor="let elbase of voteMapService.townshipDistrictOptions | async"
         [value]="elbase"
@@ -99,7 +97,6 @@
       class="grow text-body-2 sm:px-3 sm:text-h6"
       formControlName="village"
     >
-      <app-drop-down-option value="">全部</app-drop-down-option>
       <app-drop-down-option
         *ngFor="let elbase of voteMapService.villageOptions | async"
         [value]="elbase"

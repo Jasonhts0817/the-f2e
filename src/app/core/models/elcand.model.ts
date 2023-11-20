@@ -2,7 +2,7 @@ import { DeputyEnum } from '../enums/deputy.enum';
 import { ElectedMarkEnum } from '../enums/elected-mark.enum';
 import { GenderEnum } from '../enums/gender.enum';
 
-/** 候選人得票 */
+/** 候選人資料 */
 export class Elcand {
   /** 省市別
    *
@@ -81,6 +81,6 @@ export class Elcand {
     this.education = data[12];
     this.incumbent = data[13];
     this.electedMark = data[14];
-    this.deputy = data[15];
+    this.deputy = data[15].trim();
   }
 }

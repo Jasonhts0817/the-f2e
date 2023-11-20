@@ -16,19 +16,19 @@ import { TaiwanMap } from '../models/map.model';
 export class ApiService {
   constructor(private http: HttpClient) {}
 
-  /** 行政區基本資料 */
+  /** 取得行政區基本資料 */
   getElbase(year: VoteYearEnum) {
     return this.http
       .get<Elbase[]>(`${environment.apiUrl}/api/president/${year}/elbase.json`)
       .pipe(map((datas) => datas.map((data) => new Elbase(data))));
   }
-  /** 候選人得票 */
+  /** 取得候選人資料 */
   getElcand(year: VoteYearEnum) {
     return this.http
       .get<Elcand[]>(`${environment.apiUrl}/api/president/${year}/elcand.json`)
       .pipe(map((datas) => datas.map((data) => new Elcand(data))));
   }
-  /** 政黨基本資料 */
+  /** 取得政黨基本資料 */
   getElpaty(year: VoteYearEnum) {
     return this.http
       .get<Elpaty[]>(`${environment.apiUrl}/api/president/${year}/elpaty.json`)
@@ -40,19 +40,21 @@ export class ApiService {
       .get<Elprof[]>(`${environment.apiUrl}/api/president/${year}/elprof.json`)
       .pipe(map((datas) => datas.map((data) => new Elprof(data))));
   }
-  /** 取得選舉概況 */
+  /** 取得候選人得票檔 */
   getElctks(year: VoteYearEnum) {
     return this.http
       .get<Elctks[]>(`${environment.apiUrl}/api/president/${year}/elctks.json`)
       .pipe(map((datas) => datas.map((data) => new Elctks(data))));
   }
 
+  /** 取得縣市地圖 */
   getCountryJson() {
     return this.http
       .get<TaiwanMap>(`${environment.apiUrl}/api/map/counties.json`)
       .pipe(map((data) => new TaiwanMap(data)));
   }
 
+  /** 取得鄉鎮市區地圖 */
   getTownJson(townNo: string) {
     return this.http
       .get<TaiwanMap>(
