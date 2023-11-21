@@ -77,10 +77,11 @@
     >
       <app-drop-down-option
         *ngFor="
-          let elbase of voteMapService.provinceAndCountryCityOptions | async
+          let elbase of voteMapService.provinceAndCountryCityOptions | async;
+          let i = index
         "
         [value]="elbase"
-        >{{ elbase.name }}</app-drop-down-option
+        >{{ i === 0 ? "全部" : elbase.name }}</app-drop-down-option
       >
     </app-drop-down>
     <app-drop-down
@@ -88,9 +89,12 @@
       formControlName="townshipDistrict"
     >
       <app-drop-down-option
-        *ngFor="let elbase of voteMapService.townshipDistrictOptions | async"
+        *ngFor="
+          let elbase of voteMapService.townshipDistrictOptions | async;
+          let i = index
+        "
         [value]="elbase"
-        >{{ elbase.name }}</app-drop-down-option
+        >{{ i === 0 ? "全部" : elbase.name }}</app-drop-down-option
       >
     </app-drop-down>
     <app-drop-down
@@ -98,9 +102,12 @@
       formControlName="village"
     >
       <app-drop-down-option
-        *ngFor="let elbase of voteMapService.villageOptions | async"
+        *ngFor="
+          let elbase of voteMapService.villageOptions | async;
+          let i = index
+        "
         [value]="elbase"
-        >{{ elbase.name }}</app-drop-down-option
+        >{{ i === 0 ? "全部" : elbase.name }}</app-drop-down-option
       >
     </app-drop-down>
   </div>

@@ -37,16 +37,28 @@ export interface VoteInfoVM {
   totalVotes: number;
 }
 
-export interface AreaVoteInfoVM {
-  /** 區域名稱 */
-  areaName: string;
-
-  partyVoteInfo: {
+export interface HistoryPartyInfoVM {
+  year: VoteYearEnum;
+  partyVoteInfos: {
     /** 政黨名稱 */
     politicalPartyName: string;
     /** 得票率 */
     votePercentage: number;
-  };
+    /** 得票數 */
+    voteCount: number;
+  }[];
+}
+
+export interface AreaVoteInfoVM {
+  /** 區域名稱 */
+  areaName: string;
+
+  partyVoteInfos: {
+    /** 政黨名稱 */
+    politicalPartyName: string;
+    /** 得票率 */
+    votePercentage: number;
+  }[];
   /** 當選人名稱 */
   electedName: string;
   /** 投票數 */

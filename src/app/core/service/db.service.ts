@@ -22,17 +22,21 @@ export class DbService extends Dexie {
   constructor(private apiService: ApiService) {
     super('ngdexieliveQuery');
     this.version(1).stores({
-      elbase: '++id, year, provinceCity, countyCity, townshipDistrict, village',
+      elbase:
+        '++id, [year+name], [year+provinceCity+countyCity], [year+townshipDistrict+village]',
       elcand: '++id, year',
-      elctks: '++id, year, provinceCity, countyCity, townshipDistrict, village',
+      elctks:
+        '++id, [year+provinceCity+countyCity], [year+townshipDistrict+village]',
       elpaty: '++id, year',
-      elprof: '++id, year, provinceCity, countyCity, townshipDistrict, village',
+      elprof:
+        '++id, [year+provinceCity+countyCity], [year+townshipDistrict+village]',
     });
     this.on('populate', () => this.populate());
   }
 
   async populate() {
     const reqs = Object.values(VoteYearEnum)
+      // .filter((year) => year === '2020')
       .map((voteYear) => [
         this.apiService
           .getElbase(voteYear)

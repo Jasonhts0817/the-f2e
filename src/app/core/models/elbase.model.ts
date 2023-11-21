@@ -26,11 +26,11 @@ export class Elbase {
   name: string;
   constructor(data: any, year: VoteYearEnum) {
     this.year = year;
-    this.provinceCity = data[0];
-    this.countyCity = data[1];
-    this.electoralDistrict = data[2];
-    this.townshipDistrict = data[3];
-    this.village = data[4];
-    this.name = data[5];
+    this.provinceCity = data[0].trim();
+    this.countyCity = data[1].trim();
+    this.electoralDistrict = data[2].trim();
+    this.townshipDistrict = data[3].trim();
+    this.village = data[4].trim();
+    this.name = data[5].trim();
   }
 }

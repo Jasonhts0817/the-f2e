@@ -70,21 +70,21 @@ export class Elcand {
 
   constructor(data: any, year: VoteYearEnum) {
     this.year = year;
-    this.provinceCity = data[0];
-    this.countyCity = data[1];
-    this.electoralDistrict = data[2];
-    this.townshipDistrict = data[3];
-    this.village = data[4];
-    this.numberSequence = data[5];
-    this.name = data[6];
-    this.politicalPartyCode = data[7];
-    this.gender = data[8];
-    this.dateOfBirth = data[9];
-    this.age = data[10];
-    this.placeOfBirth = data[11];
-    this.education = data[12];
-    this.incumbent = data[13];
-    this.electedMark = data[14];
+    this.provinceCity = data[0].trim();
+    this.countyCity = data[1].trim();
+    this.electoralDistrict = data[2].trim();
+    this.townshipDistrict = data[3].trim();
+    this.village = data[4].trim();
+    this.numberSequence = data[5].trim();
+    this.name = data[6].trim();
+    this.politicalPartyCode = data[7].trim();
+    this.gender = data[8].trim();
+    this.dateOfBirth = data[9].trim();
+    this.age = data[10].trim();
+    this.placeOfBirth = data[11].trim();
+    this.education = data[12].trim();
+    this.incumbent = data[13].trim();
+    this.electedMark = data[14].trim();
     this.deputy = data[15].trim();
   }
 }

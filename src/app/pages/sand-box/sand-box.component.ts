@@ -111,7 +111,7 @@ export class SandBoxComponent implements OnInit {
         patyObj[elpaty.politicalPartyCode] = elpaty.politicalPartyName;
         return patyObj;
       },
-      {} as { [key: number]: string },
+      {} as { [key: string]: string },
     );
   }
 

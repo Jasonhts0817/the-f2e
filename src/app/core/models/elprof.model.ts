@@ -39,7 +39,7 @@ export class Elprof {
    *
    * 投開票所以上層級彙總時，該投開票所別為0
    */
-  pollingStation: number;
+  pollingStation: string;
   /** 有效票 */
   validVotes: number;
   /** 無效票 */
@@ -70,25 +70,25 @@ export class Elprof {
   electedToCandidateRatio: number;
   constructor(data: any, year: VoteYearEnum) {
     this.year = year;
-    this.provinceCity = data[0];
-    this.countyCity = data[1];
-    this.electoralDistrict = data[2];
-    this.townshipDistrict = data[3];
-    this.village = data[4];
-    this.pollingStation = data[5];
-    this.validVotes = data[6];
-    this.invalidVotes = data[7];
-    this.totalVotes = data[8];
-    this.electorate = data[9];
-    this.population = data[10];
-    this.totalCandidates = data[11];
-    this.totalElected = data[12];
-    this.maleCandidates = data[13];
-    this.femaleCandidates = data[14];
-    this.maleElected = data[15];
-    this.femaleElected = data[16];
-    this.electorateToPopulationRatio = data[17];
-    this.voterTurnout = data[18];
-    this.electedToCandidateRatio = data[19];
+    this.provinceCity = data[0].trim();
+    this.countyCity = data[1].trim();
+    this.electoralDistrict = data[2].trim();
+    this.townshipDistrict = data[3].trim();
+    this.village = data[4].trim();
+    this.pollingStation = data[5].trim();
+    this.validVotes = data[6].trim();
+    this.invalidVotes = data[7].trim();
+    this.totalVotes = data[8].trim();
+    this.electorate = data[9].trim();
+    this.population = data[10].trim();
+    this.totalCandidates = data[11].trim();
+    this.totalElected = data[12].trim();
+    this.maleCandidates = data[13].trim();
+    this.femaleCandidates = data[14].trim();
+    this.maleElected = data[15].trim();
+    this.femaleElected = data[16].trim();
+    this.electorateToPopulationRatio = data[17].trim();
+    this.voterTurnout = data[18].trim();
+    this.electedToCandidateRatio = data[19].trim();
   }
 }

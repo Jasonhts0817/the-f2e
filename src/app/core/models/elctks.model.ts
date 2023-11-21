@@ -40,7 +40,7 @@ export class Elctks {
    *
    * 投開票所以上層級彙總時，該投開票所別為0
    */
-  pollingStation: number;
+  pollingStation: string;
   /** 候選人號次 */
   candidateNumber: number;
   /** 得票數 */
@@ -55,15 +55,15 @@ export class Elctks {
   electedMark: ElectedMarkEnum;
   constructor(data: any, year: VoteYearEnum) {
     this.year = year;
-    this.provinceCity = data[0];
-    this.countyCity = data[1];
-    this.electoralDistrict = data[2];
-    this.townshipDistrict = data[3];
-    this.village = data[4];
-    this.pollingStation = data[5];
-    this.candidateNumber = data[6];
-    this.voteCount = data[7];
-    this.votePercentage = data[8];
-    this.electedMark = data[9];
+    this.provinceCity = data[0].trim();
+    this.countyCity = data[1].trim();
+    this.electoralDistrict = data[2].trim();
+    this.townshipDistrict = data[3].trim();
+    this.village = data[4].trim();
+    this.pollingStation = data[5].trim();
+    this.candidateNumber = data[6].trim();
+    this.voteCount = data[7].trim();
+    this.votePercentage = data[8].trim();
+    this.electedMark = data[9].trim();
   }
 }

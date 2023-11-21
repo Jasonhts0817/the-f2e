@@ -5,7 +5,7 @@ export class Elpaty {
   id?: number;
   year: VoteYearEnum;
   /** 政黨代號 */
-  politicalPartyCode: number;
+  politicalPartyCode: string;
   /** 政黨名稱 */
   politicalPartyName: string;
   constructor(data: any, year: VoteYearEnum) {
