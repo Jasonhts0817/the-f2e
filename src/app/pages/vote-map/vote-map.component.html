@@ -1,20 +1,92 @@
 <div>
-  <div></div>
-  <div>
-    <h4>全台縣市總統得票率</h4>
-    <section>
-      <h5>總統的票數</h5>
-      <div>
-        <div>
-          <img />
-          <div></div>
+  <div class="w-1/4"></div>
+  <div class="w-3/4 px-12">
+    <h3 class="pb-3 pt-8 text-h3">全台縣市總統得票率</h3>
+    <section class="rounded-2xl bg-gray-200 p-4 pt-6">
+      <h5 class="text-h5">總統得票數</h5>
+      <div class="flex gap-4">
+        <div
+          class="flex w-1/2 flex-col justify-center gap-3 rounded-xl bg-white px-6 py-4"
+        >
+          <ul class="flex justify-between">
+            <li
+              class="flex gap-3"
+              *ngFor="let cand of top3CandidateInfo | async; let i = index"
+            >
+              <img
+                class="h-12 w-12 rounded-2xl"
+                [ngClass]="cand.color"
+                [src]="cand.img"
+              />
+              <div>
+                <div class="text-small text-font-secondary">
+                  {{ cand.politicalPartyName }}
+                </div>
+                <div class="flex items-center text-body-1">
+                  <span>{{ cand.name }}</span>
+                  <img
+                    *ngIf="cand.electedMark === '*'"
+                    class="h-5 w-5 pl-1"
+                    src="assets/icons/check_circle.svg"
+                    alt="當選標記"
+                  />
+                </div>
+                <div>
+                  <span class="text-h6">{{
+                    cand.voteCount | currency: "TWD" : "" : "1.0-0"
+                  }}</span>
+                  <span class="pl-1 text-body-2">票</span>
+                </div>
+              </div>
+            </li>
+          </ul>
+          <app-stack-chart [data]="stackChartData | async"></app-stack-chart>
         </div>
-        <div></div>
+        <div
+          class="flex w-1/2 justify-between gap-10 rounded-xl bg-white px-6 py-4"
+        >
+          <app-donut-chart
+            [width]="124"
+            [data]="donutChartData | async"
+          ></app-donut-chart>
+          <div class="grid grow grid-cols-2 grid-rows-2 gap-x-12 gap-y-4">
+            <div class="flex flex-col gap-1">
+              <span class="text-body-2 text-font-secondary">投票數</span>
+              <span class="text-h6">{{
+                (voteMapService.voteInfo | async)?.totalVotes
+                  | currency: "TWD" : "" : "1.0-0"
+              }}</span>
+            </div>
+            <div class="flex flex-col gap-1">
+              <span class="text-body-2 text-font-secondary">投票率</span>
+              <span class="text-h6"
+                >{{
+                  (voteMapService.voteInfo | async)?.voterTurnout
+                    | currency: "TWD" : "" : "1.2-2"
+                }}%</span
+              >
+            </div>
+            <div class="flex flex-col gap-1">
+              <span class="text-body-2 text-font-secondary">有效票數</span>
+              <span class="text-h6">{{
+                (voteMapService.voteInfo | async)?.validVotes
+                  | currency: "TWD" : "" : "1.0-0"
+              }}</span>
+            </div>
+            <div class="flex flex-col gap-1">
+              <span class="text-body-2 text-font-secondary">無效票數</span>
+              <span class="text-h6">{{
+                (voteMapService.voteInfo | async)?.invalidVotes
+                  | currency: "TWD" : "" : "1.0-0"
+              }}</span>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
-    <!-- <section>
-      <app-bar-chart></app-bar-chart>
-      <app-line-chart></app-line-chart>
+    <section>
+      <!-- <app-bar-chart></app-bar-chart>
+      <app-line-chart></app-line-chart> -->
     </section>
     <section>
       <h5>各縣市投票總覽</h5>
@@ -42,6 +114,6 @@
           </tr>
         </tbody>
       </table>
-    </section> -->
+    </section>
   </div>
 </div>

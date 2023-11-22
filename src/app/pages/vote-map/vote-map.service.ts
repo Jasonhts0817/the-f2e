@@ -229,7 +229,6 @@ export class VoteMapService {
 
   /** 取得區域投票資訊 */
   private async _getAreaVoteInfo(elbases: Elbase[]) {
-    console.log('elbases', elbases);
     const allElbase = elbases.shift() as Elbase;
     const elcands = await this.db.elcand
       .where({ year: this.currentYear })
@@ -287,8 +286,7 @@ export class VoteMapService {
           partyVoteInfos[2].votePercentage += +elctk.votePercentage;
         }
       });
-      console.log('elprofs', elprof);
-      console.log('elctks', subElctks);
+
       return {
         areaName: name,
         totalVotes: elprof.totalVotes,
