@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import {
+  AfterViewInit,
   Component,
   ElementRef,
   Input,
@@ -19,18 +20,22 @@ import * as d3 from 'd3';
   ></svg>`,
   styleUrls: ['./stack-chart.component.scss'],
 })
-export class StackChartComponent implements OnChanges {
+export class StackChartComponent implements OnChanges, AfterViewInit {
   @ViewChild('stackChart') stackChart!: ElementRef<SVGElement>;
   @Input() data?: { name: string; value: number }[] | null;
   @Input() width: number = 600;
   @Input() height: number = 18;
-
+  @Input() displayText = false;
+  ngAfterViewInit(): void {
+    this.createStackChart();
+  }
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['data']) {
       this.createStackChart();
     }
   }
   createStackChart() {
+    console.log('this.stackChart', this.stackChart);
     if (!this.data || !this.stackChart) return;
     this.stackChart.nativeElement.innerHTML = '';
     const series = d3
@@ -73,13 +78,15 @@ export class StackChartComponent implements OnChanges {
       .attr('height', this.height)
       .transition()
       .attr('width', (d) => x(d[1]) - x(d[0]));
-    g.selectAll('text')
-      .data((D) => D.map((d: any) => ((d.key = D.key), d)))
-      .join('text')
-      .attr('x', (d) => (x(d[1]) - x(d[0])) * 0.45 + x(d[0]))
-      .attr('y', this.height * 0.75)
-      .attr('class', 'text-small')
-      .attr('fill', 'white')
-      .text((d) => `${Math.round((d[1] - d[0]) * 100)}%`);
+    if (this.displayText) {
+      g.selectAll('text')
+        .data((D) => D.map((d: any) => ((d.key = D.key), d)))
+        .join('text')
+        .attr('x', (d) => (x(d[1]) - x(d[0])) * 0.45 + x(d[0]))
+        .attr('y', this.height * 0.75)
+        .attr('class', 'text-small')
+        .attr('fill', 'white')
+        .text((d) => `${Math.round((d[1] - d[0]) * 100)}%`);
+    }
   }
 }

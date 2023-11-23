@@ -4,13 +4,12 @@ import { BarChartComponent } from 'src/app/shared/charts/bar-chart/bar-chart.com
 import { LineChartComponent } from 'src/app/shared/charts/line-chart/line-chart.component';
 import { VoteMapService } from './vote-map.service';
 import { ActivatedRoute } from '@angular/router';
-import { ApiService } from 'src/app/core/service/api.service';
 import { VoteYearEnum } from 'src/app/core/enums/vote-year.enum';
 import { StackChartComponent } from 'src/app/shared/charts/stack-chart/stack-chart.component';
 import { DonutChartComponent } from 'src/app/shared/charts/donut-chart/donut-chart.component';
-import { merge } from 'd3';
-import { CandidateInfoVM } from './vote-map.view-model';
-import { map, mergeMap, tap } from 'rxjs';
+import { map } from 'rxjs';
+import { MapChartComponent } from 'src/app/shared/charts/map-chart/map-chart.component';
+import { FooterComponent } from 'src/app/layout/footer/footer.component';
 
 @Component({
   selector: 'app-vote-map',
@@ -21,6 +20,8 @@ import { map, mergeMap, tap } from 'rxjs';
     LineChartComponent,
     StackChartComponent,
     DonutChartComponent,
+    MapChartComponent,
+    FooterComponent,
   ],
   templateUrl: './vote-map.component.html',
 })
@@ -36,8 +37,8 @@ export class VoteMapComponent implements OnInit {
 
   stackChartData = this.voteMapService.top3CandidateInfo.pipe(
     map((cands) =>
-      cands.map(({ votePercentage, politicalPartyName }) => ({
-        name: politicalPartyName,
+      cands.map(({ votePercentage, name }) => ({
+        name: name,
         value: votePercentage,
       })),
     ),
@@ -48,6 +49,18 @@ export class VoteMapComponent implements OnInit {
       voteInfo?.voterTurnout as number,
       100 - (voteInfo?.voterTurnout as number),
     ]),
+  );
+
+  areaVoteInfoVM = this.voteMapService.areaVoteInfoVM.pipe(
+    map((infos) =>
+      infos.map((info) => ({
+        ...info,
+        partyVoteInfos: info.partyVoteInfos.map((party) => ({
+          name: party.candName,
+          value: party.votePercentage,
+        })),
+      })),
+    ),
   );
 
   themes = [

@@ -26,14 +26,6 @@ const routes: Routes = [
       },
     ],
   },
-  {
-    path: 'sand-box',
-    title: '測試區',
-    loadComponent: () =>
-      import('./pages/sand-box/sand-box.component').then(
-        (mod) => mod.SandBoxComponent,
-      ),
-  },
 ];
 
 @NgModule({

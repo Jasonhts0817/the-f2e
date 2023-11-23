@@ -16,17 +16,17 @@ import { Observable, forkJoin, from, map, mergeMap } from 'rxjs';
   selector: 'app-map-chart',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './map-chart.component.html',
+  template: `<svg #mapChart></svg> `,
   styleUrls: ['./map-chart.component.scss'],
 })
 export class MapChartComponent implements AfterViewInit {
   @ViewChild('mapChart') mapChart!: ElementRef<Element>;
-  @Input() width: number = 900;
-  @Input() height: number = 500;
+  @Input() width: number = 400;
+  @Input() height: number = 800;
   country!: any;
   townsObj!: any;
   countryGElement!: d3.Selection<SVGGElement, unknown, null, undefined>;
-  projection = d3.geoMercator().center([121, 24]).scale(5500);
+  projection = d3.geoMercator().center([122.5, 24.5]).scale(10000);
   path = d3.geoPath(this.projection) as any;
 
   constructor(private apiService: ApiService) {}
@@ -57,9 +57,10 @@ export class MapChartComponent implements AfterViewInit {
     const svg = d3
       .select(this.mapChart.nativeElement)
       .attr('viewBox', [0, 0, this.width, this.height])
-      .attr('width', this.width)
-      .attr('height', this.height)
-      .attr('style', 'max-width: 100%; height: auto;')
+      .attr(
+        'style',
+        'max-width: 100%; height: auto; max-height: calc(100dvh - 66px)',
+      )
       .on('click', () => this._reset());
 
     this.countryGElement = svg.append('g');

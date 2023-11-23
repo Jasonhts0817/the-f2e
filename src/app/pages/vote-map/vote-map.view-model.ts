@@ -55,7 +55,7 @@ export interface AreaVoteInfoVM {
 
   partyVoteInfos: {
     /** 政黨名稱 */
-    politicalPartyName: string;
+    candName: string;
     /** 得票率 */
     votePercentage: number;
   }[];

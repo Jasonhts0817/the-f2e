@@ -1,6 +1,8 @@
-<div>
-  <div class="w-1/4"></div>
-  <div class="w-3/4 px-12">
+<div class="sticky top-[66px] flex">
+  <div class="h-[calc(100dvh-66px)] w-1/4">
+    <app-map-chart></app-map-chart>
+  </div>
+  <div class="h-[calc(100dvh-66px)] w-3/4 overflow-y-auto px-12">
     <h3 class="pb-3 pt-8 text-h3">全台縣市總統得票率</h3>
     <section class="rounded-2xl bg-gray-200 p-4 pt-6">
       <h5 class="text-h5">總統得票數</h5>
@@ -40,7 +42,10 @@
               </div>
             </li>
           </ul>
-          <app-stack-chart [data]="stackChartData | async"></app-stack-chart>
+          <app-stack-chart
+            [data]="stackChartData | async"
+            [displayText]="true"
+          ></app-stack-chart>
         </div>
         <div
           class="flex w-1/2 justify-between gap-10 rounded-xl bg-white px-6 py-4"
@@ -84,36 +89,71 @@
         </div>
       </div>
     </section>
-    <section>
-      <!-- <app-bar-chart></app-bar-chart>
-      <app-line-chart></app-line-chart> -->
+    <section class="flex gap-6 pt-6">
+      <div class="w-1/2 rounded-xl border-[1px] border-line">
+        <div class="flex justify-between px-4 py-3">
+          <h5 class="text-h5">歷屆政黨得票數</h5>
+          <div class="flex items-center gap-1">
+            <span class="inline-block h-2 w-2 rounded-full bg-role-1"></span>
+            <span class="text-small">蝙蝠黨</span>
+          </div>
+        </div>
+        <app-bar-chart class="p-6 pt-3"></app-bar-chart>
+      </div>
+      <div class="w-1/2 rounded-xl border-[1px] border-line">
+        <div class="flex justify-between px-4 py-3">
+          <h5 class="text-h5">歷屆政黨得票數</h5>
+          <div class="flex items-center gap-1">
+            <span class="inline-block h-2 w-2 rounded-full bg-role-1"></span>
+            <span class="text-small">蝙蝠黨</span>
+          </div>
+        </div>
+        <app-line-chart class="p-6 pt-3"></app-line-chart>
+      </div>
     </section>
-    <section>
-      <h5>各縣市投票總覽</h5>
+    <section class="pt-6">
+      <h5 class="text-h5">各縣市投票總覽</h5>
       <table>
-        <thead class="p-2">
+        <thead class="bg-bg p-2">
           <tr>
-            <th>縣市</th>
-            <th>得票率</th>
-            <th>當選人</th>
-            <th>投票數</th>
-            <th>投票率</th>
-            <th></th>
+            <th class="w-2/12 p-2 pr-6 text-left text-body-2">縣市</th>
+            <th class="w-3/12 p-2 pr-6 text-left text-body-2">得票率</th>
+            <th class="w-2/12 p-2 pr-6 text-left text-body-2">當選人</th>
+            <th class="w-2/12 p-2 pr-6 text-left text-body-2">投票數</th>
+            <th class="w-2/12 p-2 pr-6 text-left text-body-2">投票率</th>
+            <th class="w-1/12 p-2 text-left text-body-2"></th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
+          <tr *ngFor="let areaVoteInfoVM of areaVoteInfoVM | async">
+            <td class="p-2 pr-6 text-left text-h6">
+              {{ areaVoteInfoVM.areaName }}
+            </td>
+            <td class="p-2 pr-6 text-left text-body-2">
+              <app-stack-chart
+                [data]="areaVoteInfoVM.partyVoteInfos"
+              ></app-stack-chart>
+            </td>
+            <td class="p-2 pr-6 text-left text-body-2">
+              {{ areaVoteInfoVM.electedName }}
+            </td>
+            <td class="p-2 pr-6 text-left text-body-2">
+              {{ areaVoteInfoVM.totalVotes | currency: "TWD" : "" : "1.0-0" }}
+            </td>
+            <td class="p-2 pr-6 text-left text-body-2">
+              {{
+                areaVoteInfoVM.voterTurnout | currency: "TWD" : "" : "1.2-2"
+              }}%
+            </td>
             <td>
-              <img src="assets/icons/navigate_next.svg" alt="下一頁" />
+              <span class="flex h-auto w-full items-center justify-center">
+                <img src="assets/icons/navigate_next.svg" alt="下一頁" />
+              </span>
             </td>
           </tr>
         </tbody>
       </table>
     </section>
+    <app-footer></app-footer>
   </div>
 </div>
