@@ -1,15 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { BarChartComponent } from 'src/app/shared/charts/bar-chart/bar-chart.component';
-import { LineChartComponent } from 'src/app/shared/charts/line-chart/line-chart.component';
-import { VoteMapService } from './vote-map.service';
 import { ActivatedRoute } from '@angular/router';
-import { VoteYearEnum } from 'src/app/core/enums/vote-year.enum';
-import { StackChartComponent } from 'src/app/shared/charts/stack-chart/stack-chart.component';
-import { DonutChartComponent } from 'src/app/shared/charts/donut-chart/donut-chart.component';
 import { map } from 'rxjs';
-import { MapChartComponent } from 'src/app/shared/charts/map-chart/map-chart.component';
+
+import { VoteMapService } from './vote-map.service';
+import { VoteYearEnum } from 'src/app/core/enums/vote-year.enum';
 import { FooterComponent } from 'src/app/layout/footer/footer.component';
+import { BarChartComponent } from 'src/app/shared/charts/bar-chart.component';
+import { LineChartComponent } from 'src/app/shared/charts/line-chart.component';
+import { StackChartComponent } from 'src/app/shared/charts/stack-chart.component';
+import { DonutChartComponent } from 'src/app/shared/charts/donut-chart.component';
+import { MapChartComponent } from 'src/app/shared/charts/map-chart.component';
 
 @Component({
   selector: 'app-vote-map',
@@ -63,6 +64,31 @@ export class VoteMapComponent implements OnInit {
     ),
   );
 
+  historyPartyVoteCount = this.voteMapService.historyPartyInfos.pipe(
+    map((infos) =>
+      infos
+        .filter((info) => info?.year)
+        .map((info) => ({
+          year: info?.year,
+          name: info?.politicalPartyName,
+          value: info?.voteCount,
+        })),
+    ),
+  );
+
+  historyPartyVotePercentage = this.voteMapService.historyPartyInfos.pipe(
+    map((infos) =>
+      infos
+        .filter((info) => info?.year)
+        .map((info) => ({
+          year: info?.year,
+          name: info?.politicalPartyName,
+          percent: Math.round(info?.votePercentage),
+          value: info?.voteCount,
+        })),
+    ),
+  );
+
   themes = [
     { img: 'assets/images/candidate-1.png', color: 'bg-role-1' },
     { img: 'assets/images/candidate-2.png', color: 'bg-role-2' },
@@ -78,7 +104,7 @@ export class VoteMapComponent implements OnInit {
     const { year, provinceAnyCountyCity, townshipDistrict, village } =
       this.route.snapshot.queryParams;
     const req = {
-      year: year ?? VoteYearEnum._1996,
+      year: year ?? VoteYearEnum._2020,
       provinceAnyCountyCity: provinceAnyCountyCity,
       townshipDistrict: townshipDistrict,
       village: village,

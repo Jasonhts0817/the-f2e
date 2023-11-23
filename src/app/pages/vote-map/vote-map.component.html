@@ -90,7 +90,7 @@
       </div>
     </section>
     <section class="flex gap-6 pt-6">
-      <div class="w-1/2 rounded-xl border-[1px] border-line">
+      <div class="h-fit w-1/2 rounded-xl border-[1px] border-line">
         <div class="flex justify-between px-4 py-3">
           <h5 class="text-h5">歷屆政黨得票數</h5>
           <div class="flex items-center gap-1">
@@ -98,17 +98,25 @@
             <span class="text-small">蝙蝠黨</span>
           </div>
         </div>
-        <app-bar-chart class="p-6 pt-3"></app-bar-chart>
+        <app-bar-chart
+          [width]="600"
+          [height]="200"
+          [data]="historyPartyVoteCount | async"
+        ></app-bar-chart>
       </div>
-      <div class="w-1/2 rounded-xl border-[1px] border-line">
+      <div class="h-fit w-1/2 rounded-xl border-[1px] border-line">
         <div class="flex justify-between px-4 py-3">
-          <h5 class="text-h5">歷屆政黨得票數</h5>
+          <h5 class="text-h5">歷屆政黨得票率</h5>
           <div class="flex items-center gap-1">
             <span class="inline-block h-2 w-2 rounded-full bg-role-1"></span>
             <span class="text-small">蝙蝠黨</span>
           </div>
         </div>
-        <app-line-chart class="p-6 pt-3"></app-line-chart>
+        <app-line-chart
+          [width]="600"
+          [height]="200"
+          [data]="historyPartyVotePercentage | async"
+        ></app-line-chart>
       </div>
     </section>
     <section class="pt-6">

@@ -18,7 +18,6 @@ import * as d3 from 'd3';
     #stackChart
     class="max-w-full overflow-hidden rounded-full"
   ></svg>`,
-  styleUrls: ['./stack-chart.component.scss'],
 })
 export class StackChartComponent implements OnChanges, AfterViewInit {
   @ViewChild('stackChart') stackChart!: ElementRef<SVGElement>;
@@ -35,7 +34,6 @@ export class StackChartComponent implements OnChanges, AfterViewInit {
     }
   }
   createStackChart() {
-    console.log('this.stackChart', this.stackChart);
     if (!this.data || !this.stackChart) return;
     this.stackChart.nativeElement.innerHTML = '';
     const series = d3

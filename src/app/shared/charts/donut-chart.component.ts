@@ -14,7 +14,6 @@ import * as d3 from 'd3';
   standalone: true,
   imports: [CommonModule],
   template: `<svg #donutChart class="max-w-full"></svg>`,
-  styleUrls: ['./donut-chart.component.scss'],
 })
 export class DonutChartComponent implements OnChanges {
   @ViewChild('donutChart') donutChart!: ElementRef<SVGElement>;

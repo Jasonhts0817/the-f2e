@@ -17,7 +17,6 @@ import { Observable, forkJoin, from, map, mergeMap } from 'rxjs';
   standalone: true,
   imports: [CommonModule],
   template: `<svg #mapChart></svg> `,
-  styleUrls: ['./map-chart.component.scss'],
 })
 export class MapChartComponent implements AfterViewInit {
   @ViewChild('mapChart') mapChart!: ElementRef<Element>;

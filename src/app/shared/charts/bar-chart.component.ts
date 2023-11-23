@@ -11,14 +11,15 @@ import * as d3 from 'd3';
 @Component({
   selector: 'app-bar-chart',
   standalone: true,
-  template: `<svg #barChart></svg> `,
-  styleUrls: ['./bar-chart.component.scss'],
+  template: `<div class="flex items-center justify-center p-6 pt-3">
+    <svg #barChart></svg>
+  </div>`,
 })
 export class BarChartComponent implements AfterViewInit {
   @ViewChild('barChart') barChart!: ElementRef<SVGElement>;
-  @Input() data?: { year: string; name: string; value: number }[];
+  @Input() data?: { year: string; name: string; value: number }[] | null;
   @Input() width: number = 600;
-  @Input() height: number = 18;
+  @Input() height: number = 200;
 
   ngAfterViewInit(): void {
     this.createBarChart();
@@ -29,13 +30,18 @@ export class BarChartComponent implements AfterViewInit {
     }
   }
   createBarChart() {
-    if (!this.data) return;
+    if (!this.data || !this.barChart) return;
+    this.barChart.nativeElement.innerHTML = '';
+    const marginTop = 10;
+    const marginBottom = 20;
+    const marginRight = 10;
+    const marginLeft = 50;
 
     const fx = d3
       .scaleBand()
       .domain(new Set(this.data.map((d) => d.year)))
-      .rangeRound([0, this.width])
-      .paddingInner(0.1);
+      .rangeRound([marginLeft + 10, this.width - marginRight - 10])
+      .paddingInner(0.2);
 
     const names = new Set(this.data.map((d) => d.name));
 
@@ -48,14 +54,14 @@ export class BarChartComponent implements AfterViewInit {
     const color = d3
       .scaleOrdinal()
       .domain(names)
-      .range(d3.schemeSpectral[names.size])
+      .range(['#8082FF', '#F4A76F', '#57D2A9'])
       .unknown('#ccc');
 
     const y = d3
       .scaleLinear()
       .domain([0, d3.max(this.data, (d) => d.value) as number])
       .nice()
-      .rangeRound([this.height, 0]);
+      .rangeRound([this.height - marginBottom, marginTop]);
 
     const formatValue = (x: number) =>
       isNaN(x) ? 'N/A' : x.toLocaleString('en');
@@ -73,26 +79,29 @@ export class BarChartComponent implements AfterViewInit {
       .selectAll()
       .data(d3.group(this.data, (d) => d.year))
       .join('g')
-      .attr('transform', ([state]) => `translate(${fx(state)},0)`)
+      .attr('transform', ([name]) => `translate(${fx(name)},0)`)
       .selectAll()
       .data(([, d]) => d)
       .join('rect')
-      .attr('x', (d) => x(d.name) as number)
+      .attr('x', (d) => x(d.name) as any)
       .attr('y', (d) => y(d.value))
       .attr('width', x.bandwidth())
       .attr('height', (d) => y(0) - y(d.value))
       .attr('fill', (d) => color(d.name) as string);
 
+    const xAxis = d3.axisBottom(fx).tickSizeInner(0);
     svg
       .append('g')
-      .attr('transform', `translate(0,${this.height})`)
-      .call(d3.axisBottom(fx).tickSizeOuter(0))
+      .attr('transform', `translate(-10,${this.height - marginBottom + 10})`)
+      .call(xAxis)
       .call((g) => g.selectAll('.domain').remove());
 
+    const yAxis = d3.axisLeft(y).tickSizeInner(0).ticks(5);
+    yAxis.tickFormat((value) => `${(value.valueOf() / 10000).toString()}萬`);
     svg
       .append('g')
-      .attr('transform', `translate(0,0)`)
-      .call(d3.axisLeft(y).ticks(null, 's'))
+      .attr('transform', `translate(${marginLeft - 14},0)`)
+      .call(yAxis)
       .call((g) => g.selectAll('.domain').remove());
   }
 }

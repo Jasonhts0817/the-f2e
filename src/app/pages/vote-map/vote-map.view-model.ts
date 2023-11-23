@@ -39,14 +39,12 @@ export interface VoteInfoVM {
 
 export interface HistoryPartyInfoVM {
   year: VoteYearEnum;
-  partyVoteInfos: {
-    /** 政黨名稱 */
-    politicalPartyName: string;
-    /** 得票率 */
-    votePercentage: number;
-    /** 得票數 */
-    voteCount: number;
-  }[];
+  /** 政黨名稱 */
+  politicalPartyName: string;
+  /** 得票率 */
+  votePercentage: number;
+  /** 得票數 */
+  voteCount: number;
 }
 
 export interface AreaVoteInfoVM {
@@ -54,7 +52,7 @@ export interface AreaVoteInfoVM {
   areaName: string;
 
   partyVoteInfos: {
-    /** 政黨名稱 */
+    /** 候選人名稱 */
     candName: string;
     /** 得票率 */
     votePercentage: number;

@@ -24,7 +24,7 @@ export class VoteMapService {
   searchForm?: FormGroup;
 
   VoteYearEnum = VoteYearEnum;
-  currentYear = VoteYearEnum._1996;
+  currentYear = VoteYearEnum._2020;
 
   genderObject: { [key: number]: string } = { 1: '男', 2: '女' };
 
@@ -70,11 +70,12 @@ export class VoteMapService {
       const options = await this._getTownshipDistrictOptions(elbase);
       this.townshipDistrictOptions.next(options);
 
-      this._getTop3CandidateInfo(elbase);
       this._getVoteInfo(elbase);
-      this._getHistoryPartyInfo(elbase.name);
+      this._getTop3CandidateInfo(elbase).then(() => {
+        this._getHistoryPartyInfo(elbase.name);
+      });
       if (elbase.provinceCity === '00' && elbase.countyCity === '000') {
-        this._getAreaVoteInfo(this.provinceAndCountryCityOptions.value);
+        this._getCountryVoteInfo(this.provinceAndCountryCityOptions.value);
       } else {
         this._getAreaVoteInfo(options);
       }
@@ -154,7 +155,6 @@ export class VoteMapService {
           politicalPartyName,
         };
       });
-    console.log('top3CandidateInfo', top3CandidateInfo);
     this.top3CandidateInfo.next(top3CandidateInfo);
   }
 
@@ -192,17 +192,17 @@ export class VoteMapService {
         const elcands = await this.db.elcand.where({ year }).toArray();
         const elpaties = await this.db.elpaty.where({ year }).toArray();
         const elctks = await this.db.elctks
-          .where('[year+provinceCity+countyCity]')
-          .equals([year, elbase?.provinceCity, elbase?.countyCity])
+          .where('[year+townshipDistrict+village]')
+          .equals([year, elbase?.townshipDistrict, elbase?.village])
           .and(
             (elctks) =>
-              elctks.townshipDistrict === elbase.townshipDistrict &&
-              elctks.village === elbase.village &&
+              elctks.provinceCity === elbase.provinceCity &&
+              elctks.countyCity === elbase.countyCity &&
               (elctks.pollingStation === '0000' ||
                 elctks.pollingStation === '0'),
           )
           .toArray();
-        const partyVoteInfos: any[] = [];
+        const partyInfos: any[] = [];
 
         elctks
           .sort((a, b) => +b.voteCount - +a.voteCount)
@@ -216,26 +216,91 @@ export class VoteMapService {
                 elcand.politicalPartyCode === politicalPartyCode,
             );
 
-            if (partyVoteInfos.length < 3) {
+            if (partyInfos.length < 3) {
               const politicalPartyName =
-                partyVoteInfos.length < 2 ? elpaty?.politicalPartyName : '其他';
-              partyVoteInfos.push({
+                partyInfos.length < 2 ? elpaty?.politicalPartyName : '其他';
+              partyInfos.push({
+                year,
                 politicalPartyName,
                 votePercentage: +elctk.votePercentage,
                 voteCount: +elctk.voteCount,
               });
             } else {
-              partyVoteInfos[2].votePercentage += +elctk.votePercentage;
-              partyVoteInfos[2].voteCount += +elctk.voteCount;
+              partyInfos[2].votePercentage += +elctk.votePercentage;
+              partyInfos[2].voteCount += +elctk.voteCount;
             }
           });
-        return {
-          year,
-          partyVoteInfos,
-        } as HistoryPartyInfoVM;
+        return partyInfos as HistoryPartyInfoVM[];
       }),
     );
-    this.historyPartyInfos.next(historyPartyInfos as HistoryPartyInfoVM[]);
+    this.historyPartyInfos.next(
+      historyPartyInfos.flat() as HistoryPartyInfoVM[],
+    );
+  }
+
+  /** 取得縣市投票資訊 */
+  private async _getCountryVoteInfo(elbases: Elbase[]) {
+    const allElbase = elbases[0] as Elbase;
+    const elcands = await this.db.elcand
+      .where({ year: this.currentYear })
+      .toArray();
+    const elprofs = await this.db.elprof
+      .where('[year+townshipDistrict+village]')
+      .equals([this.currentYear, allElbase.townshipDistrict, allElbase.village])
+      .toArray();
+    const elctks = await this.db.elctks
+      .where('[year+townshipDistrict+village]')
+      .equals([this.currentYear, allElbase.townshipDistrict, allElbase.village])
+      .toArray();
+
+    const areaVoteInfoVM = elbases.map((elbase) => {
+      const { provinceCity, countyCity, name } = elbase;
+      const elprof = elprofs.find(
+        (elprof) =>
+          elprof.provinceCity == provinceCity &&
+          elprof.countyCity === countyCity &&
+          (elprof.pollingStation === '0000' || elprof.pollingStation === '0'),
+      ) as Elprof;
+      const subElctks = elctks
+        .filter(
+          (elctk) =>
+            elctk.provinceCity == provinceCity &&
+            elctk.countyCity === countyCity &&
+            (elctk.pollingStation === '0000' || elctk.pollingStation === '0'),
+        )
+        .sort((a, b) => +b.voteCount - +a.voteCount);
+      const electedCand = elcands.find(
+        (elcand) => elcand.numberSequence === subElctks[0].candidateNumber,
+      ) as Elcand;
+      const partyVoteInfos: any[] = [];
+      subElctks.map((elctk) => {
+        const elcand = elcands.find(
+          ({ numberSequence }) => numberSequence === elctk.candidateNumber,
+        ) as Elcand;
+
+        if (partyVoteInfos.length < 3) {
+          const candName = partyVoteInfos.length < 2 ? elcand.name : '其他';
+          partyVoteInfos.push({
+            candName,
+            votePercentage: +elctk.votePercentage,
+          });
+        } else {
+          partyVoteInfos[2].votePercentage += +elctk.votePercentage;
+        }
+      });
+
+      return {
+        areaName: name,
+        totalVotes: elprof.totalVotes,
+        voterTurnout: elprof.voterTurnout,
+        partyVoteInfos,
+        electedName: electedCand.name,
+      };
+    });
+    if (areaVoteInfoVM.length > 1) {
+      areaVoteInfoVM.shift();
+    }
+    this.areaVoteInfoVM.next(areaVoteInfoVM);
   }
 
   /** 取得區域投票資訊 */
