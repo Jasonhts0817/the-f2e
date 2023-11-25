@@ -15,7 +15,7 @@
   </a>
   <div
     *ngIf="voteMapService.searchForm"
-    class="flex justify-center gap-2 xl:grow"
+    class="flex justify-start gap-2 xl:grow"
     [formGroup]="voteMapService.searchForm"
   >
     <div class="flex items-center">
@@ -36,7 +36,7 @@
 
     <div
       *ngIf="voteMapService.searchForm"
-      class="hidden max-w-[610px] grow items-center pl-4 xl:flex"
+      class="hidden max-w-[423px] grow items-center pl-4 xl:flex"
     >
       <ng-container *ngTemplateOutlet="area"></ng-container>
     </div>
@@ -93,19 +93,6 @@
       <app-drop-down-option
         *ngFor="
           let elbase of voteMapService.townshipDistrictOptions | async;
-          let i = index
-        "
-        [value]="elbase"
-        >{{ i === 0 ? "全部" : elbase.name }}</app-drop-down-option
-      >
-    </app-drop-down>
-    <app-drop-down
-      class="grow text-body-2 sm:px-3 sm:text-h6"
-      formControlName="village"
-    >
-      <app-drop-down-option
-        *ngFor="
-          let elbase of voteMapService.villageOptions | async;
           let i = index
         "
         [value]="elbase"

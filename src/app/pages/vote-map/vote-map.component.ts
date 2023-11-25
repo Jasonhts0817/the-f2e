@@ -158,13 +158,12 @@ export class VoteMapComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    const { year, provinceAnyCountyCity, townshipDistrict, village } =
+    const { year, provinceAnyCountyCity, townshipDistrict } =
       this.route.snapshot.queryParams;
     const req = {
       year: year ?? VoteYearEnum._2020,
       provinceAnyCountyCity: provinceAnyCountyCity,
       townshipDistrict: townshipDistrict,
-      village: village,
     };
     this.voteMapService.searchForm?.patchValue(req);
   }

@@ -38,7 +38,6 @@ export class VoteMapService {
   regionFilterFormGroup!: FormGroup;
   provinceAndCountryCityOptions = new BehaviorSubject<Elbase[]>([]);
   townshipDistrictOptions = new BehaviorSubject<Elbase[]>([]);
-  villageOptions = new BehaviorSubject<Elbase[]>([]);
   constructor(
     private db: DbService,
     private fb: FormBuilder,
@@ -51,7 +50,6 @@ export class VoteMapService {
       year: undefined,
       provinceAnyCountyCity: undefined,
       townshipDistrict: undefined,
-      village: undefined,
     });
     f.controls.year?.valueChanges.subscribe((year) => {
       if (!year) return;
@@ -66,7 +64,6 @@ export class VoteMapService {
     f.controls.provinceAnyCountyCity?.valueChanges.subscribe(async (elbase) => {
       if (!elbase) return;
 
-      f.controls.village?.patchValue(undefined);
       f.controls.townshipDistrict?.patchValue(undefined);
 
       const options = await this._getTownshipDistrictOptions(elbase);
@@ -88,10 +85,8 @@ export class VoteMapService {
     });
     f.controls.townshipDistrict?.valueChanges.subscribe(async (elbase) => {
       if (!elbase) return;
-      f.controls.village?.patchValue(undefined);
 
       const options = await this._getVillageOptions(elbase);
-      this.villageOptions.next(options);
 
       this._getVoteInfo(elbase);
       this._getTop3CandidateInfo(elbase).then(() => {
@@ -100,15 +95,6 @@ export class VoteMapService {
       });
     });
 
-    f.controls.village?.valueChanges.subscribe((elbase) => {
-      if (!elbase) return;
-
-      this._getVoteInfo(elbase);
-      this._getTop3CandidateInfo(elbase).then(() => {
-        this._getHistoryPartyInfo(elbase.name);
-        this._getAreaVoteInfo([elbase]);
-      });
-    });
     this.searchForm = f;
   }
 
