@@ -2,7 +2,10 @@ import {
   AfterViewInit,
   Component,
   ElementRef,
+  EventEmitter,
   Input,
+  Output,
+  SimpleChanges,
   ViewChild,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -22,15 +25,27 @@ export class MapChartComponent implements AfterViewInit {
   @ViewChild('mapChart') mapChart!: ElementRef<Element>;
   @Input() width: number = 400;
   @Input() height: number = 800;
-  @Input() data?: {}[] | null;
+  @Input() countryData: { areaName: string; hex: string }[] | null = [];
+  @Input() areaData: { areaName: string; hex: string }[] | null = [];
+  @Output() changeTown = new EventEmitter<string>();
   country!: any;
   townsObj!: any;
   countryGElement!: d3.Selection<SVGGElement, unknown, null, undefined>;
   projection = d3.geoMercator().center([122.5, 24.5]).scale(10000);
   path = d3.geoPath(this.projection) as any;
 
+  currentTownId?: string;
+
   constructor(private apiService: ApiService) {}
   ngAfterViewInit(): void {
+    d3.select(this.mapChart.nativeElement)
+      .attr('viewBox', [0, 0, this.width, this.height])
+      .attr(
+        'style',
+        'max-width: 100%; height: auto; max-height: calc(100dvh - 66px)',
+      )
+      .on('click', () => this._reset());
+
     this.apiService
       .getCountryJson()
       .pipe(
@@ -53,16 +68,23 @@ export class MapChartComponent implements AfterViewInit {
       });
   }
 
-  creatCountryChart() {
-    const svg = d3
-      .select(this.mapChart.nativeElement)
-      .attr('viewBox', [0, 0, this.width, this.height])
-      .attr(
-        'style',
-        'max-width: 100%; height: auto; max-height: calc(100dvh - 66px)',
-      )
-      .on('click', () => this._reset());
+  ngOnChanges(changes: SimpleChanges): void {
+    if (
+      changes['countryData'] &&
+      changes['countryData'].currentValue.length > 0
+    ) {
+      this.creatCountryChart();
+    }
+    if (changes['areaData'] && changes['areaData'].currentValue.length > 0) {
+      console.log("changes['areaData']", changes['areaData']);
+      this._setTownTheme();
+    }
+  }
 
+  creatCountryChart() {
+    if (!this.countryData || !this.mapChart) return;
+    this.mapChart.nativeElement.innerHTML = '';
+    const svg = d3.select(this.mapChart.nativeElement);
     this.countryGElement = svg.append('g');
 
     // country group
@@ -86,8 +108,11 @@ export class MapChartComponent implements AfterViewInit {
       .on('click', (event, d) => this._clicked(event, d))
       .attr('d', this.path)
       .attr('fill', (d: any) => {
-        console.log('d', d);
-        return '#444';
+        const { properties } = d;
+        const area = this.countryData?.find(
+          ({ areaName }) => areaName === properties.name,
+        );
+        return area ? area.hex : '#fff';
       })
       .append('title')
       .text((d: any) => d.properties?.name);
@@ -97,7 +122,7 @@ export class MapChartComponent implements AfterViewInit {
       .append('g')
       .attr('class', 'town')
       .attr('display', 'none')
-      .attr('id', (d: any) => d.properties.id)
+      .attr('id', (d: any) => `town_${d.properties.id}`)
       .selectAll('g')
       .data((d: any) => {
         const townId = d.properties.id;
@@ -112,7 +137,7 @@ export class MapChartComponent implements AfterViewInit {
       .attr('d', this.path)
       .attr('stroke', 'white')
       .attr('stroke-width', 0.1)
-      .attr('fill', (d: any) => '#444')
+      .attr('fill', (d: any) => '#fff')
       .append('title')
       .text((d: any) => d.properties?.name);
 
@@ -122,7 +147,7 @@ export class MapChartComponent implements AfterViewInit {
   private _clicked(event: any, d: any) {
     event.stopPropagation();
     const svg = d3.select(this.mapChart.nativeElement);
-    this._displayTown(d.properties.id);
+    this._displayTown(d.properties);
 
     const [[x0, y0], [x1, y1]] = this.path.bounds(d);
     svg
@@ -143,11 +168,25 @@ export class MapChartComponent implements AfterViewInit {
       );
   }
 
-  private _displayTown(townId?: string) {
-    const towns = this.countryGElement.selectAll('g.town');
-    towns.attr('display', (townData: any) =>
-      townData.properties.id === townId ? '' : 'none',
-    );
+  private _displayTown(properties?: Properties) {
+    this.changeTown.emit(properties?.name);
+    this.currentTownId = `town_${properties?.id}`;
+    this.countryGElement.selectAll('g.town').attr('display', 'none');
+  }
+
+  private _setTownTheme() {
+    if (!this.currentTownId) return;
+    this.countryGElement
+      .selectAll(`#${this.currentTownId}`)
+      .attr('display', '')
+      .selectAll('path')
+      .attr('fill', (d: any) => {
+        const { properties } = d;
+        const area = this.areaData?.find(
+          ({ areaName }) => areaName === properties.name,
+        );
+        return area ? area.hex : '#fff';
+      });
   }
 
   private _reset() {

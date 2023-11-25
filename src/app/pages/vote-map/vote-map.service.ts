@@ -32,6 +32,7 @@ export class VoteMapService {
   top3CandidateInfo = new BehaviorSubject<CandidateInfoVM[]>([]);
   voteInfo = new BehaviorSubject<VoteInfoVM | undefined>(undefined);
   historyPartyInfos = new BehaviorSubject<HistoryPartyInfoVM[]>([]);
+  countryVoteInfoVM = new BehaviorSubject<AreaVoteInfoVM[]>([]);
   areaVoteInfoVM = new BehaviorSubject<AreaVoteInfoVM[]>([]);
 
   regionFilterFormGroup!: FormGroup;
@@ -75,7 +76,11 @@ export class VoteMapService {
       this._getTop3CandidateInfo(elbase).then(() => {
         this._getHistoryPartyInfo(elbase.name);
         if (elbase.provinceCity === '00' && elbase.countyCity === '000') {
-          this._getCountryVoteInfo(this.provinceAndCountryCityOptions.value);
+          this._getCountryVoteInfo(
+            this.provinceAndCountryCityOptions.value,
+          ).then(() => {
+            this.countryVoteInfoVM.next(this.areaVoteInfoVM.value);
+          });
         } else {
           this._getAreaVoteInfo(options);
         }

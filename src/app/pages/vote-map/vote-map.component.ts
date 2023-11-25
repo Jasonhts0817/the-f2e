@@ -56,7 +56,19 @@ export class VoteMapComponent implements OnInit {
     ]),
   );
 
-  mapChartData = this.voteMapService.areaVoteInfoVM.pipe(
+  mapChartCountryData = this.voteMapService.countryVoteInfoVM.pipe(
+    map((infos) =>
+      infos.map((info) => {
+        const theme = this._getPartyTheme(info.electedPartyName);
+        return {
+          areaName: info.areaName,
+          ...theme,
+        };
+      }),
+    ),
+  );
+
+  mapChartAreaData = this.voteMapService.areaVoteInfoVM.pipe(
     map((infos) =>
       infos.map((info) => {
         const theme = this._getPartyTheme(info.electedPartyName);
@@ -155,6 +167,15 @@ export class VoteMapComponent implements OnInit {
       village: village,
     };
     this.voteMapService.searchForm?.patchValue(req);
+  }
+
+  changeTown(townName: string) {
+    const option = this.voteMapService.provinceAndCountryCityOptions.value.find(
+      (country) => country.name == townName,
+    );
+    this.voteMapService.searchForm?.controls[
+      'provinceAnyCountyCity'
+    ].patchValue(option);
   }
 
   private _getPartyTheme(partyName: string) {

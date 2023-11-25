@@ -1,6 +1,10 @@
 <div class="sticky top-[66px] flex">
   <div class="h-[calc(100dvh-66px)] w-1/4">
-    <app-map-chart></app-map-chart>
+    <app-map-chart
+      [countryData]="mapChartCountryData | async"
+      [areaData]="mapChartAreaData | async"
+      (changeTown)="changeTown($event)"
+    ></app-map-chart>
   </div>
   <div class="h-[calc(100dvh-66px)] w-3/4 overflow-y-auto px-12">
     <h3 class="pb-3 pt-8 text-h3">全台縣市總統得票率</h3>
