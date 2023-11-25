@@ -19,6 +19,7 @@ export class LineChartComponent {
   @Input() data?:
     | { year: string; name: string; percent: number; value: number }[]
     | null;
+  @Input() themes?: string[] | null;
   @Input() width: number = 600;
   @Input() height: number = 200;
 
@@ -26,12 +27,12 @@ export class LineChartComponent {
     this.createBarChart();
   }
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['data']) {
+    if (changes['data'] || changes['themes']) {
       this.createBarChart();
     }
   }
   createBarChart() {
-    if (!this.data || !this.lineChart) return;
+    if (!this.data || !this.lineChart || !this.themes) return;
     console.log('data', this.data);
     this.lineChart.nativeElement.innerHTML = '';
     const marginTop = 10;
@@ -54,7 +55,7 @@ export class LineChartComponent {
     const color = d3
       .scaleOrdinal()
       .domain(this.data.map((d) => d.name))
-      .range(['#8082FF', '#F4A76F', '#57D2A9']);
+      .range(this.themes);
 
     const svg = d3
       .select(this.lineChart.nativeElement)

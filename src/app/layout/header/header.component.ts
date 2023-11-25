@@ -4,6 +4,7 @@ import { DropDownComponent } from 'src/app/shared/drop-down/drop-down.component'
 import { DropDownOptionComponent } from 'src/app/shared/drop-down/drop-down-option.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { VoteMapService } from 'src/app/pages/vote-map/vote-map.service';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -13,6 +14,7 @@ import { VoteMapService } from 'src/app/pages/vote-map/vote-map.service';
     ReactiveFormsModule,
     DropDownComponent,
     DropDownOptionComponent,
+    RouterModule,
   ],
   templateUrl: './header.component.html',
 })

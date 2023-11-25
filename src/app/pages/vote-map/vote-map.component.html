@@ -45,6 +45,7 @@
           <app-stack-chart
             [data]="stackChartData | async"
             [displayText]="true"
+            [themes]="themes | async"
           ></app-stack-chart>
         </div>
         <div
@@ -94,28 +95,40 @@
         <div class="flex justify-between px-4 py-3">
           <h5 class="text-h5">歷屆政黨得票數</h5>
           <div class="flex items-center gap-1">
-            <span class="inline-block h-2 w-2 rounded-full bg-role-1"></span>
-            <span class="text-small">蝙蝠黨</span>
+            <div *ngFor="let cand of top3CandidateInfo | async">
+              <span
+                class="mr-1 inline-block h-2 w-2 rounded-full bg-role-1"
+                [ngClass]="cand.color"
+              ></span>
+              <span class="text-small">{{ cand.politicalPartyName }}</span>
+            </div>
           </div>
         </div>
         <app-bar-chart
           [width]="600"
           [height]="200"
           [data]="historyPartyVoteCount | async"
+          [themes]="themes | async"
         ></app-bar-chart>
       </div>
       <div class="h-fit w-1/2 rounded-xl border-[1px] border-line">
         <div class="flex justify-between px-4 py-3">
           <h5 class="text-h5">歷屆政黨得票率</h5>
           <div class="flex items-center gap-1">
-            <span class="inline-block h-2 w-2 rounded-full bg-role-1"></span>
-            <span class="text-small">蝙蝠黨</span>
+            <div *ngFor="let cand of top3CandidateInfo | async">
+              <span
+                class="mr-1 inline-block h-2 w-2 rounded-full bg-role-1"
+                [ngClass]="cand.color"
+              ></span>
+              <span class="text-small">{{ cand.politicalPartyName }}</span>
+            </div>
           </div>
         </div>
         <app-line-chart
           [width]="600"
           [height]="200"
           [data]="historyPartyVotePercentage | async"
+          [themes]="themes | async"
         ></app-line-chart>
       </div>
     </section>
@@ -140,6 +153,7 @@
             <td class="p-2 pr-6 text-left text-body-2">
               <app-stack-chart
                 [data]="areaVoteInfoVM.partyVoteInfos"
+                [themes]="themes | async"
               ></app-stack-chart>
             </td>
             <td class="p-2 pr-6 text-left text-body-2">

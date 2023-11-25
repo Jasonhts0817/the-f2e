@@ -16,6 +16,7 @@ import {
   VoteInfoVM,
 } from './vote-map.view-model';
 import { DbService } from 'src/app/core/service/db.service';
+import { DeputyEnum } from 'src/app/core/enums/deputy.enum';
 
 @Injectable({
   providedIn: 'root',
@@ -87,18 +88,21 @@ export class VoteMapService {
       const options = await this._getVillageOptions(elbase);
       this.villageOptions.next(options);
 
-      this._getTop3CandidateInfo(elbase);
       this._getVoteInfo(elbase);
-      this._getHistoryPartyInfo(elbase.name);
       this._getAreaVoteInfo(options);
+      this._getTop3CandidateInfo(elbase).then(() => {
+        this._getHistoryPartyInfo(elbase.name);
+      });
     });
 
     f.controls.village?.valueChanges.subscribe((elbase) => {
       if (!elbase) return;
-      this._getTop3CandidateInfo(elbase);
+
       this._getVoteInfo(elbase);
-      this._getHistoryPartyInfo(elbase.name);
       this._getAreaVoteInfo([elbase]);
+      this._getTop3CandidateInfo(elbase).then(() => {
+        this._getHistoryPartyInfo(elbase.name);
+      });
     });
     this.searchForm = f;
   }
@@ -202,35 +206,39 @@ export class VoteMapService {
                 elctks.pollingStation === '0'),
           )
           .toArray();
-        const partyInfos: any[] = [];
 
-        elctks
-          .sort((a, b) => +b.voteCount - +a.voteCount)
-          .forEach((elctk) => {
-            const elcand = elcands.find(
-              ({ numberSequence }) => numberSequence === elctk.candidateNumber,
-            ) as Elcand;
-            if (!elcand) return;
+        return this.top3CandidateInfo.value
+          .map((cand) => {
             const elpaty = elpaties.find(
-              ({ politicalPartyCode }) =>
-                elcand.politicalPartyCode === politicalPartyCode,
+              ({ politicalPartyName }) =>
+                cand.politicalPartyName === politicalPartyName,
             );
-
-            if (partyInfos.length < 3) {
-              const politicalPartyName =
-                partyInfos.length < 2 ? elpaty?.politicalPartyName : '其他';
-              partyInfos.push({
-                year,
-                politicalPartyName,
-                votePercentage: +elctk.votePercentage,
-                voteCount: +elctk.voteCount,
+            console.log('elpaty', year, cand.name, elpaty);
+            if (!elpaty) return;
+            const partyInfo: HistoryPartyInfoVM = {
+              year,
+              politicalPartyName: elpaty?.politicalPartyName,
+              votePercentage: 0,
+              voteCount: 0,
+            };
+            elcands
+              .filter(
+                (elcand) =>
+                  elcand.politicalPartyCode === elpaty?.politicalPartyCode &&
+                  elcand.deputy !== DeputyEnum.VicePresident,
+              )
+              .map((elcand) => {
+                const elctk = elctks.find(
+                  (elctk) => elctk.candidateNumber === elcand.numberSequence,
+                );
+                if (!elctk) return;
+                partyInfo.votePercentage =
+                  +elctk.votePercentage + +partyInfo.votePercentage;
+                partyInfo.voteCount = +elctk.voteCount + +partyInfo.voteCount;
               });
-            } else {
-              partyInfos[2].votePercentage += +elctk.votePercentage;
-              partyInfos[2].voteCount += +elctk.voteCount;
-            }
-          });
-        return partyInfos as HistoryPartyInfoVM[];
+            return partyInfo.voteCount ? partyInfo : undefined;
+          })
+          .filter(Boolean);
       }),
     );
     this.historyPartyInfos.next(

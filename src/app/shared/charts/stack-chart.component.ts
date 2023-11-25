@@ -22,6 +22,7 @@ import * as d3 from 'd3';
 export class StackChartComponent implements OnChanges, AfterViewInit {
   @ViewChild('stackChart') stackChart!: ElementRef<SVGElement>;
   @Input() data?: { name: string; value: number }[] | null;
+  @Input() themes?: string[] | null;
   @Input() width: number = 600;
   @Input() height: number = 18;
   @Input() displayText = false;
@@ -29,12 +30,12 @@ export class StackChartComponent implements OnChanges, AfterViewInit {
     this.createStackChart();
   }
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['data']) {
+    if (changes['data'] || changes['themes']) {
       this.createStackChart();
     }
   }
   createStackChart() {
-    if (!this.data || !this.stackChart) return;
+    if (!this.data || !this.stackChart || !this.themes) return;
     this.stackChart.nativeElement.innerHTML = '';
     const series = d3
       .stack()
@@ -53,7 +54,7 @@ export class StackChartComponent implements OnChanges, AfterViewInit {
     const color = d3
       .scaleOrdinal()
       .domain(series.map((d) => d.key))
-      .range(['#8082FF', '#F4A76F', '#57D2A9'])
+      .range(this.themes)
       .unknown('#ccc');
 
     const svg = d3

@@ -24,6 +24,7 @@ module.exports = {
         "role-1": "#8082FF",
         "role-2": "#F4A76F",
         "role-3": "#57D2A9",
+        "role-other": "#64748B",
         gray: {
           100: "#F8F9FA",
           200: "#E9ECEF",

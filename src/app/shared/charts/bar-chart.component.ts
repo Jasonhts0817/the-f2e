@@ -18,6 +18,7 @@ import * as d3 from 'd3';
 export class BarChartComponent implements AfterViewInit {
   @ViewChild('barChart') barChart!: ElementRef<SVGElement>;
   @Input() data?: { year: string; name: string; value: number }[] | null;
+  @Input() themes?: string[] | null;
   @Input() width: number = 600;
   @Input() height: number = 200;
 
@@ -25,12 +26,12 @@ export class BarChartComponent implements AfterViewInit {
     this.createBarChart();
   }
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['data']) {
+    if (changes['data'] || changes['themes']) {
       this.createBarChart();
     }
   }
   createBarChart() {
-    if (!this.data || !this.barChart) return;
+    if (!this.data || !this.barChart || !this.themes) return;
     this.barChart.nativeElement.innerHTML = '';
     const marginTop = 10;
     const marginBottom = 20;
@@ -51,11 +52,7 @@ export class BarChartComponent implements AfterViewInit {
       .rangeRound([0, fx.bandwidth()])
       .padding(0.05);
 
-    const color = d3
-      .scaleOrdinal()
-      .domain(names)
-      .range(['#8082FF', '#F4A76F', '#57D2A9'])
-      .unknown('#ccc');
+    const color = d3.scaleOrdinal().domain(names).range(this.themes);
 
     const y = d3
       .scaleLinear()
