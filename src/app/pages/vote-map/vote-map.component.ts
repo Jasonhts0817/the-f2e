@@ -152,6 +152,20 @@ export class VoteMapComponent implements OnInit {
     },
   ];
 
+  breadCrumb: string[] = [];
+
+  title = '';
+
+  get isProvinceAnyCountyCity() {
+    return this.breadCrumb.length === 1;
+  }
+  get isTownshipDistrict() {
+    return this.breadCrumb.length === 2;
+  }
+  get isVillage() {
+    return this.breadCrumb.length === 3;
+  }
+
   constructor(
     private route: ActivatedRoute,
     public voteMapService: VoteMapService,
@@ -165,16 +179,61 @@ export class VoteMapComponent implements OnInit {
       provinceAnyCountyCity: provinceAnyCountyCity,
       townshipDistrict: townshipDistrict,
     };
+    this._registerSearchFormChange();
     this.voteMapService.searchForm?.patchValue(req);
   }
+  private _registerSearchFormChange() {
+    this.voteMapService.searchForm?.valueChanges.subscribe((search) => {
+      const breadCrumb = ['全臺縣市總統得票'];
 
-  changeTown(townName: string) {
-    const option = this.voteMapService.provinceAndCountryCityOptions.value.find(
-      (country) => country.name == townName,
+      const { provinceAnyCountyCity, townshipDistrict } = search;
+      if (
+        provinceAnyCountyCity &&
+        (provinceAnyCountyCity.provinceCity !== '00' ||
+          provinceAnyCountyCity.countyCity !== '000')
+      ) {
+        breadCrumb.push(provinceAnyCountyCity.name);
+      }
+      if (townshipDistrict && townshipDistrict?.countyCity !== '00') {
+        breadCrumb.push(townshipDistrict?.name);
+      }
+      this.breadCrumb = breadCrumb;
+      this.title = breadCrumb[breadCrumb.length - 1];
+    });
+  }
+
+  changeCity(cityName: string) {
+    let option = this.voteMapService.provinceAndCountryCityOptions.value.find(
+      (country) => country.name == cityName,
     );
+    option = option
+      ? option
+      : this.voteMapService.provinceAndCountryCityOptions.value[0];
+
     this.voteMapService.searchForm?.controls[
       'provinceAnyCountyCity'
     ].patchValue(option);
+  }
+
+  changeTown(townName: string) {
+    let option = this.voteMapService.townshipDistrictOptions.value.find(
+      (country) => country.name == townName,
+    );
+    option = option
+      ? option
+      : this.voteMapService.townshipDistrictOptions.value[0];
+
+    this.voteMapService.searchForm?.controls['townshipDistrict'].patchValue(
+      option,
+    );
+  }
+
+  clickAreaInfo(areaName: string) {
+    if (this.isProvinceAnyCountyCity) {
+      this.changeCity(areaName);
+    } else if (this.isTownshipDistrict) {
+      this.changeTown(areaName);
+    }
   }
 
   private _getPartyTheme(partyName: string) {

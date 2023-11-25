@@ -23,15 +23,15 @@ import { Observable, forkJoin, from, map, mergeMap } from 'rxjs';
 })
 export class MapChartComponent implements AfterViewInit {
   @ViewChild('mapChart') mapChart!: ElementRef<Element>;
-  @Input() width: number = 400;
-  @Input() height: number = 800;
+  @Input() width: number = 500;
+  @Input() height: number = 860;
   @Input() countryData: { areaName: string; hex: string }[] | null = [];
   @Input() areaData: { areaName: string; hex: string }[] | null = [];
-  @Output() changeTown = new EventEmitter<string>();
+  @Output() changeCity = new EventEmitter<string>();
   country!: any;
   townsObj!: any;
   countryGElement!: d3.Selection<SVGGElement, unknown, null, undefined>;
-  projection = d3.geoMercator().center([122.5, 24.5]).scale(10000);
+  projection = d3.geoMercator().center([122, 24.3]).scale(13000);
   path = d3.geoPath(this.projection) as any;
 
   currentTownId?: string;
@@ -76,7 +76,6 @@ export class MapChartComponent implements AfterViewInit {
       this.creatCountryChart();
     }
     if (changes['areaData'] && changes['areaData'].currentValue.length > 0) {
-      console.log("changes['areaData']", changes['areaData']);
       this._setTownTheme();
     }
   }
@@ -169,7 +168,7 @@ export class MapChartComponent implements AfterViewInit {
   }
 
   private _displayTown(properties?: Properties) {
-    this.changeTown.emit(properties?.name);
+    this.changeCity.emit(properties?.name);
     this.currentTownId = `town_${properties?.id}`;
     this.countryGElement.selectAll('g.town').attr('display', 'none');
   }

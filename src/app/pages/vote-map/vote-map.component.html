@@ -1,13 +1,35 @@
 <div class="sticky top-[66px] flex">
-  <div class="h-[calc(100dvh-66px)] w-1/4">
+  <div class="bg-map h-[calc(100dvh-66px)] w-[600px]">
     <app-map-chart
       [countryData]="mapChartCountryData | async"
       [areaData]="mapChartAreaData | async"
-      (changeTown)="changeTown($event)"
+      (changeCity)="changeCity($event)"
     ></app-map-chart>
   </div>
-  <div class="h-[calc(100dvh-66px)] w-3/4 overflow-y-auto px-12">
-    <h3 class="pb-3 pt-8 text-h3">全台縣市總統得票率</h3>
+  <div class="h-[calc(100dvh-66px)] grow overflow-y-auto px-12">
+    <h3 class="flex items-center gap-[10px] pb-3 pt-8 text-h3">
+      <img
+        *ngIf="breadCrumb.length > 1"
+        src="assets/icons/arrow_back.svg"
+        alt="上一步"
+        class="cursor-pointer rounded-full bg-bg p-2"
+        (click)="changeCity(breadCrumb[breadCrumb.length - 2])"
+      />
+      <span>{{ title }}</span>
+    </h3>
+    <ul *ngIf="breadCrumb.length > 1" class="flex py-2">
+      <li
+        *ngFor="let areaName of breadCrumb; let last = last; let first = first"
+        (click)="changeCity(areaName)"
+        class="cursor-pointer text-body-1 text-font-secondary"
+      >
+        {{ first ? "" : "／" }}
+        <span
+          [ngClass]="{ 'text-font-secondary': !last, 'text-primary': last }"
+          >{{ areaName }}</span
+        >
+      </li>
+    </ul>
     <section class="rounded-2xl bg-gray-200 p-4 pt-6">
       <h5 class="text-h5">總統得票數</h5>
       <div class="flex gap-4">
@@ -150,7 +172,12 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let areaVoteInfoVM of areaVoteInfoVM | async">
+          <tr
+            *ngFor="let areaVoteInfoVM of areaVoteInfoVM | async"
+            class="cursor-pointer hover:bg-[#F8F9FA]"
+            [ngClass]="{ 'cursor-pointer': !isVillage }"
+            (click)="clickAreaInfo(areaVoteInfoVM.areaName)"
+          >
             <td class="p-2 pr-6 text-left text-h6">
               {{ areaVoteInfoVM.areaName }}
             </td>
@@ -181,7 +208,10 @@
               }}%
             </td>
             <td>
-              <span class="flex h-auto w-full items-center justify-center">
+              <span
+                *ngIf="!isVillage"
+                class="flex h-auto w-full items-center justify-center"
+              >
                 <img src="assets/icons/navigate_next.svg" alt="下一頁" />
               </span>
             </td>

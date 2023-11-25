@@ -19,6 +19,7 @@ module.exports = {
         "font-primary": "#334155",
         "font-secondary": "#64748B",
         bg: "#E9ECEF",
+        map: "#E3FAFF",
         hover: "#F8F9FA",
         line: "#DEE2E6",
         "role-1": "#8082FF",

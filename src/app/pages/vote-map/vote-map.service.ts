@@ -455,7 +455,9 @@ export class VoteMapService {
       .and((elbase) => elbase.townshipDistrict === townshipDistrict)
       .toArray();
 
-    const allIndex = elbases.findIndex((elbase) => elbase.village === '0000');
+    const allIndex = elbases.findIndex(
+      (elbase) => elbase.townshipDistrict === '000',
+    );
     const allElbase = elbases.splice(allIndex, 1)[0];
     return [allElbase, ...elbases];
   }
