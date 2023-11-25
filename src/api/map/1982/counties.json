@@ -2188,112 +2188,112 @@
         {
           "arcs": [[[0]], [[1]], [[2]], [[3]], [[4]], [[5]]],
           "type": "MultiPolygon",
-          "properties": { "id": "09007", "name": "連江縣" }
+          "properties": { "id": "04002", "name": "連江縣" }
         },
         {
           "arcs": [[[6]], [[7]], [[8]]],
           "type": "MultiPolygon",
-          "properties": { "id": "09020", "name": "金門縣" }
+          "properties": { "id": "04001", "name": "金門縣" }
         },
         {
           "arcs": [[[9]], [[10, 11, 12, 13, 14, 15]]],
           "type": "MultiPolygon",
-          "properties": { "id": "10002", "name": "宜蘭縣" }
+          "properties": { "id": "03002", "name": "宜蘭縣" }
         },
         {
           "arcs": [[17, 18, 19, 20]],
           "type": "Polygon",
-          "properties": { "id": "10007", "name": "彰化縣" }
+          "properties": { "id": "03007", "name": "彰化縣" }
         },
         {
           "arcs": [[21, 22, 23, 24, -19, 25]],
           "type": "Polygon",
-          "properties": { "id": "10008", "name": "南投縣" }
+          "properties": { "id": "03008", "name": "南投縣" }
         },
         {
           "arcs": [[[26]], [[27]], [[-25, 28, 29, -20]]],
           "type": "MultiPolygon",
-          "properties": { "id": "10009", "name": "雲林縣" }
+          "properties": { "id": "03009", "name": "雲林縣" }
         },
         {
           "arcs": [[[30]], [[31, 32, 33]]],
           "type": "MultiPolygon",
-          "properties": { "id": "10013", "name": "屏東縣" }
+          "properties": { "id": "03013", "name": "屏東縣" }
         },
         {
           "arcs": [[[34]], [[35]], [[36]], [[37, -32, 38, 39]]],
           "type": "MultiPolygon",
-          "properties": { "id": "10014", "name": "臺東縣" }
+          "properties": { "id": "03014", "name": "臺東縣" }
         },
         {
           "arcs": [[40, -40, 41, -22, 42, -12]],
           "type": "Polygon",
-          "properties": { "id": "10015", "name": "花蓮縣" }
+          "properties": { "id": "03015", "name": "花蓮縣" }
         },
         {
           "arcs": [[[43]], [[44]], [[45]], [[46]], [[47]], [[48]]],
           "type": "MultiPolygon",
-          "properties": { "id": "10016", "name": "澎湖縣" }
+          "properties": { "id": "03016", "name": "澎湖縣" }
         },
         {
           "arcs": [[49, 50, 51, 52]],
           "type": "Polygon",
-          "properties": { "id": "10017", "name": "基隆市" }
+          "properties": { "id": "03017", "name": "基隆市" }
         },
         {
           "arcs": [[53, 54, 55]],
           "type": "Polygon",
-          "properties": { "id": "10018", "name": "新竹市" }
+          "properties": { "id": "03018", "name": "新竹市" }
         },
         {
           "arcs": [[56]],
           "type": "Polygon",
-          "properties": { "id": "63000", "name": "臺北市" }
+          "properties": { "id": "01000", "name": "臺北市" }
         },
         {
           "arcs": [[-52, 57, -50, 58, -16, 59, 60], [-57]],
           "type": "Polygon",
-          "properties": { "id": "65000", "name": "新北市" }
+          "properties": { "id": "03001", "name": "臺北縣" }
         },
         {
           "arcs": [[-43, -26, -18, 61, 62, 63, -13]],
           "type": "Polygon",
-          "properties": { "id": "66000", "name": "臺中市" }
+          "properties": { "id": "03019", "name": "臺中市" }
         },
         {
           "arcs": [[64, 65, 66]],
           "type": "Polygon",
-          "properties": { "id": "67000", "name": "臺南市" }
+          "properties": { "id": "03021", "name": "臺南市" }
         },
         {
           "arcs": [[-60, -15, 67, 68, 69]],
           "type": "Polygon",
-          "properties": { "id": "68000", "name": "桃園市" }
+          "properties": { "id": "03003", "name": "桃園縣" }
         },
         {
           "arcs": [[-63, 70, -54, 71]],
           "type": "Polygon",
-          "properties": { "id": "10005", "name": "苗栗縣" }
+          "properties": { "id": "03005", "name": "苗栗縣" }
         },
         {
           "arcs": [[-56, 72, -69, -68, -14, -64, -72]],
           "type": "Polygon",
-          "properties": { "id": "10004", "name": "新竹縣" }
+          "properties": { "id": "03004", "name": "新竹縣" }
         },
         {
           "arcs": [[73]],
           "type": "Polygon",
-          "properties": { "id": "10020", "name": "嘉義市" }
+          "properties": { "id": "03020", "name": "嘉義市" }
         },
         {
           "arcs": [[-24, 74, -67, 75, -29], [-74]],
           "type": "Polygon",
-          "properties": { "id": "10010", "name": "嘉義縣" }
+          "properties": { "id": "03010", "name": "嘉義縣" }
         },
         {
           "arcs": [[-65, -75, -23, -42, -39, -34, 76]],
           "type": "Polygon",
-          "properties": { "id": "64000", "name": "高雄市" }
+          "properties": { "id": "02000", "name": "高雄市" }
         }
       ]
     }

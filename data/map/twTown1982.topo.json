@@ -357,7 +357,7 @@
           "properties": {
             "TOWNSN": "10014001",
             "TOWNID": "1001408",
-            "COUNTYNAME": "台東縣",
+            "COUNTYNAME": "臺東縣",
             "TOWNNAME": "長濱鄉"
           }
         },
@@ -368,7 +368,7 @@
           "properties": {
             "TOWNSN": "10014020",
             "TOWNID": "1001412",
-            "COUNTYNAME": "台東縣",
+            "COUNTYNAME": "臺東縣",
             "TOWNNAME": "海端鄉"
           }
         },
@@ -379,7 +379,7 @@
           "properties": {
             "TOWNSN": "10014034",
             "TOWNID": "1001402",
-            "COUNTYNAME": "台東縣",
+            "COUNTYNAME": "臺東縣",
             "TOWNNAME": "成功鎮"
           }
         },
@@ -390,7 +390,7 @@
           "properties": {
             "TOWNSN": "10014043",
             "TOWNID": "1001406",
-            "COUNTYNAME": "台東縣",
+            "COUNTYNAME": "臺東縣",
             "TOWNNAME": "池上鄉"
           }
         },
@@ -401,7 +401,7 @@
           "properties": {
             "TOWNSN": "10014047",
             "TOWNID": "1001403",
-            "COUNTYNAME": "台東縣",
+            "COUNTYNAME": "臺東縣",
             "TOWNNAME": "關山鎮"
           }
         },
@@ -411,7 +411,7 @@
           "properties": {
             "TOWNSN": "10014048",
             "TOWNID": "1001407",
-            "COUNTYNAME": "台東縣",
+            "COUNTYNAME": "臺東縣",
             "TOWNNAME": "東河鄉"
           }
         },
@@ -421,7 +421,7 @@
           "properties": {
             "TOWNSN": "10014049",
             "TOWNID": "1001405",
-            "COUNTYNAME": "台東縣",
+            "COUNTYNAME": "臺東縣",
             "TOWNNAME": "鹿野鄉"
           }
         },
@@ -432,7 +432,7 @@
           "properties": {
             "TOWNSN": "10014052",
             "TOWNID": "1001413",
-            "COUNTYNAME": "台東縣",
+            "COUNTYNAME": "臺東縣",
             "TOWNNAME": "延平鄉"
           }
         },
@@ -443,7 +443,7 @@
           "properties": {
             "TOWNSN": "10014059",
             "TOWNID": "1001404",
-            "COUNTYNAME": "台東縣",
+            "COUNTYNAME": "臺東縣",
             "TOWNNAME": "卑南鄉"
           }
         },
@@ -453,7 +453,7 @@
           "properties": {
             "TOWNSN": "10014060",
             "TOWNID": "1001401",
-            "COUNTYNAME": "台東縣",
+            "COUNTYNAME": "臺東縣",
             "TOWNNAME": "台東市"
           }
         },
@@ -464,7 +464,7 @@
           "properties": {
             "TOWNSN": "10014072",
             "TOWNID": "1001411",
-            "COUNTYNAME": "台東縣",
+            "COUNTYNAME": "臺東縣",
             "TOWNNAME": "綠島鄉"
           }
         },
@@ -475,7 +475,7 @@
           "properties": {
             "TOWNSN": "10014077",
             "TOWNID": "1001414",
-            "COUNTYNAME": "台東縣",
+            "COUNTYNAME": "臺東縣",
             "TOWNNAME": "金峰鄉"
           }
         },
@@ -485,7 +485,7 @@
           "properties": {
             "TOWNSN": "10014078",
             "TOWNID": "1001409",
-            "COUNTYNAME": "台東縣",
+            "COUNTYNAME": "臺東縣",
             "TOWNNAME": "太麻里鄉"
           }
         },
@@ -495,7 +495,7 @@
           "properties": {
             "TOWNSN": "10014079",
             "TOWNID": "1001410",
-            "COUNTYNAME": "台東縣",
+            "COUNTYNAME": "臺東縣",
             "TOWNNAME": "大武鄉"
           }
         },
@@ -505,7 +505,7 @@
           "properties": {
             "TOWNSN": "10014080",
             "TOWNID": "1001415",
-            "COUNTYNAME": "台東縣",
+            "COUNTYNAME": "臺東縣",
             "TOWNNAME": "達仁鄉"
           }
         },
@@ -516,7 +516,7 @@
           "properties": {
             "TOWNSN": "10014092",
             "TOWNID": "1001416",
-            "COUNTYNAME": "台東縣",
+            "COUNTYNAME": "臺東縣",
             "TOWNNAME": "蘭嶼鄉"
           }
         },
@@ -527,7 +527,7 @@
           "properties": {
             "TOWNSN": "10001014",
             "TOWNID": "1000122",
-            "COUNTYNAME": "台北縣",
+            "COUNTYNAME": "臺北縣",
             "TOWNNAME": "石門鄉"
           }
         },
@@ -537,7 +537,7 @@
           "properties": {
             "TOWNSN": "10001015",
             "TOWNID": "1000121",
-            "COUNTYNAME": "台北縣",
+            "COUNTYNAME": "臺北縣",
             "TOWNNAME": "三芝鄉"
           }
         },
@@ -547,7 +547,7 @@
           "properties": {
             "TOWNSN": "10001016",
             "TOWNID": "1000127",
-            "COUNTYNAME": "台北縣",
+            "COUNTYNAME": "臺北縣",
             "TOWNNAME": "金山鄉"
           }
         },
@@ -558,7 +558,7 @@
           "properties": {
             "TOWNSN": "10001031",
             "TOWNID": "1000110",
-            "COUNTYNAME": "台北縣",
+            "COUNTYNAME": "臺北縣",
             "TOWNNAME": "淡水鎮"
           }
         },
@@ -568,7 +568,7 @@
           "properties": {
             "TOWNSN": "10001032",
             "TOWNID": "1000128",
-            "COUNTYNAME": "台北縣",
+            "COUNTYNAME": "臺北縣",
             "TOWNNAME": "萬里鄉"
           }
         },
@@ -579,7 +579,7 @@
           "properties": {
             "TOWNSN": "10001034",
             "TOWNID": "1000123",
-            "COUNTYNAME": "台北縣",
+            "COUNTYNAME": "臺北縣",
             "TOWNNAME": "八里鄉"
           }
         },
@@ -590,7 +590,7 @@
           "properties": {
             "TOWNSN": "10001043",
             "TOWNID": "1000117",
-            "COUNTYNAME": "台北縣",
+            "COUNTYNAME": "臺北縣",
             "TOWNNAME": "林口鄉"
           }
         },
@@ -601,7 +601,7 @@
           "properties": {
             "TOWNSN": "10001047",
             "TOWNID": "1000115",
-            "COUNTYNAME": "台北縣",
+            "COUNTYNAME": "臺北縣",
             "TOWNNAME": "五股鄉"
           }
         },
@@ -612,7 +612,7 @@
           "properties": {
             "TOWNSN": "10001050",
             "TOWNID": "1000112",
-            "COUNTYNAME": "台北縣",
+            "COUNTYNAME": "臺北縣",
             "TOWNNAME": "瑞芳鎮"
           }
         },
@@ -622,7 +622,7 @@
           "properties": {
             "TOWNSN": "10001051",
             "TOWNID": "1000114",
-            "COUNTYNAME": "台北縣",
+            "COUNTYNAME": "臺北縣",
             "TOWNNAME": "蘆洲市"
           }
         },
@@ -632,7 +632,7 @@
           "properties": {
             "TOWNSN": "10001052",
             "TOWNID": "1000111",
-            "COUNTYNAME": "台北縣",
+            "COUNTYNAME": "臺北縣",
             "TOWNNAME": "汐止市"
           }
         },
@@ -643,7 +643,7 @@
           "properties": {
             "TOWNSN": "10001054",
             "TOWNID": "1000102",
-            "COUNTYNAME": "台北縣",
+            "COUNTYNAME": "臺北縣",
             "TOWNNAME": "三重市"
           }
         },
@@ -654,7 +654,7 @@
           "properties": {
             "TOWNSN": "10001057",
             "TOWNID": "1000116",
-            "COUNTYNAME": "台北縣",
+            "COUNTYNAME": "臺北縣",
             "TOWNNAME": "泰山鄉"
           }
         },
@@ -664,7 +664,7 @@
           "properties": {
             "TOWNSN": "10001058",
             "TOWNID": "1000126",
-            "COUNTYNAME": "台北縣",
+            "COUNTYNAME": "臺北縣",
             "TOWNNAME": "貢寮鄉"
           }
         },
@@ -674,7 +674,7 @@
           "properties": {
             "TOWNSN": "10001059",
             "TOWNID": "1000105",
-            "COUNTYNAME": "台北縣",
+            "COUNTYNAME": "臺北縣",
             "TOWNNAME": "新莊市"
           }
         },
@@ -685,7 +685,7 @@
           "properties": {
             "TOWNSN": "10001061",
             "TOWNID": "1000124",
-            "COUNTYNAME": "台北縣",
+            "COUNTYNAME": "臺北縣",
             "TOWNNAME": "平溪鄉"
           }
         },
@@ -696,7 +696,7 @@
           "properties": {
             "TOWNSN": "10001067",
             "TOWNID": "1000104",
-            "COUNTYNAME": "台北縣",
+            "COUNTYNAME": "臺北縣",
             "TOWNNAME": "永和市"
           }
         },
@@ -706,7 +706,7 @@
           "properties": {
             "TOWNSN": "10001068",
             "TOWNID": "1000101",
-            "COUNTYNAME": "台北縣",
+            "COUNTYNAME": "臺北縣",
             "TOWNNAME": "板橋市"
           }
         },
@@ -717,7 +717,7 @@
           "properties": {
             "TOWNSN": "10001071",
             "TOWNID": "1000125",
-            "COUNTYNAME": "台北縣",
+            "COUNTYNAME": "臺北縣",
             "TOWNNAME": "雙溪鄉"
           }
         },
@@ -727,7 +727,7 @@
           "properties": {
             "TOWNSN": "10001072",
             "TOWNID": "1000118",
-            "COUNTYNAME": "台北縣",
+            "COUNTYNAME": "臺北縣",
             "TOWNNAME": "深坑鄉"
           }
         },
@@ -738,7 +738,7 @@
           "properties": {
             "TOWNSN": "10001076",
             "TOWNID": "1000103",
-            "COUNTYNAME": "台北縣",
+            "COUNTYNAME": "臺北縣",
             "TOWNNAME": "中和市"
           }
         },
@@ -749,7 +749,7 @@
           "properties": {
             "TOWNSN": "10001078",
             "TOWNID": "1000107",
-            "COUNTYNAME": "台北縣",
+            "COUNTYNAME": "臺北縣",
             "TOWNNAME": "樹林市"
           }
         },
@@ -759,7 +759,7 @@
           "properties": {
             "TOWNSN": "10001079",
             "TOWNID": "1000113",
-            "COUNTYNAME": "台北縣",
+            "COUNTYNAME": "臺北縣",
             "TOWNNAME": "土城市"
           }
         },
@@ -769,7 +769,7 @@
           "properties": {
             "TOWNSN": "10001080",
             "TOWNID": "1000108",
-            "COUNTYNAME": "台北縣",
+            "COUNTYNAME": "臺北縣",
             "TOWNNAME": "鶯歌鎮"
           }
         },
@@ -779,7 +779,7 @@
           "properties": {
             "TOWNSN": "10001081",
             "TOWNID": "1000119",
-            "COUNTYNAME": "台北縣",
+            "COUNTYNAME": "臺北縣",
             "TOWNNAME": "石碇鄉"
           }
         },
@@ -789,7 +789,7 @@
           "properties": {
             "TOWNSN": "10001082",
             "TOWNID": "1000106",
-            "COUNTYNAME": "台北縣",
+            "COUNTYNAME": "臺北縣",
             "TOWNNAME": "新店市"
           }
         },
@@ -799,7 +799,7 @@
           "properties": {
             "TOWNSN": "10001083",
             "TOWNID": "1000120",
-            "COUNTYNAME": "台北縣",
+            "COUNTYNAME": "臺北縣",
             "TOWNNAME": "坪林鄉"
           }
         },
@@ -809,7 +809,7 @@
           "properties": {
             "TOWNSN": "10001084",
             "TOWNID": "1000109",
-            "COUNTYNAME": "台北縣",
+            "COUNTYNAME": "臺北縣",
             "TOWNNAME": "三峽鎮"
           }
         },
@@ -819,7 +819,7 @@
           "properties": {
             "TOWNSN": "10001085",
             "TOWNID": "1000129",
-            "COUNTYNAME": "台北縣",
+            "COUNTYNAME": "臺北縣",
             "TOWNNAME": "烏來鄉"
           }
         },
@@ -829,7 +829,7 @@
           "properties": {
             "TOWNSN": "63000001",
             "TOWNID": "6300012",
-            "COUNTYNAME": "台北市",
+            "COUNTYNAME": "臺北市",
             "TOWNNAME": "北投區"
           }
         },
@@ -841,7 +841,7 @@
           "properties": {
             "TOWNSN": "63000002",
             "TOWNID": "6300011",
-            "COUNTYNAME": "台北市",
+            "COUNTYNAME": "臺北市",
             "TOWNNAME": "士林區"
           }
         },
@@ -851,7 +851,7 @@
           "properties": {
             "TOWNSN": "63000003",
             "TOWNID": "6300010",
-            "COUNTYNAME": "台北市",
+            "COUNTYNAME": "臺北市",
             "TOWNNAME": "內湖區"
           }
         },
@@ -861,7 +861,7 @@
           "properties": {
             "TOWNSN": "63000004",
             "TOWNID": "6300004",
-            "COUNTYNAME": "台北市",
+            "COUNTYNAME": "臺北市",
             "TOWNNAME": "中山區"
           }
         },
@@ -871,7 +871,7 @@
           "properties": {
             "TOWNSN": "63000005",
             "TOWNID": "6300006",
-            "COUNTYNAME": "台北市",
+            "COUNTYNAME": "臺北市",
             "TOWNNAME": "大同區"
           }
         },
@@ -881,7 +881,7 @@
           "properties": {
             "TOWNSN": "63000006",
             "TOWNID": "6300001",
-            "COUNTYNAME": "台北市",
+            "COUNTYNAME": "臺北市",
             "TOWNNAME": "松山區"
           }
         },
@@ -891,7 +891,7 @@
           "properties": {
             "TOWNSN": "63000007",
             "TOWNID": "6300009",
-            "COUNTYNAME": "台北市",
+            "COUNTYNAME": "臺北市",
             "TOWNNAME": "南港區"
           }
         },
@@ -901,7 +901,7 @@
           "properties": {
             "TOWNSN": "63000008",
             "TOWNID": "6300007",
-            "COUNTYNAME": "台北市",
+            "COUNTYNAME": "臺北市",
             "TOWNNAME": "萬華區"
           }
         },
@@ -911,7 +911,7 @@
           "properties": {
             "TOWNSN": "63000009",
             "TOWNID": "6300005",
-            "COUNTYNAME": "台北市",
+            "COUNTYNAME": "臺北市",
             "TOWNNAME": "中正區"
           }
         },
@@ -921,7 +921,7 @@
           "properties": {
             "TOWNSN": "63000010",
             "TOWNID": "6300002",
-            "COUNTYNAME": "台北市",
+            "COUNTYNAME": "臺北市",
             "TOWNNAME": "信義區"
           }
         },
@@ -931,7 +931,7 @@
           "properties": {
             "TOWNSN": "63000011",
             "TOWNID": "6300003",
-            "COUNTYNAME": "台北市",
+            "COUNTYNAME": "臺北市",
             "TOWNNAME": "大安區"
           }
         },
@@ -941,7 +941,7 @@
           "properties": {
             "TOWNSN": "63000012",
             "TOWNID": "6300008",
-            "COUNTYNAME": "台北市",
+            "COUNTYNAME": "臺北市",
             "TOWNNAME": "文山區"
           }
         },
@@ -951,7 +951,7 @@
           "properties": {
             "TOWNSN": "10011001",
             "TOWNID": "1001105",
-            "COUNTYNAME": "台南縣",
+            "COUNTYNAME": "臺南縣",
             "TOWNNAME": "後壁鄉"
           }
         },
@@ -961,7 +961,7 @@
           "properties": {
             "TOWNSN": "10011002",
             "TOWNID": "1001103",
-            "COUNTYNAME": "台南縣",
+            "COUNTYNAME": "臺南縣",
             "TOWNNAME": "白河鎮"
           }
         },
@@ -971,7 +971,7 @@
           "properties": {
             "TOWNSN": "10011003",
             "TOWNID": "1001102",
-            "COUNTYNAME": "台南縣",
+            "COUNTYNAME": "臺南縣",
             "TOWNNAME": "鹽水鎮"
           }
         },
@@ -981,7 +981,7 @@
           "properties": {
             "TOWNSN": "10011004",
             "TOWNID": "1001101",
-            "COUNTYNAME": "台南縣",
+            "COUNTYNAME": "臺南縣",
             "TOWNNAME": "新營市"
           }
         },
@@ -991,7 +991,7 @@
           "properties": {
             "TOWNSN": "10011005",
             "TOWNID": "1001117",
-            "COUNTYNAME": "台南縣",
+            "COUNTYNAME": "臺南縣",
             "TOWNNAME": "北門鄉"
           }
         },
@@ -1001,7 +1001,7 @@
           "properties": {
             "TOWNSN": "10011006",
             "TOWNID": "1001106",
-            "COUNTYNAME": "台南縣",
+            "COUNTYNAME": "臺南縣",
             "TOWNNAME": "東山鄉"
           }
         },
@@ -1011,7 +1011,7 @@
           "properties": {
             "TOWNSN": "10011007",
             "TOWNID": "1001104",
-            "COUNTYNAME": "台南縣",
+            "COUNTYNAME": "臺南縣",
             "TOWNNAME": "柳營鄉"
           }
         },
@@ -1021,7 +1021,7 @@
           "properties": {
             "TOWNSN": "10011008",
             "TOWNID": "1001113",
-            "COUNTYNAME": "台南縣",
+            "COUNTYNAME": "臺南縣",
             "TOWNNAME": "學甲鎮"
           }
         },
@@ -1031,7 +1031,7 @@
           "properties": {
             "TOWNSN": "10011009",
             "TOWNID": "1001108",
-            "COUNTYNAME": "台南縣",
+            "COUNTYNAME": "臺南縣",
             "TOWNNAME": "下營鄉"
           }
         },
@@ -1041,7 +1041,7 @@
           "properties": {
             "TOWNSN": "10011010",
             "TOWNID": "1001109",
-            "COUNTYNAME": "台南縣",
+            "COUNTYNAME": "臺南縣",
             "TOWNNAME": "六甲鄉"
           }
         },
@@ -1051,7 +1051,7 @@
           "properties": {
             "TOWNSN": "10011011",
             "TOWNID": "1001116",
-            "COUNTYNAME": "台南縣",
+            "COUNTYNAME": "臺南縣",
             "TOWNNAME": "將軍鄉"
           }
         },
@@ -1061,7 +1061,7 @@
           "properties": {
             "TOWNSN": "10011012",
             "TOWNID": "1001110",
-            "COUNTYNAME": "台南縣",
+            "COUNTYNAME": "臺南縣",
             "TOWNNAME": "官田鄉"
           }
         },
@@ -1071,7 +1071,7 @@
           "properties": {
             "TOWNSN": "10011013",
             "TOWNID": "1001107",
-            "COUNTYNAME": "台南縣",
+            "COUNTYNAME": "臺南縣",
             "TOWNNAME": "麻豆鎮"
           }
         },
@@ -1081,7 +1081,7 @@
           "properties": {
             "TOWNSN": "10011014",
             "TOWNID": "1001124",
-            "COUNTYNAME": "台南縣",
+            "COUNTYNAME": "臺南縣",
             "TOWNNAME": "楠西鄉"
           }
         },
@@ -1091,7 +1091,7 @@
           "properties": {
             "TOWNSN": "10011015",
             "TOWNID": "1001112",
-            "COUNTYNAME": "台南縣",
+            "COUNTYNAME": "臺南縣",
             "TOWNNAME": "佳里鎮"
           }
         },
@@ -1101,7 +1101,7 @@
           "properties": {
             "TOWNSN": "10011016",
             "TOWNID": "1001111",
-            "COUNTYNAME": "台南縣",
+            "COUNTYNAME": "臺南縣",
             "TOWNNAME": "大內鄉"
           }
         },
@@ -1111,7 +1111,7 @@
           "properties": {
             "TOWNSN": "10011017",
             "TOWNID": "1001119",
-            "COUNTYNAME": "台南縣",
+            "COUNTYNAME": "臺南縣",
             "TOWNNAME": "善化鎮"
           }
         },
@@ -1121,7 +1121,7 @@
           "properties": {
             "TOWNSN": "10011018",
             "TOWNID": "1001123",
-            "COUNTYNAME": "台南縣",
+            "COUNTYNAME": "臺南縣",
             "TOWNNAME": "玉井鄉"
           }
         },
@@ -1131,7 +1131,7 @@
           "properties": {
             "TOWNSN": "10011019",
             "TOWNID": "1001114",
-            "COUNTYNAME": "台南縣",
+            "COUNTYNAME": "臺南縣",
             "TOWNNAME": "西港鄉"
           }
         },
@@ -1141,7 +1141,7 @@
           "properties": {
             "TOWNSN": "10011020",
             "TOWNID": "1001115",
-            "COUNTYNAME": "台南縣",
+            "COUNTYNAME": "臺南縣",
             "TOWNNAME": "七股鄉"
           }
         },
@@ -1151,7 +1151,7 @@
           "properties": {
             "TOWNSN": "10011021",
             "TOWNID": "1001125",
-            "COUNTYNAME": "台南縣",
+            "COUNTYNAME": "臺南縣",
             "TOWNNAME": "南化鄉"
           }
         },
@@ -1161,7 +1161,7 @@
           "properties": {
             "TOWNSN": "10011022",
             "TOWNID": "1001122",
-            "COUNTYNAME": "台南縣",
+            "COUNTYNAME": "臺南縣",
             "TOWNNAME": "山上鄉"
           }
         },
@@ -1171,7 +1171,7 @@
           "properties": {
             "TOWNSN": "10011023",
             "TOWNID": "1001121",
-            "COUNTYNAME": "台南縣",
+            "COUNTYNAME": "臺南縣",
             "TOWNNAME": "安定鄉"
           }
         },
@@ -1181,7 +1181,7 @@
           "properties": {
             "TOWNSN": "10011024",
             "TOWNID": "1001120",
-            "COUNTYNAME": "台南縣",
+            "COUNTYNAME": "臺南縣",
             "TOWNNAME": "新市鄉"
           }
         },
@@ -1191,7 +1191,7 @@
           "properties": {
             "TOWNSN": "10011025",
             "TOWNID": "1001118",
-            "COUNTYNAME": "台南縣",
+            "COUNTYNAME": "臺南縣",
             "TOWNNAME": "新化鎮"
           }
         },
@@ -1201,7 +1201,7 @@
           "properties": {
             "TOWNSN": "10011026",
             "TOWNID": "1001131",
-            "COUNTYNAME": "台南縣",
+            "COUNTYNAME": "臺南縣",
             "TOWNNAME": "永康市"
           }
         },
@@ -1211,7 +1211,7 @@
           "properties": {
             "TOWNSN": "10011027",
             "TOWNID": "1001126",
-            "COUNTYNAME": "台南縣",
+            "COUNTYNAME": "臺南縣",
             "TOWNNAME": "左鎮鄉"
           }
         },
@@ -1221,7 +1221,7 @@
           "properties": {
             "TOWNSN": "10011028",
             "TOWNID": "1001130",
-            "COUNTYNAME": "台南縣",
+            "COUNTYNAME": "臺南縣",
             "TOWNNAME": "龍崎鄉"
           }
         },
@@ -1231,7 +1231,7 @@
           "properties": {
             "TOWNSN": "10011029",
             "TOWNID": "1001128",
-            "COUNTYNAME": "台南縣",
+            "COUNTYNAME": "臺南縣",
             "TOWNNAME": "歸仁鄉"
           }
         },
@@ -1241,7 +1241,7 @@
           "properties": {
             "TOWNSN": "10011030",
             "TOWNID": "1001129",
-            "COUNTYNAME": "台南縣",
+            "COUNTYNAME": "臺南縣",
             "TOWNNAME": "關廟鄉"
           }
         },
@@ -1251,7 +1251,7 @@
           "properties": {
             "TOWNSN": "10011031",
             "TOWNID": "1001127",
-            "COUNTYNAME": "台南縣",
+            "COUNTYNAME": "臺南縣",
             "TOWNNAME": "仁德鄉"
           }
         },
@@ -1261,7 +1261,7 @@
           "properties": {
             "TOWNSN": "10021001",
             "TOWNID": "1002106",
-            "COUNTYNAME": "台南市",
+            "COUNTYNAME": "臺南市",
             "TOWNNAME": "安南區"
           }
         },
@@ -1271,7 +1271,7 @@
           "properties": {
             "TOWNSN": "10021002",
             "TOWNID": "1002104",
-            "COUNTYNAME": "台南市",
+            "COUNTYNAME": "臺南市",
             "TOWNNAME": "北區"
           }
         },
@@ -1281,7 +1281,7 @@
           "properties": {
             "TOWNSN": "10021003",
             "TOWNID": "1002102",
-            "COUNTYNAME": "台南市",
+            "COUNTYNAME": "臺南市",
             "TOWNNAME": "中西區"
           }
         },
@@ -1291,7 +1291,7 @@
           "properties": {
             "TOWNSN": "10021005",
             "TOWNID": "1002107",
-            "COUNTYNAME": "台南市",
+            "COUNTYNAME": "臺南市",
             "TOWNNAME": "安平區"
           }
         },
@@ -1301,7 +1301,7 @@
           "properties": {
             "TOWNSN": "10021006",
             "TOWNID": "1002101",
-            "COUNTYNAME": "台南市",
+            "COUNTYNAME": "臺南市",
             "TOWNNAME": "東區"
           }
         },
@@ -1311,7 +1311,7 @@
           "properties": {
             "TOWNSN": "10021007",
             "TOWNID": "1002107",
-            "COUNTYNAME": "台南市",
+            "COUNTYNAME": "臺南市",
             "TOWNNAME": "安平區(海)"
           }
         },
@@ -1321,7 +1321,7 @@
           "properties": {
             "TOWNSN": "10021008",
             "TOWNID": "1002103",
-            "COUNTYNAME": "台南市",
+            "COUNTYNAME": "臺南市",
             "TOWNNAME": "南區(海)"
           }
         },
@@ -1331,7 +1331,7 @@
           "properties": {
             "TOWNSN": "10021009",
             "TOWNID": "1002103",
-            "COUNTYNAME": "台南市",
+            "COUNTYNAME": "臺南市",
             "TOWNNAME": "南區"
           }
         },
@@ -1341,7 +1341,7 @@
           "properties": {
             "TOWNSN": "10006001",
             "TOWNID": "1000603",
-            "COUNTYNAME": "台中縣",
+            "COUNTYNAME": "臺中縣",
             "TOWNNAME": "大甲鎮"
           }
         },
@@ -1351,7 +1351,7 @@
           "properties": {
             "TOWNSN": "10006002",
             "TOWNID": "1000614",
-            "COUNTYNAME": "台中縣",
+            "COUNTYNAME": "臺中縣",
             "TOWNNAME": "大安鄉"
           }
         },
@@ -1361,7 +1361,7 @@
           "properties": {
             "TOWNSN": "10006003",
             "TOWNID": "1000613",
-            "COUNTYNAME": "台中縣",
+            "COUNTYNAME": "臺中縣",
             "TOWNNAME": "外埔鄉"
           }
         },
@@ -1371,7 +1371,7 @@
           "properties": {
             "TOWNSN": "10006004",
             "TOWNID": "1000607",
-            "COUNTYNAME": "台中縣",
+            "COUNTYNAME": "臺中縣",
             "TOWNNAME": "后里鄉"
           }
         },
@@ -1382,7 +1382,7 @@
           "properties": {
             "TOWNSN": "10006007",
             "TOWNID": "1000604",
-            "COUNTYNAME": "台中縣",
+            "COUNTYNAME": "臺中縣",
             "TOWNNAME": "清水鎮"
           }
         },
@@ -1392,7 +1392,7 @@
           "properties": {
             "TOWNSN": "10006008",
             "TOWNID": "1000604",
-            "COUNTYNAME": "台中縣",
+            "COUNTYNAME": "臺中縣",
             "TOWNNAME": "清水鎮(海)"
           }
         },
@@ -1402,7 +1402,7 @@
           "properties": {
             "TOWNSN": "10006009",
             "TOWNID": "1000621",
-            "COUNTYNAME": "台中縣",
+            "COUNTYNAME": "臺中縣",
             "TOWNNAME": "和平鄉"
           }
         },
@@ -1412,7 +1412,7 @@
           "properties": {
             "TOWNSN": "10006010",
             "TOWNID": "1000608",
-            "COUNTYNAME": "台中縣",
+            "COUNTYNAME": "臺中縣",
             "TOWNNAME": "神岡鄉"
           }
         },
@@ -1422,7 +1422,7 @@
           "properties": {
             "TOWNSN": "10006011",
             "TOWNID": "1000606",
-            "COUNTYNAME": "台中縣",
+            "COUNTYNAME": "臺中縣",
             "TOWNNAME": "梧棲鎮(海)"
           }
         },
@@ -1432,7 +1432,7 @@
           "properties": {
             "TOWNSN": "10006012",
             "TOWNID": "1000612",
-            "COUNTYNAME": "台中縣",
+            "COUNTYNAME": "臺中縣",
             "TOWNNAME": "石岡鄉"
           }
         },
@@ -1442,7 +1442,7 @@
           "properties": {
             "TOWNSN": "10006013",
             "TOWNID": "1000601",
-            "COUNTYNAME": "台中縣",
+            "COUNTYNAME": "臺中縣",
             "TOWNNAME": "豐原市"
           }
         },
@@ -1452,7 +1452,7 @@
           "properties": {
             "TOWNSN": "10006014",
             "TOWNID": "1000606",
-            "COUNTYNAME": "台中縣",
+            "COUNTYNAME": "臺中縣",
             "TOWNNAME": "梧棲鎮"
           }
         },
@@ -1462,7 +1462,7 @@
           "properties": {
             "TOWNSN": "10006015",
             "TOWNID": "1000602",
-            "COUNTYNAME": "台中縣",
+            "COUNTYNAME": "臺中縣",
             "TOWNNAME": "東勢鎮"
           }
         },
@@ -1472,7 +1472,7 @@
           "properties": {
             "TOWNSN": "10006016",
             "TOWNID": "1000605",
-            "COUNTYNAME": "台中縣",
+            "COUNTYNAME": "臺中縣",
             "TOWNNAME": "沙鹿鎮"
           }
         },
@@ -1482,7 +1482,7 @@
           "properties": {
             "TOWNSN": "10006017",
             "TOWNID": "1000610",
-            "COUNTYNAME": "台中縣",
+            "COUNTYNAME": "臺中縣",
             "TOWNNAME": "大雅鄉"
           }
         },
@@ -1492,7 +1492,7 @@
           "properties": {
             "TOWNSN": "10006018",
             "TOWNID": "1000609",
-            "COUNTYNAME": "台中縣",
+            "COUNTYNAME": "臺中縣",
             "TOWNNAME": "潭子鄉"
           }
         },
@@ -1502,7 +1502,7 @@
           "properties": {
             "TOWNSN": "10006019",
             "TOWNID": "1000617",
-            "COUNTYNAME": "台中縣",
+            "COUNTYNAME": "臺中縣",
             "TOWNNAME": "龍井鄉"
           }
         },
@@ -1512,7 +1512,7 @@
           "properties": {
             "TOWNSN": "10006020",
             "TOWNID": "1000611",
-            "COUNTYNAME": "台中縣",
+            "COUNTYNAME": "臺中縣",
             "TOWNNAME": "新社鄉"
           }
         },
@@ -1522,7 +1522,7 @@
           "properties": {
             "TOWNSN": "10006021",
             "TOWNID": "1000616",
-            "COUNTYNAME": "台中縣",
+            "COUNTYNAME": "臺中縣",
             "TOWNNAME": "大肚鄉"
           }
         },
@@ -1532,7 +1532,7 @@
           "properties": {
             "TOWNSN": "10006022",
             "TOWNID": "1000619",
-            "COUNTYNAME": "台中縣",
+            "COUNTYNAME": "臺中縣",
             "TOWNNAME": "太平市"
           }
         },
@@ -1542,7 +1542,7 @@
           "properties": {
             "TOWNSN": "10006023",
             "TOWNID": "1000620",
-            "COUNTYNAME": "台中縣",
+            "COUNTYNAME": "臺中縣",
             "TOWNNAME": "大里市"
           }
         },
@@ -1552,7 +1552,7 @@
           "properties": {
             "TOWNSN": "10006024",
             "TOWNID": "1000615",
-            "COUNTYNAME": "台中縣",
+            "COUNTYNAME": "臺中縣",
             "TOWNNAME": "烏日鄉"
           }
         },
@@ -1562,7 +1562,7 @@
           "properties": {
             "TOWNSN": "10006025",
             "TOWNID": "1000618",
-            "COUNTYNAME": "台中縣",
+            "COUNTYNAME": "臺中縣",
             "TOWNNAME": "霧峰鄉"
           }
         },
@@ -1572,7 +1572,7 @@
           "properties": {
             "TOWNSN": "10019001",
             "TOWNID": "1001908",
-            "COUNTYNAME": "台中市",
+            "COUNTYNAME": "臺中市",
             "TOWNNAME": "北屯區"
           }
         },
@@ -1582,7 +1582,7 @@
           "properties": {
             "TOWNSN": "10019002",
             "TOWNID": "1001906",
-            "COUNTYNAME": "台中市",
+            "COUNTYNAME": "臺中市",
             "TOWNNAME": "西屯區"
           }
         },
@@ -1592,7 +1592,7 @@
           "properties": {
             "TOWNSN": "10019003",
             "TOWNID": "1001905",
-            "COUNTYNAME": "台中市",
+            "COUNTYNAME": "臺中市",
             "TOWNNAME": "北區"
           }
         },
@@ -1602,7 +1602,7 @@
           "properties": {
             "TOWNSN": "10019004",
             "TOWNID": "1001904",
-            "COUNTYNAME": "台中市",
+            "COUNTYNAME": "臺中市",
             "TOWNNAME": "西區"
           }
         },
@@ -1612,7 +1612,7 @@
           "properties": {
             "TOWNSN": "10019005",
             "TOWNID": "1001901",
-            "COUNTYNAME": "台中市",
+            "COUNTYNAME": "臺中市",
             "TOWNNAME": "中區"
           }
         },
@@ -1622,7 +1622,7 @@
           "properties": {
             "TOWNSN": "10019006",
             "TOWNID": "1001907",
-            "COUNTYNAME": "台中市",
+            "COUNTYNAME": "臺中市",
             "TOWNNAME": "南屯區"
           }
         },
@@ -1632,7 +1632,7 @@
           "properties": {
             "TOWNSN": "10019007",
             "TOWNID": "1001902",
-            "COUNTYNAME": "台中市",
+            "COUNTYNAME": "臺中市",
             "TOWNNAME": "東區"
           }
         },
@@ -1642,7 +1642,7 @@
           "properties": {
             "TOWNSN": "10019008",
             "TOWNID": "1001903",
-            "COUNTYNAME": "台中市",
+            "COUNTYNAME": "臺中市",
             "TOWNNAME": "南區"
           }
         },
