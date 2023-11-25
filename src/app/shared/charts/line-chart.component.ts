@@ -33,7 +33,6 @@ export class LineChartComponent {
   }
   createBarChart() {
     if (!this.data || !this.lineChart || !this.themes) return;
-    console.log('data', this.data);
     this.lineChart.nativeElement.innerHTML = '';
     const marginTop = 10;
     const marginBottom = 20;

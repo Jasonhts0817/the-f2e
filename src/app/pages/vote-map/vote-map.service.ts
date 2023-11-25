@@ -213,7 +213,6 @@ export class VoteMapService {
               ({ politicalPartyName }) =>
                 cand.politicalPartyName === politicalPartyName,
             );
-            console.log('elpaty', year, cand.name, elpaty);
             if (!elpaty) return;
             const partyInfo: HistoryPartyInfoVM = {
               year,
@@ -249,6 +248,9 @@ export class VoteMapService {
   /** 取得縣市投票資訊 */
   private async _getCountryVoteInfo(elbases: Elbase[]) {
     const allElbase = elbases[0] as Elbase;
+    const elpaties = await this.db.elpaty
+      .where({ year: this.currentYear })
+      .toArray();
     const elcands = await this.db.elcand
       .where({ year: this.currentYear })
       .toArray();
@@ -280,6 +282,9 @@ export class VoteMapService {
       const electedCand = elcands.find(
         (elcand) => elcand.numberSequence === subElctks[0].candidateNumber,
       ) as Elcand;
+      const elpaty = elpaties.find(
+        (party) => party.politicalPartyCode === electedCand.politicalPartyCode,
+      ) as Elpaty;
       const partyVoteInfos: any[] = [];
       subElctks.map((elctk) => {
         const elcand = elcands.find(
@@ -303,6 +308,7 @@ export class VoteMapService {
         voterTurnout: elprof.voterTurnout,
         partyVoteInfos,
         electedName: electedCand.name,
+        electedPartyName: elpaty.politicalPartyName,
       };
     });
     if (areaVoteInfoVM.length > 1) {
@@ -314,6 +320,9 @@ export class VoteMapService {
   /** 取得區域投票資訊 */
   private async _getAreaVoteInfo(elbases: Elbase[]) {
     const allElbase = elbases[0] as Elbase;
+    const elpaties = await this.db.elpaty
+      .where({ year: this.currentYear })
+      .toArray();
     const elcands = await this.db.elcand
       .where({ year: this.currentYear })
       .toArray();
@@ -345,6 +354,9 @@ export class VoteMapService {
       const electedCand = elcands.find(
         (elcand) => elcand.numberSequence === subElctks[0].candidateNumber,
       ) as Elcand;
+      const elpaty = elpaties.find(
+        (party) => party.politicalPartyCode === electedCand.politicalPartyCode,
+      ) as Elpaty;
       const partyVoteInfos: any[] = [];
       subElctks.map((elctk) => {
         const elcand = elcands.find(
@@ -368,6 +380,7 @@ export class VoteMapService {
         voterTurnout: elprof.voterTurnout,
         partyVoteInfos,
         electedName: electedCand.name,
+        electedPartyName: elpaty.politicalPartyName,
       };
     });
     if (areaVoteInfoVM.length > 1) {

@@ -30,10 +30,8 @@ export class VoteMapComponent implements OnInit {
   top3CandidateInfo = this.voteMapService.top3CandidateInfo.pipe(
     map((cands) =>
       cands.map((cand, i) => {
-        const theme =
-          this.themesConfig.find(
-            (theme) => theme.partyName === cand.politicalPartyName,
-          ) ?? this.themesConfig[this.themesConfig.length - 1];
+        const theme = this._getPartyTheme(cand.politicalPartyName);
+
         return {
           ...cand,
           ...theme,
@@ -51,22 +49,38 @@ export class VoteMapComponent implements OnInit {
     ),
   );
 
-  donutChartData = this.voteMapService.voteInfo.pipe<number[]>(
+  donutChartData = this.voteMapService.voteInfo.pipe(
     map((voteInfo) => [
       voteInfo?.voterTurnout as number,
       100 - (voteInfo?.voterTurnout as number),
     ]),
   );
 
+  mapChartData = this.voteMapService.areaVoteInfoVM.pipe(
+    map((infos) =>
+      infos.map((info) => {
+        const theme = this._getPartyTheme(info.electedPartyName);
+        return {
+          areaName: info.areaName,
+          ...theme,
+        };
+      }),
+    ),
+  );
+
   areaVoteInfoVM = this.voteMapService.areaVoteInfoVM.pipe(
     map((infos) =>
-      infos.map((info) => ({
-        ...info,
-        partyVoteInfos: info.partyVoteInfos.map((party) => ({
-          name: party.candName,
-          value: party.votePercentage,
-        })),
-      })),
+      infos.map((info) => {
+        const theme = this._getPartyTheme(info.electedPartyName);
+        return {
+          ...info,
+          ...theme,
+          partyVoteInfos: info.partyVoteInfos.map((party) => ({
+            name: party.candName,
+            value: party.votePercentage,
+          })),
+        };
+      }),
     ),
   );
 
@@ -141,5 +155,12 @@ export class VoteMapComponent implements OnInit {
       village: village,
     };
     this.voteMapService.searchForm?.patchValue(req);
+  }
+
+  private _getPartyTheme(partyName: string) {
+    return (
+      this.themesConfig.find((theme) => theme.partyName === partyName) ??
+      this.themesConfig[this.themesConfig.length - 1]
+    );
   }
 }

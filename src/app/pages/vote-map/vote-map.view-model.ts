@@ -59,6 +59,8 @@ export interface AreaVoteInfoVM {
   }[];
   /** 當選人名稱 */
   electedName: string;
+  /** 當選人政黨 */
+  electedPartyName: string;
   /** 投票數 */
   totalVotes: number;
   /** 投票數對選舉人數 */

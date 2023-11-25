@@ -157,7 +157,16 @@
               ></app-stack-chart>
             </td>
             <td class="p-2 pr-6 text-left text-body-2">
-              {{ areaVoteInfoVM.electedName }}
+              <div class="flex items-center gap-2">
+                <img
+                  class="h-8 w-8 rounded-full"
+                  [ngClass]="areaVoteInfoVM.color"
+                  [src]="areaVoteInfoVM.img"
+                />
+                <span>
+                  {{ areaVoteInfoVM.electedName }}
+                </span>
+              </div>
             </td>
             <td class="p-2 pr-6 text-left text-body-2">
               {{ areaVoteInfoVM.totalVotes | currency: "TWD" : "" : "1.0-0" }}

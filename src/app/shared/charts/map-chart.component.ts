@@ -22,6 +22,7 @@ export class MapChartComponent implements AfterViewInit {
   @ViewChild('mapChart') mapChart!: ElementRef<Element>;
   @Input() width: number = 400;
   @Input() height: number = 800;
+  @Input() data?: {}[] | null;
   country!: any;
   townsObj!: any;
   countryGElement!: d3.Selection<SVGGElement, unknown, null, undefined>;
@@ -84,7 +85,10 @@ export class MapChartComponent implements AfterViewInit {
       .append('path')
       .on('click', (event, d) => this._clicked(event, d))
       .attr('d', this.path)
-      .attr('fill', (d: any) => '#444')
+      .attr('fill', (d: any) => {
+        console.log('d', d);
+        return '#444';
+      })
       .append('title')
       .text((d: any) => d.properties?.name);
 
