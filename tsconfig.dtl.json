@@ -4,5 +4,5 @@
   "compilerOptions": {
     "module": "CommonJS"
   },
-  "files": ["script/data-transform.ts"]
+  "files": ["script/*.ts"]
 }

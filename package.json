@@ -8,7 +8,8 @@
     "build:prod": "ng build --configuration=production --base-href /the-f2e-2023/",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "dtl": "npx ts-node --project tsconfig.dtl.json ./script/data-transform.ts"
+    "dtl:vote": "npx ts-node --project tsconfig.dtl.json ./script/vote-data-transform.ts",
+    "dtl:map": "npx ts-node --project tsconfig.dtl.json ./script/map-data-transform.ts"
   },
   "private": true,
   "dependencies": {

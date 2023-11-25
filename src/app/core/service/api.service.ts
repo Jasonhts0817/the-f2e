@@ -48,18 +48,24 @@ export class ApiService {
   }
 
   /** 取得縣市地圖 */
-  getCountryJson() {
+  getCountryJson(year: VoteYearEnum) {
+    const url =
+      +year >= 2010
+        ? `${environment.apiUrl}/api/map/2010/counties.json`
+        : `${environment.apiUrl}/api/map/1982/counties.json`;
     return this.http
-      .get<TaiwanMap>(`${environment.apiUrl}/api/map/counties.json`)
+      .get<TaiwanMap>(url)
       .pipe(map((data) => new TaiwanMap(data)));
   }
 
   /** 取得鄉鎮市區地圖 */
-  getTownJson(townNo: string) {
+  getTownJson(year: VoteYearEnum, townNo: string) {
+    const url =
+      +year >= 2010
+        ? `${environment.apiUrl}/api/map/2010/towns/towns-${townNo}.json`
+        : `${environment.apiUrl}/api/map/1982/towns/towns-${townNo}.json`;
     return this.http
-      .get<TaiwanMap>(
-        `${environment.apiUrl}/api/map/towns/towns-${townNo}.json`,
-      )
+      .get<TaiwanMap>(url)
       .pipe(map((data) => new TaiwanMap(data)));
   }
 }
