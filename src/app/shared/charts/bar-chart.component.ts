@@ -66,13 +66,34 @@ export class BarChartComponent implements AfterViewInit {
     const formatValue = (x: number) =>
       isNaN(x) ? 'N/A' : x.toLocaleString('en');
 
-    // Create the SVG container.
     const svg = d3
       .select(this.barChart.nativeElement)
       .attr('width', this.width)
       .attr('height', this.height)
       .attr('viewBox', [0, 0, this.width, this.height])
       .attr('style', 'max-width: 100%; height: auto;');
+
+    const xAxis = d3.axisBottom(fx).tickSizeInner(0);
+    svg
+      .append('g')
+      .attr('transform', `translate(-10,${this.height - marginBottom + 10})`)
+      .call(xAxis)
+      .call((g) => g.selectAll('.domain').remove());
+
+    const yAxis = d3.axisLeft(y).tickSizeInner(0).ticks(5);
+    yAxis.tickFormat((value) => `${(value.valueOf() / 10000).toString()}萬`);
+    svg
+      .append('g')
+      .attr('transform', `translate(${marginLeft - 14},0)`)
+      .call(yAxis)
+      .call((g) => g.selectAll('.domain').remove())
+      .call((g) =>
+        g
+          .selectAll('.tick line')
+          .attr('x1', 15)
+          .attr('x2', this.width - marginLeft - marginRight)
+          .attr('stroke-opacity', 0.1),
+      );
 
     svg
       .append('g')
@@ -88,20 +109,5 @@ export class BarChartComponent implements AfterViewInit {
       .attr('width', x.bandwidth())
       .attr('height', (d) => y(0) - y(d.value))
       .attr('fill', (d) => color(d.name) as string);
-
-    const xAxis = d3.axisBottom(fx).tickSizeInner(0);
-    svg
-      .append('g')
-      .attr('transform', `translate(-10,${this.height - marginBottom + 10})`)
-      .call(xAxis)
-      .call((g) => g.selectAll('.domain').remove());
-
-    const yAxis = d3.axisLeft(y).tickSizeInner(0).ticks(5);
-    yAxis.tickFormat((value) => `${(value.valueOf() / 10000).toString()}萬`);
-    svg
-      .append('g')
-      .attr('transform', `translate(${marginLeft - 14},0)`)
-      .call(yAxis)
-      .call((g) => g.selectAll('.domain').remove());
   }
 }

@@ -34,16 +34,17 @@ export class LineChartComponent {
     if (!this.data || !this.lineChart) return;
     console.log('data', this.data);
     this.lineChart.nativeElement.innerHTML = '';
-    const marginTop = 30;
-    const marginRight = 50;
-    const marginBottom = 30;
-    const marginLeft = 30;
+    const marginTop = 10;
+    const marginBottom = 20;
+    const marginRight = 10;
+    const marginLeft = 50;
 
-    // Create the horizontal, vertical and color scales.
     const x = d3
-      .scaleTime()
-      .domain([+this.data[0]?.year, +this.data[this.data.length - 1]?.year])
-      .range([marginLeft, this.width - marginRight]);
+      .scaleBand()
+      .domain(new Set(this.data.map((d) => d.year)))
+      .range([marginLeft, this.width - marginRight])
+      .paddingInner(1)
+      .paddingOuter(0.1);
 
     const y = d3
       .scaleLinear()
@@ -55,7 +56,6 @@ export class LineChartComponent {
       .domain(this.data.map((d) => d.name))
       .range(['#8082FF', '#F4A76F', '#57D2A9']);
 
-    // Create the SVG container.
     const svg = d3
       .select(this.lineChart.nativeElement)
       .attr('width', this.width)
@@ -63,24 +63,36 @@ export class LineChartComponent {
       .attr('viewBox', [0, 0, this.width, this.height])
       .attr('style', 'max-width: 100%; height: auto; font: 10px sans-serif;');
 
+    const xAxis = d3.axisBottom(x).tickSizeInner(0);
+
+    xAxis.tickFormat((value) => `${value.valueOf()}`);
     svg
       .append('g')
-      .attr('transform', `translate(0,${this.height - marginBottom})`)
-      .call(
-        d3
-          .axisBottom(x)
-          .ticks(this.width / 80)
-          .tickSizeOuter(0),
+      .attr('transform', `translate(0,${this.height - marginBottom + 10})`)
+      .call(xAxis)
+      .call((g) => g.selectAll('.domain').remove());
+
+    const yAxis = d3.axisLeft(y).tickSizeInner(0).ticks(5);
+    yAxis.tickFormat((value) => `${value.valueOf()}%`);
+    svg
+      .append('g')
+      .attr('transform', `translate(${marginLeft - 15},0)`)
+      .call(yAxis)
+      .call((g) => g.selectAll('.domain').remove())
+      .call((g) =>
+        g
+          .selectAll('.tick line')
+          .attr('x1', 15)
+          .attr('x2', this.width - marginLeft)
+          .attr('stroke-opacity', 0.1),
       );
 
-    // Add a container for each series.
     const serie = svg
       .append('g')
       .selectAll()
       .data(d3.group(this.data, (d) => d.name))
       .join('g');
 
-    // Draw the lines.
     serie
       .append('path')
       .attr('fill', 'none')
@@ -89,7 +101,7 @@ export class LineChartComponent {
       .attr('d', (d) =>
         d3
           .line()
-          .x((d: any) => x(d.year))
+          .x((d: any) => x(d.year) as number)
           .y((d: any) => y(d.percent))(d[1] as any),
       );
 
@@ -99,7 +111,7 @@ export class LineChartComponent {
       .data((d) => d[1])
       .join('circle')
       .attr('r', '3')
-      .attr('cx', (d) => x(+d.year))
+      .attr('cx', (d) => x(d.year) as number)
       .attr('cy', (d) => y(d.percent))
       .attr('fill', (d) => color(d.name) as string);
   }
