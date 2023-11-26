@@ -49,10 +49,23 @@ export class ApiService {
 
   /** 取得縣市地圖 */
   getCountryJson(year: VoteYearEnum) {
-    const url =
-      +year >= 2010
-        ? `${environment.apiUrl}/api/map/2010/counties.json`
-        : `${environment.apiUrl}/api/map/1982/counties.json`;
+    let url = '';
+
+    switch (year) {
+      case VoteYearEnum._1996:
+      case VoteYearEnum._2000:
+      case VoteYearEnum._2004:
+      case VoteYearEnum._2008:
+        url = `${environment.apiUrl}/api/map/1982/counties.json`;
+        break;
+      case VoteYearEnum._2012:
+        url = `${environment.apiUrl}/api/map/2012/counties.json`;
+        break;
+      case VoteYearEnum._2016:
+      case VoteYearEnum._2020:
+        url = `${environment.apiUrl}/api/map/2016/counties.json`;
+        break;
+    }
     return this.http
       .get<TaiwanMap>(url)
       .pipe(map((data) => new TaiwanMap(data)));
@@ -60,10 +73,23 @@ export class ApiService {
 
   /** 取得鄉鎮市區地圖 */
   getTownJson(year: VoteYearEnum, townNo: string) {
-    const url =
-      +year >= 2010
-        ? `${environment.apiUrl}/api/map/2010/towns/towns-${townNo}.json`
-        : `${environment.apiUrl}/api/map/1982/towns/towns-${townNo}.json`;
+    let url = '';
+
+    switch (year) {
+      case VoteYearEnum._1996:
+      case VoteYearEnum._2000:
+      case VoteYearEnum._2004:
+      case VoteYearEnum._2008:
+        url = `${environment.apiUrl}/api/map/1982/towns/towns-${townNo}.json`;
+        break;
+      case VoteYearEnum._2012:
+        url = `${environment.apiUrl}/api/map/2012/towns/towns-${townNo}.json`;
+        break;
+      case VoteYearEnum._2016:
+      case VoteYearEnum._2020:
+        url = `${environment.apiUrl}/api/map/2016/towns/towns-${townNo}.json`;
+        break;
+    }
     return this.http
       .get<TaiwanMap>(url)
       .pipe(map((data) => new TaiwanMap(data)));

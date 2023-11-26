@@ -14,6 +14,7 @@ import * as topojson from 'topojson';
 import { ApiService } from 'src/app/core/service/api.service';
 import { Properties, TaiwanMap } from 'src/app/core/models/map.model';
 import { Observable, forkJoin, from, map, mergeMap } from 'rxjs';
+import { VoteYearEnum } from 'src/app/core/enums/vote-year.enum';
 
 @Component({
   selector: 'app-map-chart',
@@ -23,6 +24,7 @@ import { Observable, forkJoin, from, map, mergeMap } from 'rxjs';
 })
 export class MapChartComponent implements AfterViewInit {
   @ViewChild('mapChart') mapChart!: ElementRef<Element>;
+  @Input() year?: VoteYearEnum;
   @Input() width: number = 500;
   @Input() height: number = 860;
   @Input() countryData: { areaName: string; hex: string }[] | null = [];
@@ -45,15 +47,33 @@ export class MapChartComponent implements AfterViewInit {
         'max-width: 100%; height: auto; max-height: calc(100dvh - 66px)',
       )
       .on('click', () => this._reset());
+  }
 
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['year']) {
+      this.getMapPathData();
+    }
+    if (
+      changes['countryData'] &&
+      changes['countryData'].currentValue.length > 0
+    ) {
+      this.creatCountryChart();
+    }
+    if (changes['areaData'] && changes['areaData'].currentValue.length > 0) {
+      this._setTownTheme();
+    }
+  }
+  getMapPathData() {
+    if (!this.year) return;
     this.apiService
-      .getCountryJson()
+      .getCountryJson(this.year)
       .pipe(
         mergeMap((country) => {
           const townReqs = country.objects.map.geometries.reduce<{
             [key: string]: Observable<TaiwanMap>;
           }>((townObj, town) => {
             townObj[town.properties.id] = this.apiService.getTownJson(
+              this.year as VoteYearEnum,
               town.properties.id,
             );
             return townObj;
@@ -68,20 +88,8 @@ export class MapChartComponent implements AfterViewInit {
       });
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if (
-      changes['countryData'] &&
-      changes['countryData'].currentValue.length > 0
-    ) {
-      this.creatCountryChart();
-    }
-    if (changes['areaData'] && changes['areaData'].currentValue.length > 0) {
-      this._setTownTheme();
-    }
-  }
-
   creatCountryChart() {
-    if (!this.countryData || !this.mapChart) return;
+    if (!this.countryData || !this.mapChart || !this.year) return;
     this.mapChart.nativeElement.innerHTML = '';
     const svg = d3.select(this.mapChart.nativeElement);
     this.countryGElement = svg.append('g');

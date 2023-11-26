@@ -1,9 +1,10 @@
 <div class="sticky top-[66px] flex">
-  <div class="bg-map h-[calc(100dvh-66px)] w-[600px]">
+  <div class="h-[calc(100dvh-66px)] w-[600px] bg-map">
     <app-map-chart
       [countryData]="mapChartCountryData | async"
       [areaData]="mapChartAreaData | async"
       (changeCity)="changeCity($event)"
+      [year]="voteMapService.currentYear"
     ></app-map-chart>
   </div>
   <div class="h-[calc(100dvh-66px)] grow overflow-y-auto">
