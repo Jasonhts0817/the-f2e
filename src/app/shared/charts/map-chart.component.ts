@@ -124,8 +124,39 @@ export class MapChartComponent implements AfterViewInit {
       .append('title')
       .text((d: any) => d.properties?.name);
 
+    this.countryGElement
+      .append('g')
+      .attr('id', 'cityName')
+      .selectAll('text')
+      .data(
+        (
+          topojson.feature<Properties>(
+            this.country,
+            this.country.objects.map,
+          ) as any
+        ).features,
+      )
+      .join('text')
+      .on('click', (event, d) => this._clicked(event, d))
+      .style('font', '700 16px sans-serif')
+      .attr('fill', 'white')
+      .attr('stroke', 'black')
+      .attr('stroke-width', 0.3)
+      .attr('x', (d: any) => {
+        const [[x0, y0], [x1, y1]] = this.path.bounds(d);
+        return (x0 + x1) * 0.5;
+      })
+      .attr('y', (d: any) => {
+        const [[x0, y0], [x1, y1]] = this.path.bounds(d);
+        return (y0 + y1) * 0.5;
+      })
+      .attr('dx', '-20px')
+      .text((d: any) => {
+        return d.properties?.name;
+      });
+
     // town path
-    countryGroup
+    const townGroup = countryGroup
       .append('g')
       .attr('class', 'town')
       .attr('display', 'none')
@@ -139,7 +170,8 @@ export class MapChartComponent implements AfterViewInit {
             this.townsObj[townId].objects.map,
           ) as any
         ).features;
-      })
+      });
+    townGroup
       .join('path')
       .attr('d', this.path)
       .attr('stroke', 'white')
@@ -147,6 +179,24 @@ export class MapChartComponent implements AfterViewInit {
       .attr('fill', (d: any) => '#fff')
       .append('title')
       .text((d: any) => d.properties?.name);
+    townGroup
+      .join('text')
+      .style('font', '700 5px sans-serif')
+      .attr('fill', 'white')
+      .attr('stroke', 'black')
+      .attr('stroke-width', 0.1)
+      .attr('x', (d: any) => {
+        const [[x0, y0], [x1, y1]] = this.path.bounds(d);
+        return (x0 + x1) * 0.52;
+      })
+      .attr('y', (d: any) => {
+        const [[x0, y0], [x1, y1]] = this.path.bounds(d);
+        return (y0 + y1) * 0.5;
+      })
+      .attr('dx', '-20px')
+      .text((d: any) => {
+        return d.properties?.name;
+      });
 
     svg.call(this._zoom());
   }
@@ -154,7 +204,8 @@ export class MapChartComponent implements AfterViewInit {
   private _clicked(event: any, d: any) {
     event.stopPropagation();
     const svg = d3.select(this.mapChart.nativeElement);
-    this._displayTown(d.properties);
+    this._hiddenAllTown(d.properties);
+    this.countryGElement.select('g#cityName').attr('display', 'none');
 
     const [[x0, y0], [x1, y1]] = this.path.bounds(d);
     svg
@@ -175,7 +226,7 @@ export class MapChartComponent implements AfterViewInit {
       );
   }
 
-  private _displayTown(properties?: Properties) {
+  private _hiddenAllTown(properties?: Properties) {
     this.changeCity.emit(properties?.name);
     this.currentTownId = `town_${properties?.id}`;
     this.countryGElement.selectAll('g.town').attr('display', 'none');
@@ -197,7 +248,8 @@ export class MapChartComponent implements AfterViewInit {
   }
 
   private _reset() {
-    this._displayTown();
+    this._hiddenAllTown();
+    this.countryGElement.select('g#cityName').attr('display', '');
     const svg = d3.select(this.mapChart.nativeElement);
     svg
       .transition()
