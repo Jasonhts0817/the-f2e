@@ -2,7 +2,7 @@
   <div
     class="relative h-[190px] w-full overflow-hidden bg-map md:h-[calc(100dvh-66px)] md:w-[600px] md:overflow-auto"
   >
-    <div class="absolute z-10 h-full w-full bg-[#49505799]"></div>
+    <div class="absolute z-10 h-full w-full bg-[#49505799] md:hidden"></div>
     <app-map-chart
       [countryData]="mapChartCountryData | async"
       [areaData]="mapChartAreaData | async"

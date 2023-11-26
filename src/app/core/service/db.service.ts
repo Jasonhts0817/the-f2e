@@ -23,7 +23,7 @@ export class DbService extends Dexie {
 
   constructor(private apiService: ApiService) {
     super('ngdexieliveQuery');
-    this.version(3).stores({
+    this.version(1).stores({
       elbase:
         '++id, [year+name], [year+provinceCity+countyCity], [year+townshipDistrict+village]',
       elcand: '++id, year',
@@ -34,38 +34,14 @@ export class DbService extends Dexie {
         '++id, [year+provinceCity+countyCity], [year+townshipDistrict+village]',
     });
     this.on('populate', () => this.populate());
-    this.on(
-      'ready',
-      () => {
-        console.log('db:ready');
-      },
-      true,
-    );
   }
-
-  async populate() {
-    console.log('populate');
-    const reqs = Object.values(VoteYearEnum)
-      .map((voteYear) => [
-        this.apiService
-          .getElbase(voteYear)
-          .pipe(map((elbase) => this.elbase.bulkAdd(elbase))),
-        this.apiService
-          .getElpaty(voteYear)
-          .pipe(map((elpaty) => this.elpaty.bulkAdd(elpaty))),
-        this.apiService
-          .getElcand(voteYear)
-          .pipe(map((elcand) => this.elcand.bulkAdd(elcand))),
-      ])
-      .flat();
-
-    forkJoin(reqs).subscribe(() => {
-      console.log('data; done');
-    });
-  }
+  async populate() {}
   async downloadVoteData(voteYear: VoteYearEnum): Promise<boolean> {
     if (!voteYear) return false;
     const reqs = [
+      await this.fetchElbase(voteYear),
+      await this.fetchElcand(voteYear),
+      await this.fetchElpaty(voteYear),
       await this.fetchElprof(voteYear),
       await this.fetchElctks(voteYear),
     ];
@@ -86,6 +62,31 @@ export class DbService extends Dexie {
       });
     });
   }
+  async fetchElbase(voteYear: VoteYearEnum) {
+    const elbase = await this.elbase.where({ year: voteYear }).first();
+    console.log('elbase', elbase);
+    return elbase
+      ? of()
+      : this.apiService
+          .getElbase(voteYear)
+          .pipe(map((elbase) => this.addDataByWebWorker('elbase', elbase)));
+  }
+  async fetchElpaty(voteYear: VoteYearEnum) {
+    const elpaty = await this.elpaty.where({ year: voteYear }).first();
+    return elpaty
+      ? of()
+      : this.apiService
+          .getElpaty(voteYear)
+          .pipe(map((elpaty) => this.addDataByWebWorker('elpaty', elpaty)));
+  }
+  async fetchElcand(voteYear: VoteYearEnum) {
+    const elcand = await this.elcand.where({ year: voteYear }).first();
+    return elcand
+      ? of()
+      : this.apiService
+          .getElcand(voteYear)
+          .pipe(map((elcand) => this.addDataByWebWorker('elcand', elcand)));
+  }
 
   async fetchElprof(voteYear: VoteYearEnum) {
     const elprof = await this.elprof.where({ year: voteYear }).first();
@@ -93,7 +94,7 @@ export class DbService extends Dexie {
       ? of()
       : this.apiService
           .getElprof(voteYear)
-          .pipe(map((elprof) => this.elprof.bulkAdd(elprof)));
+          .pipe(map((elprof) => this.addDataByWebWorker('elprof', elprof)));
   }
 
   async fetchElctks(voteYear: VoteYearEnum) {
@@ -102,6 +103,17 @@ export class DbService extends Dexie {
       ? of()
       : this.apiService
           .getElctks(voteYear)
-          .pipe(map((elctks) => this.elctks.bulkAdd(elctks)));
+          .pipe(map((elctks) => this.addDataByWebWorker('elctks', elctks)));
+  }
+
+  addDataByWebWorker(tableName: string, results: any) {
+    if (typeof Worker !== 'undefined') {
+      // Create a new
+      const worker = new Worker(new URL('../../app.worker', import.meta.url));
+      worker.onmessage = ({ data }) => {
+        console.log(`page got message: ${data}`);
+      };
+      worker.postMessage({ type: 'indexedDb', tableName, results });
+    }
   }
 }
