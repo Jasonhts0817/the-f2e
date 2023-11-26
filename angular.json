@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "the-f2e-2023": {
+    "the-f2e-2023-president": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -39,7 +39,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/the-f2e-2023",
+            "outputPath": "dist/the-f2e-2023-president",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": ["zone.js"],
@@ -98,10 +98,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "the-f2e-2023:build:production"
+              "browserTarget": "the-f2e-2023-president:build:production"
             },
             "development": {
-              "browserTarget": "the-f2e-2023:build:development"
+              "browserTarget": "the-f2e-2023-president:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -109,7 +109,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "the-f2e-2023:build"
+            "browserTarget": "the-f2e-2023-president:build"
           }
         },
         "test": {

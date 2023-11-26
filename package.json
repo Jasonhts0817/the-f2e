@@ -1,11 +1,11 @@
 {
-  "name": "the-f2e-2023",
+  "name": "the-f2e-2023-president",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
-    "build:prod": "ng build --configuration=production --base-href /the-f2e-2023/",
+    "build:prod": "ng build --configuration=production --base-href /the-f2e-2023-president/",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "dtl:vote": "npx ts-node --project tsconfig.dtl.json ./script/vote-data-transform.ts",
