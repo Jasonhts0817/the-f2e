@@ -8,6 +8,7 @@ import { Elprof } from '../models/elprof.model';
 import { ApiService } from './api.service';
 import { VoteYearEnum } from '../enums/vote-year.enum';
 import { forkJoin, map, of } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -23,7 +24,7 @@ export class DbService extends Dexie {
 
   constructor(private apiService: ApiService) {
     super('ngdexieliveQuery');
-    this.version(1).stores({
+    this.version(environment.indexedDBVersion).stores({
       elbase:
         '++id, [year+name], [year+provinceCity+countyCity], [year+townshipDistrict+village]',
       elcand: '++id, year',
@@ -64,7 +65,6 @@ export class DbService extends Dexie {
   }
   async fetchElbase(voteYear: VoteYearEnum) {
     const elbase = await this.elbase.where({ year: voteYear }).first();
-    console.log('elbase', elbase);
     return elbase
       ? of()
       : this.apiService
@@ -108,11 +108,8 @@ export class DbService extends Dexie {
 
   addDataByWebWorker(tableName: string, results: any) {
     if (typeof Worker !== 'undefined') {
-      // Create a new
       const worker = new Worker(new URL('../../app.worker', import.meta.url));
-      worker.onmessage = ({ data }) => {
-        console.log(`page got message: ${data}`);
-      };
+      worker.onmessage = ({ data }) => {};
       worker.postMessage({ type: 'indexedDb', tableName, results });
     }
   }

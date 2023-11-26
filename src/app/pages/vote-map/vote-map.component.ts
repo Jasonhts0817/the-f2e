@@ -1,7 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
-import { map } from 'rxjs';
+import {
+  BehaviorSubject,
+  Subject,
+  combineLatest,
+  interval,
+  map,
+  takeUntil,
+} from 'rxjs';
 
 import { VoteMapService } from './vote-map.service';
 import { VoteYearEnum } from 'src/app/core/enums/vote-year.enum';
@@ -11,6 +18,7 @@ import { LineChartComponent } from 'src/app/shared/charts/line-chart.component';
 import { StackChartComponent } from 'src/app/shared/charts/stack-chart.component';
 import { DonutChartComponent } from 'src/app/shared/charts/donut-chart.component';
 import { MapChartComponent } from 'src/app/shared/charts/map-chart.component';
+import { DbService } from 'src/app/core/service/db.service';
 
 @Component({
   selector: 'app-vote-map',
@@ -27,6 +35,9 @@ import { MapChartComponent } from 'src/app/shared/charts/map-chart.component';
   templateUrl: './vote-map.component.html',
 })
 export class VoteMapComponent implements OnInit {
+  isLoaded = false;
+  progress = new BehaviorSubject<number>(0);
+  intervalTime: number = 2000;
   top3CandidateInfo = this.voteMapService.top3CandidateInfo.pipe(
     map((cands) =>
       cands.map((cand, i) => {
@@ -169,6 +180,7 @@ export class VoteMapComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     public voteMapService: VoteMapService,
+    private db: DbService,
   ) {}
 
   ngOnInit(): void {
@@ -180,26 +192,8 @@ export class VoteMapComponent implements OnInit {
       townshipDistrict: townshipDistrict,
     };
     this._registerSearchFormChange();
+    this._registerLoadingProgress(year);
     this.voteMapService.searchForm?.patchValue(req);
-  }
-  private _registerSearchFormChange() {
-    this.voteMapService.searchForm?.valueChanges.subscribe((search) => {
-      const breadCrumb = ['全臺縣市總統得票'];
-
-      const { provinceAnyCountyCity, townshipDistrict } = search;
-      if (
-        provinceAnyCountyCity &&
-        (provinceAnyCountyCity.provinceCity !== '00' ||
-          provinceAnyCountyCity.countyCity !== '000')
-      ) {
-        breadCrumb.push(provinceAnyCountyCity.name);
-      }
-      if (townshipDistrict && townshipDistrict?.countyCity !== '00') {
-        breadCrumb.push(townshipDistrict?.name);
-      }
-      this.breadCrumb = breadCrumb;
-      this.title = breadCrumb[breadCrumb.length - 1];
-    });
   }
 
   changeCity(cityName: string) {
@@ -238,6 +232,76 @@ export class VoteMapComponent implements OnInit {
 
   windowScrollToTop() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  private _registerSearchFormChange() {
+    this.voteMapService.searchForm?.valueChanges.subscribe((search) => {
+      const breadCrumb = ['全臺縣市總統得票'];
+
+      const { provinceAnyCountyCity, townshipDistrict } = search;
+      if (
+        provinceAnyCountyCity &&
+        (provinceAnyCountyCity.provinceCity !== '00' ||
+          provinceAnyCountyCity.countyCity !== '000')
+      ) {
+        breadCrumb.push(provinceAnyCountyCity.name);
+      }
+      if (townshipDistrict && townshipDistrict?.countyCity !== '00') {
+        breadCrumb.push(townshipDistrict?.name);
+      }
+      this.breadCrumb = breadCrumb;
+      this.title = breadCrumb[breadCrumb.length - 1];
+    });
+  }
+
+  private async _registerLoadingProgress(year: VoteYearEnum) {
+    const elctk = await this.db.elctks.where({ year }).first();
+    this.intervalTime = elctk ? 100 : 2000;
+    const isLoadedQueue: string[] = [];
+    const destry$ = new Subject();
+    const pushToLoadedQueue = (dataName: string, res: any) => {
+      if (res && res.length > 0 && !isLoadedQueue.includes(dataName)) {
+      }
+    };
+    const queueInterval = interval(this.intervalTime);
+
+    queueInterval.pipe(takeUntil(destry$)).subscribe(() => {
+      if (this.progress.value > 100) {
+        this.isLoaded = true;
+        destry$.next(true);
+        destry$.complete();
+      }
+      this.progress.next(this.progress.value + 12.5);
+    });
+
+    combineLatest([
+      this.top3CandidateInfo.pipe(
+        map((res) => pushToLoadedQueue('top3CandidateInfo', res)),
+      ),
+      this.stackChartData.pipe(
+        map((res) => pushToLoadedQueue('stackChartData', res)),
+      ),
+      this.donutChartData.pipe(
+        map((res) => pushToLoadedQueue('donutChartData', res)),
+      ),
+      this.mapChartCountryData.pipe(
+        map((res) => pushToLoadedQueue('mapChartCountryData', res)),
+      ),
+      this.mapChartAreaData.pipe(
+        map((res) => pushToLoadedQueue('mapChartAreaData', res)),
+      ),
+      this.areaVoteInfoVM.pipe(
+        map((res) => pushToLoadedQueue('areaVoteInfoVM', res)),
+      ),
+      this.historyPartyVoteCount.pipe(
+        map((res) => pushToLoadedQueue('historyPartyVoteCount', res)),
+      ),
+      this.historyPartyVotePercentage.pipe(
+        map((res) => pushToLoadedQueue('historyPartyVotePercentage', res)),
+      ),
+    ])
+      .pipe(takeUntil(destry$))
+      .subscribe();
   }
 
   private _getPartyTheme(partyName: string) {

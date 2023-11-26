@@ -20,6 +20,10 @@ export class DonutChartComponent implements OnChanges {
   @Input() data?: number[] | null;
   @Input() width: number = 124;
 
+  ngAfterViewInit(): void {
+    this.createDonutChart();
+  }
+
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['data']) {
       this.createDonutChart();

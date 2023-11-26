@@ -6,6 +6,7 @@ import { Elctks } from './core/models/elctks.model';
 import { Elcand } from './core/models/elcand.model';
 import { Elpaty } from './core/models/elpaty.model';
 import { Elprof } from './core/models/elprof.model';
+import { environment } from 'src/environments/environment';
 
 addEventListener('message', ({ data }) => {
   switch (data.type) {
@@ -46,7 +47,7 @@ export class AppDB extends Dexie {
 
   constructor() {
     super('ngdexieliveQuery');
-    this.version(1).stores({
+    this.version(environment.indexedDBVersion).stores({
       elbase:
         '++id, [year+name], [year+provinceCity+countyCity], [year+townshipDistrict+village]',
       elcand: '++id, year',
