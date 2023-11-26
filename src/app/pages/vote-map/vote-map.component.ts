@@ -236,6 +236,10 @@ export class VoteMapComponent implements OnInit {
     }
   }
 
+  windowScrollToTop() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
   private _getPartyTheme(partyName: string) {
     return (
       this.themesConfig.find((theme) => theme.partyName === partyName) ??

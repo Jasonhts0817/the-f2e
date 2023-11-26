@@ -1,5 +1,8 @@
-<div class="sticky top-[66px] flex">
-  <div class="h-[calc(100dvh-66px)] w-[600px] bg-map">
+<div class="sticky top-[66px] flex flex-col md:flex-row">
+  <div
+    class="relative h-[190px] w-full overflow-hidden bg-map md:h-[calc(100dvh-66px)] md:w-[600px] md:overflow-auto"
+  >
+    <div class="absolute z-10 h-full w-full bg-[#49505799]"></div>
     <app-map-chart
       [countryData]="mapChartCountryData | async"
       [areaData]="mapChartAreaData | async"
@@ -7,8 +10,8 @@
       [year]="voteMapService.currentYear"
     ></app-map-chart>
   </div>
-  <div class="h-[calc(100dvh-66px)] grow overflow-y-auto">
-    <div class="px-12 pb-10">
+  <div #info class="grow overflow-y-auto md:h-[calc(100dvh-66px)]">
+    <div class="px-4 pb-10 md:px-12">
       <h3 class="flex items-center gap-[10px] pb-3 pt-8 text-h3">
         <img
           *ngIf="breadCrumb.length > 1"
@@ -38,11 +41,11 @@
       </ul>
       <section class="rounded-2xl bg-gray-200 p-4 pt-6">
         <h5 class="text-h5">總統得票數</h5>
-        <div class="flex gap-4">
+        <div class="flex flex-col gap-4 xl:flex-row">
           <div
-            class="flex w-1/2 flex-col justify-center gap-3 rounded-xl bg-white px-6 py-4"
+            class="flex w-full flex-col justify-center gap-3 rounded-xl bg-white px-6 py-4 xl:w-1/2"
           >
-            <ul class="flex justify-between">
+            <ul class="flex flex-col xl:flex-row xl:justify-between">
               <li
                 class="flex gap-3"
                 *ngFor="let cand of top3CandidateInfo | async; let i = index"
@@ -81,13 +84,13 @@
             ></app-stack-chart>
           </div>
           <div
-            class="flex w-1/2 justify-between gap-10 rounded-xl bg-white px-6 py-4"
+            class="flex w-full items-center justify-between gap-10 rounded-xl bg-white px-6 py-4 xl:w-1/2"
           >
             <app-donut-chart
               [width]="124"
               [data]="donutChartData | async"
             ></app-donut-chart>
-            <div class="grid grow grid-cols-2 grid-rows-2 gap-x-12 gap-y-4">
+            <div class="grid grow grid-cols-1 gap-x-12 gap-y-4 lg:grid-cols-2">
               <div class="flex flex-col gap-1">
                 <span class="text-body-2 text-font-secondary">投票數</span>
                 <span class="text-h6">{{
@@ -122,8 +125,8 @@
           </div>
         </div>
       </section>
-      <section class="flex gap-6 pt-6">
-        <div class="h-fit w-1/2 rounded-xl border-[1px] border-line">
+      <section class="flex flex-col gap-6 pt-6 xl:flex-row">
+        <div class="h-fit w-full rounded-xl border-[1px] border-line xl:w-1/2">
           <div class="flex justify-between px-4 py-3">
             <h5 class="text-h5">歷屆政黨得票數</h5>
             <div class="flex items-center gap-1">
@@ -137,13 +140,12 @@
             </div>
           </div>
           <app-bar-chart
-            [width]="600"
-            [height]="200"
+            class="h-[200px] w-[600px]"
             [data]="historyPartyVoteCount | async"
             [themes]="themes | async"
           ></app-bar-chart>
         </div>
-        <div class="h-fit w-1/2 rounded-xl border-[1px] border-line">
+        <div class="h-fit w-full rounded-xl border-[1px] border-line xl:w-1/2">
           <div class="flex justify-between px-4 py-3">
             <h5 class="text-h5">歷屆政黨得票率</h5>
             <div class="flex items-center gap-1">
@@ -157,8 +159,7 @@
             </div>
           </div>
           <app-line-chart
-            [width]="600"
-            [height]="200"
+            class="h-[200px] md:w-[600px]"
             [data]="historyPartyVotePercentage | async"
             [themes]="themes | async"
           ></app-line-chart>
@@ -169,12 +170,37 @@
         <table>
           <thead class="bg-bg p-2">
             <tr>
-              <th class="w-2/12 p-2 pr-6 text-left text-body-2">縣市</th>
-              <th class="w-3/12 p-2 pr-6 text-left text-body-2">得票率</th>
-              <th class="w-2/12 p-2 pr-6 text-left text-body-2">當選人</th>
-              <th class="w-2/12 p-2 pr-6 text-left text-body-2">投票數</th>
-              <th class="w-2/12 p-2 pr-6 text-left text-body-2">投票率</th>
-              <th class="w-1/12 p-2 text-left text-body-2"></th>
+              <th
+                class="hidden w-2/12 p-2 pr-6 text-left text-body-2 xl:table-cell"
+              >
+                地區
+              </th>
+              <th colspan="4" class="p-2 pr-6 text-left text-body-2 xl:hidden">
+                地區
+              </th>
+              <th
+                class="hidden w-3/12 p-2 pr-6 text-left text-body-2 xl:table-cell"
+              >
+                得票率
+              </th>
+              <th
+                class="hidden w-2/12 p-2 pr-6 text-left text-body-2 xl:table-cell"
+              >
+                當選人
+              </th>
+              <th
+                class="hidden w-2/12 p-2 pr-6 text-left text-body-2 xl:table-cell"
+              >
+                投票數
+              </th>
+              <th
+                class="hidden w-2/12 p-2 pr-6 text-left text-body-2 xl:table-cell"
+              >
+                投票率
+              </th>
+              <th
+                class="hidden w-1/12 p-2 text-left text-body-2 xl:table-cell"
+              ></th>
             </tr>
           </thead>
           <tbody>
@@ -184,16 +210,27 @@
               [ngClass]="{ 'cursor-pointer': !isVillage }"
               (click)="clickAreaInfo(areaVoteInfoVM.areaName)"
             >
-              <td class="p-2 pr-6 text-left text-h6">
+              <td class="w-2/12 whitespace-nowrap p-2 pr-6 text-left text-h6">
                 {{ areaVoteInfoVM.areaName }}
               </td>
               <td class="p-2 pr-6 text-left text-body-2">
+                <div class="flex items-center gap-2 xl:hidden">
+                  <span class="text-body-2 text-font-secondary">當選人</span>
+                  <img
+                    class="h-8 w-8 rounded-full"
+                    [ngClass]="areaVoteInfoVM.color"
+                    [src]="areaVoteInfoVM.img"
+                  />
+                  <span>
+                    {{ areaVoteInfoVM.electedName }}
+                  </span>
+                </div>
                 <app-stack-chart
                   [data]="areaVoteInfoVM.partyVoteInfos"
                   [themes]="themes | async"
                 ></app-stack-chart>
               </td>
-              <td class="p-2 pr-6 text-left text-body-2">
+              <td class="hidden p-2 pr-6 text-left text-body-2 xl:table-cell">
                 <div class="flex items-center gap-2">
                   <img
                     class="h-8 w-8 rounded-full"
@@ -205,15 +242,15 @@
                   </span>
                 </div>
               </td>
-              <td class="p-2 pr-6 text-left text-body-2">
+              <td class="hidden p-2 pr-6 text-left text-body-2 xl:table-cell">
                 {{ areaVoteInfoVM.totalVotes | currency: "TWD" : "" : "1.0-0" }}
               </td>
-              <td class="p-2 pr-6 text-left text-body-2">
+              <td class="hidden p-2 pr-6 text-left text-body-2 xl:table-cell">
                 {{
                   areaVoteInfoVM.voterTurnout | currency: "TWD" : "" : "1.2-2"
                 }}%
               </td>
-              <td>
+              <td class="w-1/12">
                 <span
                   *ngIf="!isVillage"
                   class="flex h-auto w-full items-center justify-center"
@@ -228,5 +265,19 @@
     </div>
 
     <app-footer></app-footer>
+    <button class="fixed bottom-2 right-2 hidden md:block">
+      <img
+        (click)="info.scrollTo({ top: 0, behavior: 'smooth' })"
+        src="assets/icons/scroll_top.svg"
+        alt="回到頂部"
+      />
+    </button>
+    <button class="fixed bottom-2 right-2 md:hidden">
+      <img
+        (click)="windowScrollToTop()"
+        src="assets/icons/scroll_top.svg"
+        alt="回到頂部"
+      />
+    </button>
   </div>
 </div>
