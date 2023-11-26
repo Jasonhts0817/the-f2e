@@ -59,7 +59,6 @@ function dataTransform() {
       JSON.stringify(countrysTopoJson[countryId]),
     );
   });
-  console.log(countrObj);
 }
 
 dataTransform();

@@ -7,7 +7,7 @@ import { Elcand } from 'src/app/core/models/elcand.model';
 import { Elctks } from 'src/app/core/models/elctks.model';
 import { Elpaty } from 'src/app/core/models/elpaty.model';
 import { Elprof } from 'src/app/core/models/elprof.model';
-import Dexie from 'dexie';
+
 import {
   AreaVoteInfoVM,
   CandidateInfoVM,
@@ -51,9 +51,10 @@ export class VoteMapService {
       provinceAnyCountyCity: undefined,
       townshipDistrict: undefined,
     });
-    f.controls.year?.valueChanges.subscribe((year) => {
+    f.controls.year?.valueChanges.subscribe(async (year) => {
       if (!year) return;
       this.currentYear = year;
+      await this.db.downloadVoteData(year);
       this.getVoteYearData(year).then(() => {
         f.controls.provinceAnyCountyCity?.patchValue(
           this.provinceAndCountryCityOptions.value[0],
@@ -103,7 +104,6 @@ export class VoteMapService {
     this.currentYear = year;
     const options = await this._getProvinceAndCountryCityOptions();
     this.provinceAndCountryCityOptions.next(options);
-
     this._getAreaVoteInfo(options);
   }
 

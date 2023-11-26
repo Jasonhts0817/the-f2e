@@ -36,13 +36,36 @@ function convertCSVtoJson(dataFilePath: string) {
       results.push(data);
     })
     .on('end', () => {
-      const jsonString = JSON.stringify(results, null, 2);
       const { base, name } = path.parse(dataFilePath);
+      const jsonString = JSON.stringify(dataFilter(name, results), null, 2);
       const subPath = dataFilePath.replace(DATA_DIR_PATH, '').replace(base, '');
       const apiFilePath = `${API_DIR_PATH}${subPath}`;
+
       fs.mkdirSync(apiFilePath, { recursive: true });
       fs.writeFileSync(`${apiFilePath}${name}.json`, jsonString);
     });
+}
+
+function dataFilter(name: string, results: any) {
+  switch (name) {
+    case 'elprof':
+      return results.map((elprof: any) => {
+        delete elprof[9];
+        delete elprof[10];
+        delete elprof[11];
+        delete elprof[12];
+        delete elprof[13];
+        delete elprof[14];
+        delete elprof[15];
+        delete elprof[16];
+        delete elprof[17];
+        delete elprof[19];
+        return elprof;
+      });
+
+    default:
+      return results;
+  }
 }
 
 function dataTransform() {

@@ -46,28 +46,8 @@ export class Elprof {
   invalidVotes: number;
   /** 投票數 */
   totalVotes: number;
-  /** 選舉人數 */
-  electorate: number;
-  /** 人口數補選時僅有第1筆全選區有資料 */
-  population: number;
-  /** 候選人數合計 */
-  totalCandidates: number;
-  /** 當選人數合計 */
-  totalElected: number;
-  /** 候選人數-男 */
-  maleCandidates: number;
-  /** 候選人數-女 */
-  femaleCandidates: number;
-  /** 當選人數-男 */
-  maleElected: number;
-  /** 當選人數-女 */
-  femaleElected: number;
-  /** 選舉人數對人口數  全國性選舉僅縣市層級列有資料 補選時僅第1筆全選區有資料 */
-  electorateToPopulationRatio: number;
   /** 投票數對選舉人數 */
   voterTurnout: number;
-  /** 當選人數對候選人數 */
-  electedToCandidateRatio: number;
   constructor(data: any, year: VoteYearEnum) {
     this.year = year;
     this.provinceCity = data[0].trim();
@@ -79,16 +59,6 @@ export class Elprof {
     this.validVotes = data[6].trim();
     this.invalidVotes = data[7].trim();
     this.totalVotes = data[8].trim();
-    this.electorate = data[9].trim();
-    this.population = data[10].trim();
-    this.totalCandidates = data[11].trim();
-    this.totalElected = data[12].trim();
-    this.maleCandidates = data[13].trim();
-    this.femaleCandidates = data[14].trim();
-    this.maleElected = data[15].trim();
-    this.femaleElected = data[16].trim();
-    this.electorateToPopulationRatio = data[17].trim();
     this.voterTurnout = data[18].trim();
-    this.electedToCandidateRatio = data[19].trim();
   }
 }
