@@ -55,11 +55,7 @@ export class VoteMapService {
       if (!year) return;
       this.currentYear = year;
       await this.db.downloadVoteData(year);
-      this.getVoteYearData(year).then(() => {
-        f.controls.provinceAnyCountyCity?.patchValue(
-          this.provinceAndCountryCityOptions.value[0],
-        );
-      });
+      this.getVoteYearData(year);
     });
 
     f.controls.provinceAnyCountyCity?.valueChanges.subscribe(async (elbase) => {
@@ -102,9 +98,11 @@ export class VoteMapService {
   /** 取得投票年度資料 */
   async getVoteYearData(year: VoteYearEnum) {
     this.currentYear = year;
-    const options = await this._getProvinceAndCountryCityOptions();
-    this.provinceAndCountryCityOptions.next(options);
-    this._getAreaVoteInfo(options);
+    this._getProvinceAndCountryCityOptions().then((options) => {
+      this.provinceAndCountryCityOptions.next(options);
+      this.searchForm?.controls['provinceAnyCountyCity'].patchValue(options[0]);
+      this._getAreaVoteInfo(options);
+    });
   }
 
   /** 取得前三名候選人資訊 */
