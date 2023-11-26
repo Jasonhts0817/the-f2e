@@ -43,16 +43,14 @@ v 16.16.0
   - Stanealone
   - Material cdk
   - Reactive Form
-  - Angular Universal(SSG)
 - CSS
   - TailwindCSS
   - RWD
 - 其他
-  - Lottie
-  - AOS.js
-  - Swiper
-  - Imagemagick
-  - Service Worker
+  - D3.js
+  - Web Worker
+  - Indexed DB (dexie)
+  - TopoJSON
 
 # 資料夾說明
 
