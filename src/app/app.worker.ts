@@ -6,7 +6,7 @@ import { Elctks } from './core/models/elctks.model';
 import { Elcand } from './core/models/elcand.model';
 import { Elpaty } from './core/models/elpaty.model';
 import { Elprof } from './core/models/elprof.model';
-import { environment } from 'src/environments/environment';
+import { Elpinf } from './core/models/elpinf.model';
 
 addEventListener('message', ({ data }) => {
   switch (data.type) {
@@ -36,6 +36,9 @@ function insertDBData(tableName: string, results: any) {
     case 'elprof':
       db.elprof.bulkAdd(results).then();
       break;
+    case 'elpinf':
+      db.elpinf.bulkAdd(results).then();
+      break;
   }
 }
 export class AppDB extends Dexie {
@@ -44,10 +47,15 @@ export class AppDB extends Dexie {
   elctks!: Table<Elctks, number>;
   elpaty!: Table<Elpaty, number>;
   elprof!: Table<Elprof, number>;
+  elpinf!: Table<Elpinf, number>;
 
   constructor() {
     super('ngdexieliveQuery');
-    this.version(environment.indexedDBVersion).stores({
+    this.version(2).stores({
+      elpinf:
+        '++id, [year+provinceCity+countyCity], [year+townshipDistrict+village]',
+    });
+    this.version(1).stores({
       elbase:
         '++id, [year+name], [year+provinceCity+countyCity], [year+townshipDistrict+village]',
       elcand: '++id, year',

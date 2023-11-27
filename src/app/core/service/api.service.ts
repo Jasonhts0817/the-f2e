@@ -9,6 +9,7 @@ import { Elcand } from '../models/elcand.model';
 import { Elpaty } from '../models/elpaty.model';
 import { environment } from 'src/environments/environment';
 import { TaiwanMap } from '../models/map.model';
+import { Elpinf } from '../models/elpinf.model';
 
 @Injectable({
   providedIn: 'root',
@@ -45,6 +46,13 @@ export class ApiService {
     return this.http
       .get<Elctks[]>(`${environment.apiUrl}/api/president/${year}/elctks.json`)
       .pipe(map((datas) => datas.map((data) => new Elctks(data, year))));
+  }
+
+  /** 取得候選人得票檔 */
+  getElPinf(year: VoteYearEnum) {
+    return this.http
+      .get<Elpinf[]>(`${environment.apiUrl}/api/president/${year}/elpinf.json`)
+      .pipe(map((datas) => datas.map((data) => new Elpinf(data, year))));
   }
 
   /** 取得縣市地圖 */

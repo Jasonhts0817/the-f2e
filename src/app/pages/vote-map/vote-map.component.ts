@@ -37,7 +37,7 @@ import { DbService } from 'src/app/core/service/db.service';
 export class VoteMapComponent implements OnInit {
   isLoaded = false;
   progress = new BehaviorSubject<number>(0);
-  intervalTime: number = 2000;
+  intervalTime: number = 1000;
   top3CandidateInfo = this.voteMapService.top3CandidateInfo.pipe(
     map((cands) =>
       cands.map((cand, i) => {
@@ -192,7 +192,6 @@ export class VoteMapComponent implements OnInit {
       townshipDistrict: townshipDistrict,
     };
     this._registerSearchFormChange();
-    this._registerLoadingProgress(year);
     this.voteMapService.searchForm?.patchValue(req);
   }
 
@@ -252,26 +251,34 @@ export class VoteMapComponent implements OnInit {
       this.breadCrumb = breadCrumb;
       this.title = breadCrumb[breadCrumb.length - 1];
     });
+    this.voteMapService.searchForm?.controls['year'].valueChanges.subscribe(
+      (year) => this._startLoadingProgress(year),
+    );
   }
 
-  private async _registerLoadingProgress(year: VoteYearEnum) {
+  private async _startLoadingProgress(year: VoteYearEnum) {
+    this.progress.next(0);
+    this.isLoaded = false;
+
     const elctk = await this.db.elctks.where({ year }).first();
-    this.intervalTime = elctk ? 100 : 2000;
+    this.intervalTime = elctk ? 200 : 1000;
     const isLoadedQueue: string[] = [];
     const destry$ = new Subject();
     const pushToLoadedQueue = (dataName: string, res: any) => {
       if (res && res.length > 0 && !isLoadedQueue.includes(dataName)) {
+        isLoadedQueue.push(dataName);
       }
     };
     const queueInterval = interval(this.intervalTime);
 
     queueInterval.pipe(takeUntil(destry$)).subscribe(() => {
-      if (this.progress.value > 100) {
+      if (isLoadedQueue.length > 0 && this.progress.value < 100) {
+        this.progress.next(this.progress.value + 12.5);
+      } else {
         this.isLoaded = true;
         destry$.next(true);
         destry$.complete();
       }
-      this.progress.next(this.progress.value + 12.5);
     });
 
     combineLatest([

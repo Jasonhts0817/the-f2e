@@ -7,8 +7,8 @@ import { Elpaty } from '../models/elpaty.model';
 import { Elprof } from '../models/elprof.model';
 import { ApiService } from './api.service';
 import { VoteYearEnum } from '../enums/vote-year.enum';
-import { forkJoin, map, of } from 'rxjs';
-import { environment } from 'src/environments/environment';
+import { concatMap, from, map, mergeMap, of } from 'rxjs';
+import { Elpinf } from '../models/elpinf.model';
 
 @Injectable({
   providedIn: 'root',
@@ -19,12 +19,15 @@ export class DbService extends Dexie {
   elctks!: Table<Elctks, number>;
   elpaty!: Table<Elpaty, number>;
   elprof!: Table<Elprof, number>;
-
-  voteDataQueryQueue = ['1996', '2000', '2004', '2008', '2012', '2016', '2020'];
+  elpinf!: Table<Elpinf, number>;
 
   constructor(private apiService: ApiService) {
     super('ngdexieliveQuery');
-    this.version(environment.indexedDBVersion).stores({
+    this.version(2).stores({
+      elpinf:
+        '++id, [year+provinceCity+countyCity], [year+townshipDistrict+village]',
+    });
+    this.version(1).stores({
       elbase:
         '++id, [year+name], [year+provinceCity+countyCity], [year+townshipDistrict+village]',
       elcand: '++id, year',
@@ -37,31 +40,49 @@ export class DbService extends Dexie {
     this.on('populate', () => this.populate());
   }
   async populate() {}
-  async downloadVoteData(voteYear: VoteYearEnum): Promise<boolean> {
+  async downloadYearVoteData(voteYear: VoteYearEnum) {
     if (!voteYear) return false;
     const reqs = [
-      await this.fetchElbase(voteYear),
       await this.fetchElcand(voteYear),
       await this.fetchElpaty(voteYear),
       await this.fetchElprof(voteYear),
       await this.fetchElctks(voteYear),
     ];
     return new Promise((resolve) => {
-      forkJoin(reqs).subscribe({
-        complete: () => {
-          this.voteDataQueryQueue = this.voteDataQueryQueue.filter(
-            (year) => year != voteYear,
-          );
-          setTimeout(() => {
-            this.downloadVoteData(
-              this.voteDataQueryQueue.shift() as VoteYearEnum,
-            );
-          }, 10000);
-
-          resolve(true);
-        },
-      });
+      from(reqs)
+        .pipe(mergeMap((res) => res))
+        .subscribe({
+          complete: () => setTimeout(() => resolve(true), 2000),
+        });
     });
+  }
+  async downloadElbase() {
+    const reqs = [
+      await this.fetchElbase(VoteYearEnum._1996),
+      await this.fetchElbase(VoteYearEnum._2000),
+      await this.fetchElbase(VoteYearEnum._2004),
+      await this.fetchElbase(VoteYearEnum._2008),
+      await this.fetchElbase(VoteYearEnum._2012),
+      await this.fetchElbase(VoteYearEnum._2016),
+      await this.fetchElbase(VoteYearEnum._2020),
+    ];
+    from(reqs)
+      .pipe(mergeMap((res) => res))
+      .subscribe();
+  }
+  async downloadElpinf() {
+    const reqs = [
+      await this.fetchElpinf(VoteYearEnum._1996),
+      await this.fetchElpinf(VoteYearEnum._2000),
+      await this.fetchElpinf(VoteYearEnum._2004),
+      await this.fetchElpinf(VoteYearEnum._2008),
+      await this.fetchElpinf(VoteYearEnum._2012),
+      await this.fetchElpinf(VoteYearEnum._2016),
+      await this.fetchElpinf(VoteYearEnum._2020),
+    ];
+    from(reqs)
+      .pipe(mergeMap((res) => res))
+      .subscribe();
   }
   async fetchElbase(voteYear: VoteYearEnum) {
     const elbase = await this.elbase.where({ year: voteYear }).first();
@@ -104,6 +125,15 @@ export class DbService extends Dexie {
       : this.apiService
           .getElctks(voteYear)
           .pipe(map((elctks) => this.addDataByWebWorker('elctks', elctks)));
+  }
+
+  async fetchElpinf(voteYear: VoteYearEnum) {
+    const elpinf = await this.elpinf.where({ year: voteYear }).first();
+    return elpinf
+      ? of()
+      : this.apiService
+          .getElPinf(voteYear)
+          .pipe(map((elpinf) => this.addDataByWebWorker('elpinf', elpinf)));
   }
 
   addDataByWebWorker(tableName: string, results: any) {

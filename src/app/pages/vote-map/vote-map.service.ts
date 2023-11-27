@@ -54,8 +54,9 @@ export class VoteMapService {
     f.controls.year?.valueChanges.subscribe(async (year) => {
       if (!year) return;
       this.currentYear = year;
-      await this.db.downloadVoteData(year);
-      this.getVoteYearData(year);
+      await this.db.downloadYearVoteData(year).then(() => {
+        this.getVoteYearData(year);
+      });
     });
 
     f.controls.provinceAnyCountyCity?.valueChanges.subscribe(async (elbase) => {
@@ -182,49 +183,28 @@ export class VoteMapService {
           .equals([year, areaName])
           .first()) as Elbase;
         if (!elbase) return;
-        const elcands = await this.db.elcand.where({ year }).toArray();
-        const elpaties = await this.db.elpaty.where({ year }).toArray();
-        const elctks = await this.db.elctks
+        const elpinfs = await this.db.elpinf
           .where('[year+townshipDistrict+village]')
           .equals([year, elbase?.townshipDistrict, elbase?.village])
           .and(
-            (elctks) =>
-              elctks.provinceCity === elbase.provinceCity &&
-              elctks.countyCity === elbase.countyCity &&
-              (elctks.pollingStation === '0000' ||
-                elctks.pollingStation === '0'),
+            (elpinf) =>
+              elpinf.provinceCity === elbase.provinceCity &&
+              elpinf.countyCity === elbase.countyCity,
           )
           .toArray();
 
         return this.top3CandidateInfo.value
           .map((cand) => {
-            const elpaty = elpaties.find(
-              ({ politicalPartyName }) =>
-                cand.politicalPartyName === politicalPartyName,
+            const elpinf = elpinfs.find(
+              (info) => info.politicalPartyName === cand.politicalPartyName,
             );
-            if (!elpaty) return;
-            const partyInfo: HistoryPartyInfoVM = {
+            if (!elpinf) return;
+            return {
               year,
-              politicalPartyName: elpaty?.politicalPartyName,
-              votePercentage: 0,
-              voteCount: 0,
+              politicalPartyName: elpinf.politicalPartyName,
+              votePercentage: elpinf.votePercentage,
+              voteCount: elpinf.voteCount,
             };
-            elcands
-              .filter(
-                (elcand) =>
-                  elcand.politicalPartyCode === elpaty?.politicalPartyCode &&
-                  elcand.deputy !== DeputyEnum.VicePresident,
-              )
-              .map((elcand) => {
-                const elctk = elctks.find(
-                  (elctk) => elctk.candidateNumber === elcand.numberSequence,
-                );
-                if (!elctk) return;
-                partyInfo.votePercentage =
-                  +elctk.votePercentage + +partyInfo.votePercentage;
-                partyInfo.voteCount = +elctk.voteCount + +partyInfo.voteCount;
-              });
-            return partyInfo.voteCount ? partyInfo : undefined;
           })
           .filter(Boolean);
       }),
@@ -341,73 +321,75 @@ export class VoteMapService {
       .equals([this.currentYear, allElbase.provinceCity, allElbase.countyCity])
       .toArray();
 
-    const areaVoteInfoVM = elbases.map((elbase) => {
-      const { townshipDistrict, village, name } = elbase;
-      const elprof = elprofs.find(
-        (elprof) =>
-          elprof.townshipDistrict == townshipDistrict &&
-          elprof.village === village &&
-          (elprof.pollingStation === '0000' || elprof.pollingStation === '0'),
-      ) as Elprof;
-      const subElctks = elctks
-        .filter(
-          (elctk) =>
-            elctk.townshipDistrict == townshipDistrict &&
-            elctk.village === village &&
-            (elctk.pollingStation === '0000' || elctk.pollingStation === '0'),
-        )
-        .sort((a, b) => +b.voteCount - +a.voteCount);
-      const electedCand = elcands.find(
-        (elcand) => elcand.numberSequence === subElctks[0].candidateNumber,
-      ) as Elcand;
-      const elpaty = elpaties.find(
-        (party) => party.politicalPartyCode === electedCand.politicalPartyCode,
-      ) as Elpaty;
+    const areaVoteInfoVM = elbases
+      .map((elbase, i) => {
+        if (i === 0) return;
+        const { townshipDistrict, village, name } = elbase;
+        const elprof = elprofs.find(
+          (elprof) =>
+            elprof.townshipDistrict == townshipDistrict &&
+            elprof.village === village &&
+            (elprof.pollingStation === '0000' || elprof.pollingStation === '0'),
+        ) as Elprof;
+        const subElctks = elctks
+          .filter(
+            (elctk) =>
+              elctk.townshipDistrict == townshipDistrict &&
+              elctk.village === village &&
+              (elctk.pollingStation === '0000' || elctk.pollingStation === '0'),
+          )
+          .sort((a, b) => +b.voteCount - +a.voteCount);
+        const electedCand = elcands.find(
+          (elcand) => elcand.numberSequence === subElctks[0].candidateNumber,
+        ) as Elcand;
+        const elpaty = elpaties.find(
+          (party) =>
+            party.politicalPartyCode === electedCand.politicalPartyCode,
+        ) as Elpaty;
 
-      const partyVoteInfos = this.top3CandidateInfo.value
-        .map((cand) => {
-          const elpaty = elpaties.find(
-            ({ politicalPartyName }) =>
-              cand.politicalPartyName === politicalPartyName,
-          );
-          if (!elpaty) return;
-          const partyInfo = {
-            candName: cand.name,
-            votePercentage: 0,
-          };
-          elcands
-            .filter(
-              (elcand) =>
-                elcand.politicalPartyCode === elpaty?.politicalPartyCode &&
-                elcand.deputy !== DeputyEnum.VicePresident,
-            )
-            .map((elcand) => {
-              const elctk = subElctks.find(
-                (elctk) => elctk.candidateNumber === elcand.numberSequence,
-              );
-              if (!elctk) return;
-              partyInfo.votePercentage =
-                +elctk.votePercentage + +partyInfo.votePercentage;
-            });
-          return partyInfo.votePercentage ? partyInfo : undefined;
-        })
-        .filter(Boolean) as {
-        candName: string;
-        votePercentage: number;
-      }[];
+        const partyVoteInfos = this.top3CandidateInfo.value
+          .map((cand) => {
+            const elpaty = elpaties.find(
+              ({ politicalPartyName }) =>
+                cand.politicalPartyName === politicalPartyName,
+            );
+            if (!elpaty) return;
+            const partyInfo = {
+              candName: cand.name,
+              votePercentage: 0,
+            };
+            elcands
+              .filter(
+                (elcand) =>
+                  elcand.politicalPartyCode === elpaty?.politicalPartyCode &&
+                  elcand.deputy !== DeputyEnum.VicePresident,
+              )
+              .map((elcand) => {
+                const elctk = subElctks.find(
+                  (elctk) => elctk.candidateNumber === elcand.numberSequence,
+                );
+                if (!elctk) return;
+                partyInfo.votePercentage =
+                  +elctk.votePercentage + +partyInfo.votePercentage;
+              });
+            return partyInfo.votePercentage ? partyInfo : undefined;
+          })
+          .filter(Boolean) as {
+          candName: string;
+          votePercentage: number;
+        }[];
 
-      return {
-        areaName: name,
-        totalVotes: elprof.totalVotes,
-        voterTurnout: elprof.voterTurnout,
-        partyVoteInfos,
-        electedName: electedCand.name,
-        electedPartyName: elpaty.politicalPartyName,
-      };
-    });
-    if (areaVoteInfoVM.length > 1) {
-      areaVoteInfoVM.shift();
-    }
+        return {
+          areaName: name,
+          totalVotes: elprof.totalVotes,
+          voterTurnout: elprof.voterTurnout,
+          partyVoteInfos,
+          electedName: electedCand.name,
+          electedPartyName: elpaty.politicalPartyName,
+        };
+      })
+      .filter(Boolean) as AreaVoteInfoVM[];
+
     this.areaVoteInfoVM.next(areaVoteInfoVM);
   }
 

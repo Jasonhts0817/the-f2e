@@ -288,10 +288,10 @@
 <ng-template #loading>
   <div class="w-full">
     <div
-      class="h-2 bg-primary transition-[width] duration-[2s] ease-linear"
+      class="h-2 bg-primary transition-[width] duration-1000 ease-linear"
       [ngClass]="{
-        'duration-100': intervalTime === 100,
-        'duration-[2s]': intervalTime === 2000
+        'duration-200': intervalTime === 200,
+        'duration-1000': intervalTime === 1000
       }"
       [ngStyle]="{ 'width.%': progress | async }"
     ></div>

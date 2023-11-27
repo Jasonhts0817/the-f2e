@@ -84,6 +84,6 @@ export class DonutChartComponent implements OnChanges {
       .attr('class', 'text-h5')
       .attr('fill', '#D4009B')
       .attr('text-anchor', 'middle')
-      .text(`${this.data[0]}%`);
+      .text(`${this.data[0] ?? 0}%`);
   }
 }
