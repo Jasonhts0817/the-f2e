@@ -28,22 +28,38 @@ function getDataFilePath(folderPath: string): string[] {
   return filePathList;
 }
 
-function convertCSVtoJson(dataFilePath: string) {
-  const results: any = [];
-  fs.createReadStream(dataFilePath)
-    .pipe(csv({ headers: false }))
-    .on('data', (data) => {
-      results.push(data);
-    })
-    .on('end', () => {
-      const { base, name } = path.parse(dataFilePath);
-      const jsonString = JSON.stringify(dataFilter(name, results), null, 2);
-      const subPath = dataFilePath.replace(DATA_DIR_PATH, '').replace(base, '');
-      const apiFilePath = `${API_DIR_PATH}${subPath}`;
+const yearsData: { [key: string]: any } = {
+  '1996': {},
+  '2004': {},
+  '2008': {},
+  '2012': {},
+  '2000': {},
+  '2016': {},
+  '2020': {},
+};
 
-      fs.mkdirSync(apiFilePath, { recursive: true });
-      fs.writeFileSync(`${apiFilePath}${name}.json`, jsonString);
-    });
+function convertCSVtoJson(dataFilePath: string) {
+  return new Promise((resolve) => {
+    const results: any = [];
+    fs.createReadStream(dataFilePath)
+      .pipe(csv({ headers: false }))
+      .on('data', (data) => {
+        results.push(data);
+      })
+      .on('end', () => {
+        const { base, name } = path.parse(dataFilePath);
+        const jsonString = JSON.stringify(dataFilter(name, results), null, 2);
+        const subPath = dataFilePath
+          .replace(DATA_DIR_PATH, '')
+          .replace(base, '');
+        const year = subPath.replace(/\//g, '').replace('president', '');
+        const apiFilePath = `${API_DIR_PATH}${subPath}`;
+        yearsData[year][name] = results;
+        fs.mkdirSync(apiFilePath, { recursive: true });
+        fs.writeFileSync(`${apiFilePath}${name}.json`, jsonString);
+        resolve(true);
+      });
+  });
 }
 
 function dataFilter(name: string, results: any) {
@@ -70,8 +86,111 @@ function dataFilter(name: string, results: any) {
 
 function dataTransform() {
   const dataFilePaths = getDataFilePath(DATA_DIR_PATH);
-  dataFilePaths.forEach((dataFilePath) => {
-    convertCSVtoJson(dataFilePath);
+  Promise.all(
+    dataFilePaths.map(async (dataFilePath) => {
+      await convertCSVtoJson(dataFilePath);
+    }),
+  ).then(() => {
+    getPartyInfos();
   });
 }
+
+function getPartyInfos() {
+  Object.keys(yearsData).map((year) => {
+    let { elcand, elpaty, elctks } = yearsData[year];
+    elctks = elctks.filter(
+      (elctk: any) => elctk[ElctksField.village] === '0000',
+    );
+    elcand = elcand
+      .filter((elcand: any) => elcand[ElcandField.deputy] !== '*')
+      .map((elcand: any) => {
+        const party = elpaty.find(
+          (epaty: any) =>
+            epaty[ElpatiesField.politicalPartyCode] ===
+            elcand[ElcandField.politicalPartyCode],
+        );
+        return {
+          ...elcand,
+          [ElcandField.politicalPartyName]:
+            party[ElpatiesField.politicalPartyName],
+        };
+      });
+
+    const results = elctks.map((elctk: any) => {
+      const cand = elcand.find(
+        (cand: any) =>
+          cand[ElcandField.numberSequence] ===
+          elctk[ElctksField.candidateNumber].trim(),
+      );
+
+      const result = {
+        [ElpinfField.provinceCity]: elctk[ElctksField.provinceCity],
+        [ElpinfField.countyCity]: elctk[ElctksField.countyCity],
+        [ElpinfField.electoralDistrict]: elctk[ElctksField.electoralDistrict],
+        [ElpinfField.townshipDistrict]: elctk[ElctksField.townshipDistrict],
+        [ElpinfField.village]: elctk[ElctksField.village],
+        [ElpinfField.pollingStation]: elctk[ElctksField.pollingStation],
+        [ElpinfField.politicalPartyName]: cand[ElcandField.politicalPartyName],
+        [ElpinfField.votePercentage]: elctk[ElctksField.votePercentage],
+        [ElpinfField.voteCount]: elctk[ElctksField.voteCount],
+      };
+      return result;
+    });
+
+    const apiFilePath = `${API_DIR_PATH}/president/${year}`;
+    const jsonString = JSON.stringify(results);
+    fs.mkdirSync(apiFilePath, { recursive: true });
+    fs.writeFileSync(`${apiFilePath}/elpinf.json`, jsonString);
+  });
+}
+
 dataTransform();
+
+enum ElctksField {
+  provinceCity = 0,
+  countyCity = 1,
+  electoralDistrict = 2,
+  townshipDistrict = 3,
+  village = 4,
+  pollingStation = 5,
+  candidateNumber = 6,
+  voteCount = 7,
+  votePercentage = 8,
+  electedMark = 9,
+}
+enum ElcandField {
+  provinceCity = 0,
+  countyCity = 1,
+  electoralDistrict = 2,
+  townshipDistrict = 3,
+  village = 4,
+  numberSequence = 5,
+  name = 6,
+  politicalPartyCode = 7,
+  gender = 8,
+  dateOfBirth = 9,
+  age = 10,
+  placeOfBirth = 11,
+  education = 12,
+  incumbent = 13,
+  electedMark = 14,
+  deputy = 15,
+  politicalPartyName = 16,
+}
+
+enum ElpatiesField {
+  politicalPartyCode = 0,
+  politicalPartyName = 1,
+}
+
+enum ElpinfField {
+  provinceCity = 0,
+  countyCity = 1,
+  electoralDistrict = 2,
+  townshipDistrict = 3,
+  village = 4,
+  pollingStation = 5,
+  politicalPartyName = 6,
+  votePercentage = 7,
+  voteCount = 8,
+}
