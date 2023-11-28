@@ -113,6 +113,8 @@ export class MapChartComponent implements AfterViewInit {
       .attr('stroke', 'white')
       .append('path')
       .on('click', (event, d) => this._clicked(event, d))
+      .on('mouseover', (event) => event.target.setAttribute('opacity', 0.8))
+      .on('mouseout', (event) => event.target.removeAttribute('opacity'))
       .attr('d', this.path)
       .attr('fill', (d: any) => {
         const { properties } = d;
