@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import {
   AfterViewInit,
   Component,
@@ -10,8 +11,33 @@ import * as d3 from 'd3';
 @Component({
   selector: 'app-line-chart',
   standalone: true,
-  template: `<div class="flex items-center justify-center p-6 pt-3">
+  imports: [CommonModule],
+  template: `<div class="relative flex items-center justify-center p-6 pt-3">
     <svg #lineChart></svg>
+    <div
+      class="absolute z-30 flex w-[230px] flex-col gap-[10px] rounded-lg border-[1px] border-line bg-white p-4 shadow-md transition-opacity"
+      [ngStyle]="{
+        'left.px': yearTooltipInfo.x,
+        'top.px': yearTooltipInfo.y
+      }"
+      *ngIf="yearTooltipInfo && yearTooltipInfo.isShow"
+    >
+      <div>{{ yearTooltipInfo.year }}年得票數</div>
+      <div
+        *ngFor="let party of yearTooltipInfo.partyInfos"
+        class="flex justify-between"
+      >
+        <div class="flex items-center gap-2">
+          <span
+            class="inline-block h-3 w-3 rounded-full"
+            [style.background]="party.theme"
+          ></span>
+          <span>{{ party.name }}</span>
+        </div>
+
+        <span>{{ party.value | currency: 'TWD' : '' : '1.0-0' }}票</span>
+      </div>
+    </div>
   </div>`,
 })
 export class LineChartComponent {
@@ -22,6 +48,14 @@ export class LineChartComponent {
   @Input() themes?: string[] | null;
   @Input() width: number = 600;
   @Input() height: number = 200;
+
+  yearTooltipInfo?: {
+    isShow: boolean;
+    x: number;
+    y: number;
+    year: string;
+    partyInfos: { name: string; value: number; theme: string }[];
+  };
 
   ngAfterViewInit(): void {
     this.createBarChart();
@@ -113,6 +147,25 @@ export class LineChartComponent {
       .attr('r', '3')
       .attr('cx', (d) => x(d.year) as number)
       .attr('cy', (d) => y(d.percent))
-      .attr('fill', (d) => color(d.name) as string);
+      .attr('fill', (d) => color(d.name) as string)
+      .on('mouseover', (event: MouseEvent, d) => {
+        const yearData =
+          this.data?.filter((data) => data.year === d.year) ?? [];
+        this.yearTooltipInfo = {
+          isShow: true,
+          x: event.offsetX - 100,
+          y: event.offsetY - 150,
+          year: d.year,
+          partyInfos: yearData.map((info) => ({
+            ...info,
+            theme: color(info.name) as string,
+          })),
+        };
+      })
+      .on('mouseout', () => {
+        if (this.yearTooltipInfo) {
+          this.yearTooltipInfo.isShow = false;
+        }
+      });
   }
 }
