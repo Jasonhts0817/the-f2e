@@ -23,10 +23,10 @@ import * as d3 from 'd3';
       }"
       *ngIf="yearTooltipInfo && yearTooltipInfo.isShow"
     >
-      <div>{{ yearTooltipInfo.year }}年得票數</div>
+      <div class="text-h6">{{ yearTooltipInfo.year }}年得票數</div>
       <div
         *ngFor="let party of yearTooltipInfo.partyInfos"
-        class="flex justify-between"
+        class="flex justify-between text-body-2"
       >
         <div class="flex items-center gap-2">
           <span
