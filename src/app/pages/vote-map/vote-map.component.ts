@@ -19,6 +19,9 @@ import { StackChartComponent } from 'src/app/shared/charts/stack-chart.component
 import { DonutChartComponent } from 'src/app/shared/charts/donut-chart.component';
 import { MapChartComponent } from 'src/app/shared/charts/map-chart.component';
 import { DbService } from 'src/app/core/service/db.service';
+import { Dialog, DialogModule } from '@angular/cdk/dialog';
+import { MapDialogComponent } from 'src/app/shared/map-dialog/map-dialog.component';
+import { THEME_CONFIG } from 'src/app/core/consts/theme.const';
 
 @Component({
   selector: 'app-vote-map',
@@ -31,6 +34,7 @@ import { DbService } from 'src/app/core/service/db.service';
     DonutChartComponent,
     MapChartComponent,
     FooterComponent,
+    DialogModule,
   ],
   templateUrl: './vote-map.component.html',
 })
@@ -136,33 +140,6 @@ export class VoteMapComponent implements OnInit {
     map((infos) => infos.map(({ hex }) => hex)),
   );
 
-  themesConfig = [
-    {
-      partyName: '中國國民黨',
-      img: 'assets/images/candidate-1.png',
-      color: 'bg-role-1',
-      hex: '#8082FF',
-    },
-    {
-      partyName: '親民黨',
-      img: 'assets/images/candidate-2.png',
-      color: 'bg-role-2',
-      hex: '#F4A76F',
-    },
-    {
-      partyName: '民主進步黨',
-      img: 'assets/images/candidate-3.png',
-      color: 'bg-role-3',
-      hex: '#57D2A9',
-    },
-    {
-      partyName: '其他',
-      img: 'assets/images/candidate-4.png',
-      color: 'bg-role-other',
-      hex: '#64748B',
-    },
-  ];
-
   breadCrumb: string[] = [];
 
   title = '';
@@ -181,6 +158,7 @@ export class VoteMapComponent implements OnInit {
     private route: ActivatedRoute,
     public voteMapService: VoteMapService,
     private db: DbService,
+    private dialog: Dialog,
   ) {}
 
   ngOnInit(): void {
@@ -227,6 +205,10 @@ export class VoteMapComponent implements OnInit {
     } else if (this.isTownshipDistrict) {
       this.changeTown(areaName);
     }
+  }
+
+  openMapDialog() {
+    this.dialog.open(MapDialogComponent);
   }
 
   windowScrollToTop() {
@@ -313,8 +295,8 @@ export class VoteMapComponent implements OnInit {
 
   private _getPartyTheme(partyName: string) {
     return (
-      this.themesConfig.find((theme) => theme.partyName === partyName) ??
-      this.themesConfig[this.themesConfig.length - 1]
+      THEME_CONFIG.find((theme) => theme.partyName === partyName) ??
+      THEME_CONFIG[THEME_CONFIG.length - 1]
     );
   }
 }

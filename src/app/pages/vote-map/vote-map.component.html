@@ -5,7 +5,16 @@
   <div
     class="relative h-[190px] w-full overflow-hidden bg-map md:h-[calc(100dvh-66px)] md:w-[600px] md:overflow-auto"
   >
-    <div class="absolute z-10 h-full w-full bg-[#49505799] md:hidden"></div>
+    <div
+      class="absolute z-10 flex h-full w-full items-center justify-center bg-[#49505799] md:hidden"
+    >
+      <button
+        class="rounded-md bg-primary px-4 py-2 text-body-2 text-white"
+        (click)="openMapDialog()"
+      >
+        進入地圖
+      </button>
+    </div>
     <app-map-chart
       [countryData]="mapChartCountryData | async"
       [areaData]="mapChartAreaData | async"
