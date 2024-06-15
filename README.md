@@ -2,9 +2,9 @@
 
 ![](readme-imgs/README_2023-11-26-15-58-25.png)
 
-# 網站連結 [連結](https://jasonhts0817.github.io/the-f2e-2023-president/)
+網站連結 [連結](https://jasonhts0817.github.io/the-f2e-2023-president/)
 
-# F2E 2023 官網 [連結](https://2023.thef2e.com/news)
+F2E 2023 官網 [連結](https://2023.thef2e.com/news)
 
 # 作品說明
 
